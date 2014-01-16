@@ -1,0 +1,26 @@
+{
+    "name": "mcrumm/phlack",
+    "description": "Slack WebHook integration in PHP",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Crumm",
+            "email": "mike@crumm.net"
+        }
+    ],
+    "require": {
+        "guzzle/guzzle": "~3.8"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "2.0.*@dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
+
