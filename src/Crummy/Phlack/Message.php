@@ -7,12 +7,18 @@ class Message
     private $data;
 
     /**
-     * @param string $text
+     * @param $text
+     * @param null $channel
+     * @param null $username
+     * @param null $iconEmoji
      */
-    public function __construct($text)
+    public function __construct($text, $channel = null, $username = null, $iconEmoji = null)
     {
         $this->data = array (
-            'text' => $text
+            'text'       => $text,
+            'channel'    => $channel,
+            'username'   => $username,
+            'icon_emoji' => $iconEmoji
         );
     }
 
