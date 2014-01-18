@@ -41,7 +41,7 @@ class Message
      */
     public function getChannel()
     {
-        return $this->data['channel'];
+        return isset($this->data['channel']) ? $this->data['channel'] : null;
     }
 
     /**
@@ -50,5 +50,45 @@ class Message
     public function __toString()
     {
         return json_encode(array_filter($this->data));
+    }
+
+    /**
+     * @param $iconEmoji
+     * @return $this
+     */
+    public function setIconEmoji($iconEmoji)
+    {
+        if (!empty($iconEmoji)) {
+            $this->data['icon_emoji'] = sprintf(':%s:', trim($iconEmoji, ':'));
+        }
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIconEmoji()
+    {
+        return isset($this->data['icon_emoji']) ? $this->data['icon_emoji'] : null;
+    }
+
+    /**
+     * @param $username
+     * @return $this
+     */
+    public function setUsername($username)
+    {
+        if (!empty($username)) {
+            $this->data['username'] = $username;
+        }
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUsername()
+    {
+        return isset($this->data['username']) ? $this->data['username'] : null;
     }
 }

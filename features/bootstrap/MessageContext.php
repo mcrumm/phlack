@@ -51,9 +51,31 @@ class MessageContext extends BehatContext
      */
     public function iSetTheirChannels(TableNode $table)
     {
+        $this->setMessageParameter($table, 'channel');
+    }
+
+    /**
+     * @When /^I set their icon emojis:$/
+     */
+    public function iSetTheirIconEmojis(TableNode $table)
+    {
+        $this->setMessageParameter($table, 'icon_emoji');
+    }
+
+    /**
+     * @When /^I set their usernames:$/
+     */
+    public function iSetTheirUsernames(TableNode $table)
+    {
+        $this->setMessageParameter($table, 'username');
+    }
+
+    private function setMessageParameter(TableNode $table, $parameter)
+    {
+        $method = 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $parameter)));
         $hash = $table->getHash();
         foreach ($hash as $key => $row) {
-            $this->messages[$key]->setChannel($row['channel']);
+            $this->messages[$key]->{$method}($row[$parameter]);
         }
     }
 }

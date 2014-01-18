@@ -7,8 +7,10 @@ use Prophecy\Argument;
 
 class MessageSpec extends ObjectBehavior
 {
-    const TEXT    = 'contents';
-    const CHANNEL = 'channel';
+    const TEXT       = 'contents';
+    const CHANNEL    = 'channel';
+    const ICON_EMOJI = 'cookie';
+    const USERNAME   = 'crumm';
 
     function let()
     {
@@ -35,6 +37,32 @@ class MessageSpec extends ObjectBehavior
         $withHash = '#'.self::CHANNEL;
         $this->setChannel(self::CHANNEL)->getChannel()->shouldReturn($withHash);
         $this->setChannel($withHash)->getChannel()->shouldReturn($withHash);
+    }
+
+    function it_fluently_accepts_an_icon_emoji()
+    {
+        $this->setIconEmoji(self::ICON_EMOJI)->shouldReturn($this);
+    }
+
+    function it_wraps_icon_emoji_in_colons()
+    {
+        $wrapped = ':'.self::ICON_EMOJI.':';
+
+        $this
+            ->setIconEmoji(self::ICON_EMOJI)
+            ->getIconEmoji()
+                ->shouldReturn($wrapped);
+
+        $this
+            ->setIconEmoji($wrapped)
+            ->getIconEmoji()
+                ->shouldReturn($wrapped);
+    }
+
+    function it_fluently_accepts_an_username()
+    {
+        $this->setUsername(self::USERNAME)->shouldReturn($this);
+        $this->getUsername()->shouldReturn(self::USERNAME);
     }
 
     function it_prints_as_json()

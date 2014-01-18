@@ -37,3 +37,50 @@ Feature: Phlack Message
       | {"text":"Ops","channel":"#ops"}        |
       | {"text":"Banana","channel":"##banana"} |
 
+  Scenario: Messages with icons
+    Given there are messages:
+     | text                  |
+     | This is the default.  |
+     | This is a Package.    |
+     | This is a Cookie.     |
+     | This is an Hourglass. |
+     | This is a Copyright.  |
+   When I set their icon emojis:
+     | icon_emoji |
+     |            |
+     | package    |
+     | :cookie:   |
+     | :hourglass |
+     | copyright: |
+   And I echo the message
+   Then I get the output:
+     | output                                                      |
+     | {"text":"This is the default."}                             |
+     | {"text":"This is a Package.","icon_emoji":":package:"}      |
+     | {"text":"This is a Cookie.","icon_emoji":":cookie:"}        |
+     | {"text":"This is an Hourglass.","icon_emoji":":hourglass:"} |
+     | {"text":"This is a Copyright.","icon_emoji":":copyright:"}  |
+
+  Scenario: Messages with usernames
+    Given there are messages:
+      | text                  |
+      | This is from default. |
+      | This is from Adam.    |
+      | This is from Ben.     |
+      | This is from Carl.    |
+      | This is from Daryl.   |
+    When I set their usernames:
+      | username      |
+      |               |
+      | heydudeimadam |
+      | bdotfranklin  |
+      | cmalone       |
+      | otherdaryl    |
+    And I echo the message
+    Then I get the output:
+      | output                                                   |
+      | {"text":"This is from default."}                         |
+      | {"text":"This is from Adam.","username":"heydudeimadam"} |
+      | {"text":"This is from Ben.","username":"bdotfranklin"}   |
+      | {"text":"This is from Carl.","username":"cmalone"}       |
+      | {"text":"This is from Daryl.","username":"otherdaryl"}   |
