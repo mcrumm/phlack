@@ -70,12 +70,54 @@ class MessageContext extends BehatContext
         $this->setMessageParameter($table, 'username');
     }
 
+    /**
+     * Calls set{parameter} on each message
+     * @param TableNode $table
+     * @param $parameter
+     */
     private function setMessageParameter(TableNode $table, $parameter)
     {
-        $method = 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $parameter)));
+        $method = 'set' . $this->toMethodName($parameter);
         $hash = $table->getHash();
         foreach ($hash as $key => $row) {
             $this->messages[$key]->{$method}($row[$parameter]);
         }
+    }
+
+    /**
+     * @Transform /^table:text,channel,username,icon_emoji$/
+     */
+    public function castMessageTable(TableNode $messagesTable)
+    {
+        $messages = array();
+        foreach ($messagesTable->getHash() as $messageHash) {
+            $message    = new \Crummy\Phlack\Message($messageHash['text']);
+            foreach(array('channel','username','icon_emoji',) as $parameter) {
+                $method = 'set' . $this->toMethodName($parameter);
+                if (isset($messageHash[$parameter])) {
+                    $message->{$method}($messageHash[$parameter]);
+                }
+            }
+            $messages[] = $message;
+        }
+
+        return $messages;
+    }
+
+    /**
+     * @param string $parameter
+     * @return string
+     */
+    private function toMethodName($parameter)
+    {
+        return str_replace(' ', '', ucwords(str_replace('_', ' ', $parameter)));
+    }
+
+    /**
+     * @Given /^these messages:$/
+     */
+    public function theseMessages(array $messages)
+    {
+        $this->messages = $messages;
     }
 }

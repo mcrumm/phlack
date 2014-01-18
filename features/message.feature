@@ -84,3 +84,26 @@ Feature: Phlack Message
       | {"text":"This is from Ben.","username":"bdotfranklin"}   |
       | {"text":"This is from Carl.","username":"cmalone"}       |
       | {"text":"This is from Daryl.","username":"otherdaryl"}   |
+
+  Scenario: The kitchen sink of Messages
+    Given these messages:
+      | text | channel | username | icon_emoji  |
+      | 000  |         |          |             |
+      | 001  |         |          | package     |
+      | 010  |         | albert   |             |
+      | 011  |         | bob      | clock       |
+      | 100  | nbc     |          |             |
+      | 101  | cbs     |          | hourglass   |
+      | 110  | abc     | carl     |             |
+      | 111  | fox     | doge     | copyright   |
+    When I echo the message
+    Then I get the output:
+      | output                                                                       |
+      | {"text":"000"}                                                               |
+      | {"text":"001","icon_emoji":":package:"}                                      |
+      | {"text":"010","username":"albert"}                                           |
+      | {"text":"011","username":"bob","icon_emoji":":clock:"}                       |
+      | {"text":"100","channel":"#nbc"}                                              |
+      | {"text":"101","channel":"#cbs","icon_emoji":":hourglass:"}                   |
+      | {"text":"110","channel":"#abc","username":"carl"}                            |
+      | {"text":"111","channel":"#fox","username":"doge","icon_emoji":":copyright:"} |
