@@ -1,0 +1,3 @@
+formatter.name: nyan.crab
+extensions:
+    - PhpSpec\NyanFormattersExtension\Extension

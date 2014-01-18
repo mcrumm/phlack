@@ -13,7 +13,8 @@
     },
     "require-dev": {
         "behat/behat": "~2.5.0@stable",
-        "phpspec/phpspec": "2.0.*@dev"
+        "phpspec/phpspec": "2.0.*@dev",
+        "phpspec/nyan-formatters": "1.*"
     },
     "minimum-stability": "stable",
     "autoload": {
