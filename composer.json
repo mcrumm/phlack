@@ -12,11 +12,14 @@
         "guzzle/guzzle": "~3.8"
     },
     "require-dev": {
+        "behat/behat": "~2.5.0@stable",
         "phpspec/phpspec": "2.0.*@dev"
     },
+    "minimum-stability": "stable",
     "autoload": {
         "psr-0": {
-            "": "src"
+            "": "src",
+            "Context": "features"
         }
     },
     "config": {
