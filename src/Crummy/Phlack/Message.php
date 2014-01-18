@@ -4,20 +4,35 @@ namespace Crummy\Phlack;
 
 class Message
 {
-    private $text;
+    private $data;
 
     public function __construct($text)
     {
-        $this->text = $text;
+        $this->data = array (
+            'text' => $text
+        );
     }
 
     public function getText()
     {
-        return $this->text;
+        return $this->data['text'];
+    }
+
+    public function setChannel($channel)
+    {
+        if (!empty($channel)) {
+            $this->data['channel'] = (0 === strpos($channel, '#') ? $channel : '#' . $channel);
+        }
+        return $this;
+    }
+
+    public function getChannel()
+    {
+        return $this->data['channel'];
     }
 
     public function __toString()
     {
-        return json_encode(array('text' => $this->text));
+        return json_encode(array_filter($this->data));
     }
 }
