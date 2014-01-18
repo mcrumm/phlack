@@ -3,7 +3,10 @@ Feature: Phlack Message
   In order to send messages to Slack
   I need a Message object that outputs as JSON
 
-  Scenario: Create a simple message
-    Given I want to send the message "Howdy!"
-    When I echo the message
-    Then I should get: {"text": "Howdy!"}
+  Scenario: Simple Message
+    Given a message containing "Howdy!"
+    When I call "__toString" on the message
+    Then I should get:
+    """
+    {"text":"Howdy!"}
+    """
