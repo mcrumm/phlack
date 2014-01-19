@@ -1,6 +1,6 @@
 <?php
 
-namespace Crummy\Phlack;
+namespace Crummy\Phlack\Message;
 
 class Message implements \JsonSerializable
 {

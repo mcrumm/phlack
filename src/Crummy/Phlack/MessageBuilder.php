@@ -17,7 +17,7 @@ class MessageBuilder implements BuilderInterface
             throw new \LogicException('Message text cannot be empty.');
         }
 
-        return new Message(
+        return new Message\Message(
             $this->data['text'],
             isset($this->data['channel']) ? $this->data['channel'] : null,
             isset($this->data['username']) ? $this->data['username'] : null,

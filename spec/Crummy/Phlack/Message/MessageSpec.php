@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Crummy\Phlack;
+namespace spec\Crummy\Phlack\Message;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -19,7 +19,7 @@ class MessageSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Crummy\Phlack\Message');
+        $this->shouldHaveType('Crummy\Phlack\Message\Message');
     }
 
     function it_is_json_serializable()

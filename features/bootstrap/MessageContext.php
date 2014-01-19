@@ -6,6 +6,7 @@ use Behat\Behat\Context\ClosuredContextInterface,
     Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
+use Crummy\Phlack\Message\Message;
 
 class MessageContext extends BehatContext
 {
@@ -19,7 +20,7 @@ class MessageContext extends BehatContext
     {
         $hash = $table->getHash();
         foreach ($hash as $row) {
-            $this->messages[] = new \Crummy\Phlack\Message($row['text']);
+            $this->messages[] = new Message($row['text']);
         }
     }
 
@@ -91,7 +92,7 @@ class MessageContext extends BehatContext
     {
         $messages = array();
         foreach ($messagesTable->getHash() as $messageHash) {
-            $message    = new \Crummy\Phlack\Message($messageHash['text']);
+            $message    = new Message($messageHash['text']);
             foreach(array('channel','username','icon_emoji',) as $parameter) {
                 $method = 'set' . $this->toMethodName($parameter);
                 if (isset($messageHash[$parameter])) {

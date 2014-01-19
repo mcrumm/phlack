@@ -2,6 +2,7 @@
 
 namespace spec\Crummy\Phlack;
 
+use Crummy\Phlack\Message;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -20,6 +21,11 @@ class MessageBuilderSpec extends ObjectBehavior
     function it_fails_on_empty_text()
     {
         $this->shouldThrow('\LogicException')->during('create');
+    }
+
+    function it_returns_a_message_on_create()
+    {
+        $this->setText('Message')->create()->shouldReturnAnInstanceOf('\Crummy\Phlack\Message\Message');
     }
 
     function it_fluently_sets_vars()
