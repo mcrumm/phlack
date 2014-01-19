@@ -22,6 +22,11 @@ class MessageSpec extends ObjectBehavior
         $this->shouldHaveType('Crummy\Phlack\Message');
     }
 
+    function it_is_json_serializable()
+    {
+        $this->shouldImplement('\JsonSerializable');
+    }
+
     function it_contains_text()
     {
         $this->getText()->shouldReturn(self::TEXT);

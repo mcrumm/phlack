@@ -9,6 +9,7 @@
         }
     ],
     "require": {
+        "php": ">=5.4",
         "guzzle/guzzle": "~3.8"
     },
     "require-dev": {

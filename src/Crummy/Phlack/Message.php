@@ -2,7 +2,7 @@
 
 namespace Crummy\Phlack;
 
-class Message
+class Message implements \JsonSerializable
 {
     private $data;
 
@@ -55,7 +55,7 @@ class Message
      */
     public function __toString()
     {
-        return json_encode(array_filter($this->data));
+        return json_encode($this);
     }
 
     /**
@@ -96,5 +96,13 @@ class Message
     public function getUsername()
     {
         return isset($this->data['username']) ? $this->data['username'] : null;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return array_filter($this->data);
     }
 }
