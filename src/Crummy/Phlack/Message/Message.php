@@ -14,12 +14,11 @@ class Message implements \JsonSerializable
      */
     public function __construct($text, $channel = null, $username = null, $iconEmoji = null)
     {
-        $this->data = array (
-            'text'       => $text,
-            'channel'    => $channel,
-            'username'   => $username,
-            'icon_emoji' => $iconEmoji
-        );
+        $this->data = array ('text' => $text);
+
+        if ($channel)   { $this->setChannel($channel); }
+        if ($username)  { $this->setUsername($username); }
+        if ($iconEmoji) { $this->setIconEmoji($iconEmoji); }
     }
 
     /**

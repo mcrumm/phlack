@@ -10,6 +10,8 @@ use Crummy\Phlack\Message\Message;
 
 class MessageContext extends BehatContext
 {
+    use ParameterTrait;
+
     private $outputs  = array();
     private $messages = array();
 
@@ -103,15 +105,6 @@ class MessageContext extends BehatContext
         }
 
         return $messages;
-    }
-
-    /**
-     * @param string $parameter
-     * @return string
-     */
-    private function toMethodName($parameter)
-    {
-        return str_replace(' ', '', ucwords(str_replace('_', ' ', $parameter)));
     }
 
     /**

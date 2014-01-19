@@ -1,22 +1,45 @@
 <?php
 
 use Behat\Behat\Context\BehatContext;
-
 use Behat\Gherkin\Node\TableNode;
+use Crummy\Phlack\Message\Message;
 
 class MessageBuilderContext extends BehatContext
 {
-    private $messages = array();
+    use ParameterTrait;
+
+    private $messages = [];
 
     /**
-     * @When /^I build a message:$/
+     * @When /^I build the messages:$/
      */
-    public function iBuildAMessage(TableNode $table)
+    public function iBuildTheMessages(array $messages)
     {
-        foreach ($table->getHash() as $row) {
-            $builder          = new \Crummy\Phlack\MessageBuilder();
-            $this->messages[] = $builder->setText($row['text'])->create();
+        $this->messages = $messages;
+    }
+
+    /**
+     * @Transform /^table:message$/
+     * @Transform /^table:message,channel$/
+     * @Transform /^table:message,channel,username$/
+     * @Transform /^table:message,channel,username,icon_emoji$/
+     */
+    public function castMessageTable(TableNode $messagesTable)
+    {
+        $builder  = new \Crummy\Phlack\MessageBuilder();
+        $messages = [];
+        foreach ($messagesTable->getHash() as $messageHash) {
+            $builder->setText($messageHash['message']);
+            foreach (['channel', 'username', 'icon_emoji'] as $parameter) {
+                $method = 'set' . $this->toMethodName($parameter);
+                if (isset($messageHash[$parameter])) {
+                    $builder->{$method}($messageHash[$parameter]);
+                }
+            }
+            $messages[] = $builder->create();
         }
+
+        return $messages;
     }
 
     /**
