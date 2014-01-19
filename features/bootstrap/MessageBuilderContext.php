@@ -2,7 +2,7 @@
 
 use Behat\Behat\Context\BehatContext;
 use Behat\Gherkin\Node\TableNode;
-use Crummy\Phlack\Message\Message;
+use Crummy\Phlack\MessageBuilder;
 
 class MessageBuilderContext extends BehatContext
 {
@@ -26,7 +26,7 @@ class MessageBuilderContext extends BehatContext
      */
     public function castMessageTable(TableNode $messagesTable)
     {
-        $builder  = new \Crummy\Phlack\MessageBuilder();
+        $builder  = new MessageBuilder();
         $messages = [];
         foreach ($messagesTable->getHash() as $messageHash) {
             $builder->setText($messageHash['message']);
