@@ -1,6 +1,6 @@
 <?php
 
-namespace Crummy\Phlack\Message;
+namespace Crummy\Phlack\Builder;
 
 interface BuilderInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Crummy\Phlack;
+namespace spec\Crummy\Phlack\Builder;
 
 use Crummy\Phlack\Message;
 use PhpSpec\ObjectBehavior;
@@ -10,12 +10,12 @@ class MessageBuilderSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('Crummy\Phlack\MessageBuilder');
+        $this->shouldHaveType('Crummy\Phlack\Builder\MessageBuilder');
     }
 
     function it_is_a_builder()
     {
-        $this->shouldImplement('\Crummy\Phlack\Message\BuilderInterface');
+        $this->shouldImplement('\Crummy\Phlack\Builder\BuilderInterface');
     }
 
     function it_fails_on_empty_text()

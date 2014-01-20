@@ -28,7 +28,10 @@ class FeatureContext extends BehatContext
      */
     public function __construct(array $parameters)
     {
+        $this->useContext('phlack_output', new OutputContext($parameters));
         $this->useContext('phlack_message', new MessageContext($parameters));
         $this->useContext('phlack_message_builder', new MessageBuilderContext($parameters));
+        //$this->useContext('phlack_attachment', new MessageAttachmentContext($parameters));
     }
+
 }

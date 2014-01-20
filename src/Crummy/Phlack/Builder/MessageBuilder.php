@@ -1,8 +1,8 @@
 <?php
 
-namespace Crummy\Phlack;
+namespace Crummy\Phlack\Builder;
 
-use Crummy\Phlack\Message\BuilderInterface;
+use Crummy\Phlack\Message\Message;
 
 class MessageBuilder implements BuilderInterface
 {
@@ -17,7 +17,7 @@ class MessageBuilder implements BuilderInterface
             throw new \LogicException('Message text cannot be empty.');
         }
 
-        return new Message\Message(
+        return new Message(
             $this->data['text'],
             isset($this->data['channel']) ? $this->data['channel'] : null,
             isset($this->data['username']) ? $this->data['username'] : null,

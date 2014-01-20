@@ -2,20 +2,20 @@
 
 use Behat\Behat\Context\BehatContext;
 use Behat\Gherkin\Node\TableNode;
-use Crummy\Phlack\MessageBuilder;
+use Crummy\Phlack\Builder\MessageBuilder;
 
 class MessageBuilderContext extends BehatContext
 {
     use ParameterTrait;
-
-    private $messages = [];
 
     /**
      * @When /^I build the messages:$/
      */
     public function iBuildTheMessages(array $messages)
     {
-        $this->messages = $messages;
+        foreach ($messages as $message) {
+            OutputContext::pushOutput((string)$message);
+        }
     }
 
     /**
@@ -40,18 +40,5 @@ class MessageBuilderContext extends BehatContext
         }
 
         return $messages;
-    }
-
-    /**
-     * @Then /^I should get the payload:$/
-     */
-    public function iShouldGetThePayload(TableNode $table)
-    {
-        foreach ($table->getHash() as $key => $row) {
-            $payload = (string)$this->messages[$key];
-            if ($row['payload'] !== $payload) {
-                throw new Exception(sprintf("Expected: %s,\n but got: %s", $row['payload'], $payload));
-            }
-        }
     }
 }
