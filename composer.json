@@ -10,7 +10,8 @@
     ],
     "require": {
         "php": ">=5.4",
-        "guzzle/guzzle": "~3.8"
+        "guzzle/guzzle": "~3.8",
+        "doctrine/collections": "1.1.*"
     },
     "require-dev": {
         "behat/behat": "~2.5.0@stable",
