@@ -3,17 +3,31 @@
 use Behat\Behat\Context\BehatContext;
 use Behat\Gherkin\Node\TableNode;
 use Crummy\Phlack\Builder\MessageBuilder;
+use Crummy\Phlack\Message\Message;
+use Crummy\Phlack\Message\Collection\AttachmentCollection;
 
 class MessageBuilderContext extends BehatContext
 {
     use ParameterTrait;
 
     /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->attachments = new AttachmentCollection();
+    }
+
+    /**
      * @When /^I build the messages:$/
      */
     public function iBuildTheMessages(array $messages)
     {
+        /** @var Message $message */
         foreach ($messages as $message) {
+            if ($this->attachments) {
+                $message->setAttachments($this->attachments);
+            }
             OutputContext::pushOutput((string)$message);
         }
     }

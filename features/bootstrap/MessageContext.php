@@ -6,14 +6,24 @@ use Behat\Behat\Context\ClosuredContextInterface,
     Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
+use Crummy\Phlack\Message\Collection\AttachmentCollection;
 use Crummy\Phlack\Message\Message;
 
 class MessageContext extends BehatContext
 {
     use ParameterTrait;
 
-    private $outputs  = array();
-    private $messages = array();
+    private $outputs     = [ ];
+    private $messages    = [ ];
+    private $attachments;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->attachments = new AttachmentCollection();
+    }
 
     /**
      * @Given /^there are messages:$/
@@ -88,6 +98,7 @@ class MessageContext extends BehatContext
     }
 
     /**
+     * @Transform /^table:text,channel$/
      * @Transform /^table:text,channel,username,icon_emoji$/
      */
     public function castMessageTable(TableNode $messagesTable)
@@ -113,5 +124,20 @@ class MessageContext extends BehatContext
     public function theseMessages(array $messages)
     {
         $this->messages = $messages;
+    }
+
+    /**
+     * @Given /^I add an attachment with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$/
+     */
+    public function iAddAnAttachmentWith($fallback, $title, $value, $isShort)
+    {
+        $isShort     = (boolean)$isShort;
+        $aBuilder    = new \Crummy\Phlack\Builder\AttachmentBuilder();
+        $attachment  = $aBuilder->setFallback($fallback)->addField($title, $value, $isShort)->create();
+        $this->attachments->add($attachment);
+        /** @var Message $message */
+        foreach ($this->messages as $message) {
+            $message->setAttachments($this->attachments);
+        }
     }
 }

@@ -2,9 +2,13 @@
 
 namespace Crummy\Phlack\Message;
 
-class Message implements \JsonSerializable
+use Crummy\Phlack\Common\Encodable;
+use Crummy\Phlack\Message\Collection\AttachmentCollection;
+
+class Message implements Encodable
 {
     private $data;
+    private $attachments;
 
     /**
      * @param $text
@@ -14,6 +18,8 @@ class Message implements \JsonSerializable
      */
     public function __construct($text, $channel = null, $username = null, $iconEmoji = null)
     {
+        $this->attachments = new AttachmentCollection();
+
         $this->data = array ('text' => $text);
 
         if ($channel)   { $this->setChannel($channel); }
@@ -102,6 +108,42 @@ class Message implements \JsonSerializable
      */
     public function jsonSerialize()
     {
-        return array_filter($this->data);
+        $data = array_filter($this->data, function($value) {
+            return (false === $value || !empty($value));
+        });
+
+        if (count($this->attachments) < 1) {
+            return $data;
+        }
+
+        return $data + [ 'attachments' => $this->attachments->jsonSerialize() ];
+    }
+
+    /**
+     * @param AttachmentCollection $attachments
+     * @return $this
+     */
+    public function setAttachments(AttachmentCollection $attachments)
+    {
+        $this->attachments = $attachments;
+        return $this;
+    }
+
+    /**
+     * @param AttachmentInterface $attachment
+     * @return $this
+     */
+    public function addAttachment(AttachmentInterface $attachment)
+    {
+        $this->attachments->add($attachment);
+        return $this;
+    }
+
+    /**
+     * @return AttachmentCollection
+     */
+    public function getAttachments()
+    {
+        return $this->attachments;
     }
 }

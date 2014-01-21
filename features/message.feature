@@ -107,3 +107,13 @@ Feature: Phlack Message
       | {"text":"101","channel":"#cbs","icon_emoji":":hourglass:"}                   |
       | {"text":"110","channel":"#abc","username":"carl"}                            |
       | {"text":"111","channel":"#fox","username":"doge","icon_emoji":":copyright:"} |
+
+  Scenario: Message Attachments
+    Given these messages:
+      | message | channel |
+      | Default |         |
+    When I add an attachment with "fallback" "title" "value" "true"
+      And I echo the message
+    Then I get the output:
+      | output                                                                                                               |
+      | {"text":"Default","attachments":[{"fallback":"fallback","fields":[{"title":"title","value":"value","short":true}]}]} |
