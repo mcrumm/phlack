@@ -3,11 +3,11 @@
     "apiVersion": "v1",
     "description": "Slack WebHooks Integration",
     "operations": {
-        "IncomingHook": {
+        "Message": {
             "httpMethod": "POST",
             "uri": "/services/hooks/incoming-webhook",
             "summary": "POST Incoming WebHook",
-            "responseClass":"HookOutput",
+            "responseClass":"OutputModel",
             "parameters": {
                 "text": {
                     "location": "json",
@@ -31,7 +31,7 @@
         }
     },
     "models": {
-        "HookOutput": {
+        "OutputModel": {
             "type": "object",
             "properties": {
                 "status": {
