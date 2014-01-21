@@ -17,4 +17,19 @@ class PhlackClientSpec extends ObjectBehavior
     {
         $this->shouldHaveType('\Guzzle\Service\Client');
     }
+
+    function its_factory_which_requires_a_config()
+    {
+        $this::factory([ 'username' => 'foo', 'token' => 'bar' ])->shouldReturnAnInstanceOf($this);
+    }
+
+    function its_factory_requires_a_username()
+    {
+        $this->shouldThrow()->during('factory', array('foo' => 'user', 'token' => 'abc123'));
+    }
+
+    function its_factory_requires_a_token()
+    {
+        $this->shouldThrow()->during('factory', array('username' => 'bar'));
+    }
 }
