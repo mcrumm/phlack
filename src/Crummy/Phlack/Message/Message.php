@@ -2,10 +2,9 @@
 
 namespace Crummy\Phlack\Message;
 
-use Crummy\Phlack\Common\Encodable;
 use Crummy\Phlack\Message\Collection\AttachmentCollection;
 
-class Message implements Encodable
+class Message implements MessageInterface
 {
     private $data;
     private $attachments;

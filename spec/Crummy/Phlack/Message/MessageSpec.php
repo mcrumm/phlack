@@ -24,6 +24,7 @@ class MessageSpec extends ObjectBehavior
     function it_is_initializable()
     {
         $this->shouldHaveType('Crummy\Phlack\Message\Message');
+        $this->shouldImplement('\Crummy\Phlack\Message\MessageInterface');
     }
 
     function it_is_encodable()
