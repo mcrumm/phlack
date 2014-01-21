@@ -26,6 +26,15 @@ class Phlack
     }
 
     /**
+     * @param array $config
+     * @return Phlack
+     */
+    static public function factory(array $config = [ ])
+    {
+        return new self(PhlackClient::factory($config));
+    }
+
+    /**
      * @param MessageInterface $message
      * @return array|\Guzzle\Http\Message\Response
      */

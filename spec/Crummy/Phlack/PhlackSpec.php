@@ -22,6 +22,12 @@ class PhlackSpec extends ObjectBehavior
         $this->shouldHaveType('Crummy\Phlack\Phlack');
     }
 
+    function its_factory_accepts_the_client_config()
+    {
+        $this::factory(['username' => 'user', 'token' => 'token' ])
+            ->shouldReturnAnInstanceOf('\Crummy\Phlack\Phlack');
+    }
+
     function it_sends_messages($client, Message $message, OperationCommand $command, Response $response)
     {
         $message->jsonSerialize()->willReturn([ ]);
