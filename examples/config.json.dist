@@ -1,0 +1,11 @@
+{
+    "services": {
+        "phlack": {
+            "class": "Crummy\\Phlack\\Bridge\\Guzzle\\PhlackClient",
+            "params": {
+                "username": "",
+                "token": ""
+            }
+        }
+    }
+}
