@@ -1,0 +1,52 @@
+{
+    "name": "Slack Hooks",
+    "apiVersion": "v1",
+    "description": "Slack WebHooks Integration",
+    "operations": {
+        "IncomingHook": {
+            "httpMethod": "POST",
+            "uri": "/services/hooks/incoming-webhook",
+            "summary": "POST Incoming WebHook",
+            "responseClass":"HookOutput",
+            "parameters": {
+                "text": {
+                    "location": "json",
+                    "type":     "string",
+                    "required": true
+                },
+                "channel": {
+                    "location": "json",
+                    "type":     "string",
+                    "required": false
+                },
+                "icon_emoji": {
+                    "location": "json",
+                    "type":     "string",
+                    "required": false
+                }
+            },
+            "additionalParameters": {
+                "location": "json"
+            }
+        }
+    },
+    "models": {
+        "HookOutput": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "location": "statusCode",
+                    "type": "integer"
+                },
+                "reason": {
+                    "location": "reasonPhrase",
+                    "type": "string"
+                },
+                "text": {
+                    "location": "body",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
