@@ -36,4 +36,14 @@ class PhlackSpec extends ObjectBehavior
     {
         $this->getClient()->shouldReturn($client);
     }
+
+    function it_returns_a_message_builder()
+    {
+        $this->getMessageBuilder()->shouldReturnAnInstanceOf('\Crummy\Phlack\Builder\MessageBuilder');
+    }
+
+    function it_returns_an_attachment_builder()
+    {
+        $this->getAttachmentBuilder()->shouldReturnAnInstanceOf('\Crummy\Phlack\Builder\AttachmentBuilder');
+    }
 }

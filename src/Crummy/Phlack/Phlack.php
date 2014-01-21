@@ -3,6 +3,8 @@
 namespace Crummy\Phlack;
 
 use Crummy\Phlack\Bridge\Guzzle\PhlackClient;
+use Crummy\Phlack\Builder\AttachmentBuilder;
+use Crummy\Phlack\Builder\MessageBuilder;
 use Crummy\Phlack\Message\MessageInterface;
 
 class Phlack
@@ -10,6 +12,8 @@ class Phlack
     const MESSAGE_COMMAND = 'Message';
 
     private $client;
+    private $messageBuilder;
+    private $attachmentBuilder;
 
     /**
      * @param PhlackClient $client
@@ -17,6 +21,8 @@ class Phlack
     public function __construct(PhlackClient $client)
     {
         $this->client = $client;
+        $this->messageBuilder    = new MessageBuilder();
+        $this->attachmentBuilder = new AttachmentBuilder();
     }
 
     /**
@@ -35,5 +41,21 @@ class Phlack
     public function getClient()
     {
         return $this->client;
+    }
+
+    /**
+     * @return MessageBuilder
+     */
+    public function getMessageBuilder()
+    {
+        return $this->messageBuilder;
+    }
+
+    /**
+     * @return AttachmentBuilder
+     */
+    public function getAttachmentBuilder()
+    {
+        return $this->attachmentBuilder;
     }
 }
