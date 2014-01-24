@@ -102,7 +102,7 @@ echo 'The message was sent: ' . $message;
 
 #### Response
 
-The response hash contains the `status`, `reason`, and `text` from the response.
+The [Response](src/Crummy/Phlack/Bridge/Guzzle/Response/MessageResponse.php) hash contains the `status`, `reason`, and `text` from the response.
 
 Responses from the Incoming Webhooks Integration are very sparse. Success messages will simply return a `status` of `200`. Error messages will contain more details in the response `text` and `reason`.
 
