@@ -2,7 +2,7 @@
 
 namespace spec\Crummy\Phlack\Builder;
 
-use Crummy\Phlack\Message;
+use Crummy\Phlack\Message\Message;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -34,5 +34,14 @@ class MessageBuilderSpec extends ObjectBehavior
         $this->setChannel('channel')->shouldReturn($this);
         $this->setIconEmoji('package')->shouldReturn($this);
         $this->setUsername('user')->shouldReturn($this);
+    }
+
+    function it_refreshes_data_on_create()
+    {
+        $message_1 = $this->setText('Message #1')->setChannel('1')->create();
+
+        /** @var Message $message_2 */
+        $message_2 = $this->setText('Message #2')->create();
+        $message_2->getChannel()->shouldBeNull();
     }
 }

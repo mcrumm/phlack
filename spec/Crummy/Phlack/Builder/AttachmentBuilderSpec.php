@@ -50,4 +50,13 @@ class AttachmentBuilderSpec extends ObjectBehavior
         $attachment = $this->setFallback('fallback')->addField('title', 'value', true)->create();
         $attachment->getFields()->shouldHaveCount(1);
     }
+
+    function it_refreshes_data_on_create()
+    {
+        $attachment_1 = $this->setFallback('attachment 1')->addField('attach', '1', true)->create();
+
+        /** @var \Crummy\Phlack\Message\Attachment $attachment_2 */
+        $attachment_2 = $this->setFallback('attachment 2')->addField('so_attach', '2', true)->create();
+        $attachment_2->getFields()->shouldHaveCount(1);
+    }
 }

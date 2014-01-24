@@ -6,7 +6,15 @@ use Crummy\Phlack\Message\Message;
 
 class MessageBuilder implements BuilderInterface
 {
-    private $data = [];
+    private $data;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->refresh();
+    }
 
     /**
      * @throws \LogicException When create is called before text has been set
@@ -17,12 +25,11 @@ class MessageBuilder implements BuilderInterface
             throw new \LogicException('Message text cannot be empty.');
         }
 
-        return new Message(
-            $this->data['text'],
-            isset($this->data['channel']) ? $this->data['channel'] : null,
-            isset($this->data['username']) ? $this->data['username'] : null,
-            isset($this->data['icon_emoji']) ? $this->data['icon_emoji'] : null
-        );
+        $data = $this->data;
+
+        $this->refresh();
+
+        return new Message($data['text'], $data['channel'], $data['username'], $data['icon_emoji']);
     }
 
     /**
@@ -63,5 +70,18 @@ class MessageBuilder implements BuilderInterface
     {
         $this->data['username'] = $username;
         return $this;
+    }
+
+    /**
+     * Reset data to an empty message
+     */
+    protected function refresh()
+    {
+        $this->data = [
+            'text'       => null,
+            'channel'    => null,
+            'username'   => null,
+            'icon_emoji' => null,
+        ];
     }
 }

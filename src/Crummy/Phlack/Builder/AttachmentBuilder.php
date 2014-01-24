@@ -13,31 +13,25 @@ class AttachmentBuilder implements BuilderInterface
 
     public function __construct()
     {
-        $this->data = [
-            'fallback' => null,
-            'text'     => null,
-            'pretext'  => null,
-            'color'    => null
-        ];
-
-        $this->fields = new FieldCollection();
+        $this->refresh();
     }
 
+    /**
+     * @return Attachment
+     * @throws \LogicException When called before setFallback($fallback)
+     */
     public function create()
     {
         if (null === ($this->data['fallback'])) {
             throw new \LogicException('Fallback must be set before creating the Attachment');
         }
 
-        $attachment = new Attachment();
-        foreach (array_keys($this->data) as $key) {
-            $method = 'set'.ucfirst($key);
-            $attachment->{$method}($this->data[$key]);
-        }
+        $data   = $this->data;
+        $fields = $this->fields;
 
-        $attachment->setFields($this->fields);
+        $this->refresh();
 
-        return $attachment;
+        return $this->build($data, $fields);
     }
 
     /**
@@ -103,5 +97,39 @@ class AttachmentBuilder implements BuilderInterface
         $this->fields->add(new Field($title, $value, $isShort));
 
         return $this;
+    }
+
+    /**
+     * Reset the attachment data and the fields collection.
+     */
+    protected function refresh()
+    {
+        $this->data = [
+            'fallback' => null,
+            'text'     => null,
+            'pretext'  => null,
+            'color'    => null
+        ];
+
+        $this->fields = new FieldCollection();
+    }
+
+    /**
+     * @param array $data
+     * @param FieldCollection $fields
+     * @return Attachment
+     */
+    protected function build(array $data, FieldCollection $fields)
+    {
+        $attachment = new Attachment();
+
+        foreach (array_keys($data) as $key) {
+            $method = 'set'.ucfirst($key);
+            $attachment->{$method}($data[$key]);
+        }
+
+        $attachment->setFields($fields);
+
+        return $attachment;
     }
 }
