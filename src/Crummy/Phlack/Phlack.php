@@ -6,6 +6,7 @@ use Crummy\Phlack\Bridge\Guzzle\PhlackClient;
 use Crummy\Phlack\Builder\AttachmentBuilder;
 use Crummy\Phlack\Builder\MessageBuilder;
 use Crummy\Phlack\Message\MessageInterface;
+use Guzzle\Http\Exception\BadResponseException;
 
 class Phlack
 {
@@ -41,7 +42,12 @@ class Phlack
     public function send(MessageInterface $message)
     {
         $command = $this->client->getCommand(self::MESSAGE_COMMAND, $message->jsonSerialize());
-        return $this->client->execute($command);
+        try {
+            return $this->client->execute($command);
+        }
+        catch (BadResponseException $badResponse) {
+            return $badResponse->getResponse();
+        }
     }
 
     /**
@@ -66,5 +72,14 @@ class Phlack
     public function getAttachmentBuilder()
     {
         return $this->attachmentBuilder;
+    }
+
+    /**
+     * @param array $config
+     * @return Phlack
+     */
+    public function create($config = [ ])
+    {
+        return new self(PhlackClient::factory($config));
     }
 }
