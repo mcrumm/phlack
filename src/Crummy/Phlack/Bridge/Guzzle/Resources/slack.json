@@ -7,7 +7,7 @@
             "httpMethod": "POST",
             "uri": "/services/hooks/incoming-webhook",
             "summary": "POST Incoming WebHook",
-            "responseClass":"OutputModel",
+            "responseClass":"\\Crummy\\Phlack\\Bridge\\Guzzle\\Response\\MessageResponse",
             "parameters": {
                 "text": {
                     "location": "json",
@@ -27,25 +27,6 @@
             },
             "additionalParameters": {
                 "location": "json"
-            }
-        }
-    },
-    "models": {
-        "OutputModel": {
-            "type": "object",
-            "properties": {
-                "status": {
-                    "location": "statusCode",
-                    "type": "integer"
-                },
-                "reason": {
-                    "location": "reasonPhrase",
-                    "type": "string"
-                },
-                "text": {
-                    "location": "body",
-                    "type": "string"
-                }
             }
         }
     }
