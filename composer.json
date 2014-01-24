@@ -2,6 +2,7 @@
     "name": "mcrumm/phlack",
     "description": "Slack WebHook integration in PHP",
     "license": "MIT",
+    "version": "0.1.0",
     "authors": [
         {
             "name": "Michael Crumm",
