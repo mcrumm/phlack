@@ -1,4 +1,5 @@
 /examples/config.json
 /bin/
 /vendor/
+composer.lock
 .idea/*
