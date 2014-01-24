@@ -1,0 +1,11 @@
+language: php
+php:
+  - 5.3
+  - 5.4
+before_script:
+  - composer install
+script:
+  - ./bin/behat
+  - ./bin/phpspec run
+notifications:
+  email: "mike@crumm.net"
