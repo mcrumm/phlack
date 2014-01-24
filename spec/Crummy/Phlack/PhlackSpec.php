@@ -2,11 +2,10 @@
 
 namespace spec\Crummy\Phlack;
 
+use Crummy\Phlack\Bridge\Guzzle\Response\MessageResponse;
 use Crummy\Phlack\Bridge\Guzzle\PhlackClient;
 use Crummy\Phlack\Message\Message;
 use Crummy\Phlack\Phlack;
-use Guzzle\Http\Exception\BadResponseException;
-use Guzzle\Http\Message\Response;
 use Guzzle\Service\Command\OperationCommand;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -29,26 +28,12 @@ class PhlackSpec extends ObjectBehavior
             ->shouldReturnAnInstanceOf('\Crummy\Phlack\Phlack');
     }
 
-    function it_sends_messages($client, Message $message, OperationCommand $command, Response $response)
+    function it_sends_messages($client, Message $message, OperationCommand $command, MessageResponse $response)
     {
         $message->jsonSerialize()->willReturn([ ]);
 
         $client->getCommand(Phlack::MESSAGE_COMMAND, [ ])->willReturn($command);
         $client->execute($command)->willReturn($response);
-
-        $this->send($message)->shouldReturn($response);
-    }
-
-    function it_returns_response_for_bad_response_exceptions($client, Message $message, OperationCommand $command)
-    {
-        $message->jsonSerialize()->willReturn([ ]);
-
-        $client->getCommand(Phlack::MESSAGE_COMMAND, [ ])->willReturn($command);
-        $ex       = new BadResponseException();
-        $response = new Response('500');
-        $ex->setResponse($response);
-
-        $client->execute($command)->willThrow($ex);
 
         $this->send($message)->shouldReturn($response);
     }

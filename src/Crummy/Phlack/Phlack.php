@@ -42,12 +42,7 @@ class Phlack
     public function send(MessageInterface $message)
     {
         $command = $this->client->getCommand(self::MESSAGE_COMMAND, $message->jsonSerialize());
-        try {
-            return $this->client->execute($command);
-        }
-        catch (BadResponseException $badResponse) {
-            return $badResponse->getResponse();
-        }
+        return $this->client->execute($command);
     }
 
     /**
