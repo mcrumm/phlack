@@ -6,6 +6,6 @@ before_script:
   - composer install
 script:
   - ./bin/behat
-  - ./bin/phpspec run
+  - ./bin/phpspec run -fpretty
 notifications:
   email: "mike@crumm.net"
