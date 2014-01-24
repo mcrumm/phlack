@@ -3,10 +3,10 @@
 namespace Crummy\Phlack;
 
 use Crummy\Phlack\Bridge\Guzzle\PhlackClient;
+use Crummy\Phlack\Bridge\Guzzle\Response\MessageResponse;
 use Crummy\Phlack\Builder\AttachmentBuilder;
 use Crummy\Phlack\Builder\MessageBuilder;
 use Crummy\Phlack\Message\MessageInterface;
-use Guzzle\Http\Exception\BadResponseException;
 
 class Phlack
 {
@@ -37,7 +37,7 @@ class Phlack
 
     /**
      * @param MessageInterface $message
-     * @return array|\Guzzle\Http\Message\Response
+     * @return MessageResponse
      */
     public function send(MessageInterface $message)
     {
