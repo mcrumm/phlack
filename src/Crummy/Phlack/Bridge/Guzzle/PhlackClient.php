@@ -10,7 +10,12 @@ class PhlackClient extends Client
 {
     public static function factory($config = array())
     {
-        $default  = [ 'base_url' => PhlackPlugin::BASE_URL ];
+        $default  = [
+            'base_url'        => PhlackPlugin::BASE_URL,
+            'request.options' => [
+                'exceptions'  => false,
+            ],
+        ];
         $required = [ 'username', 'token' ];
 
         $config = Collection::fromConfig($config, $default, $required);
