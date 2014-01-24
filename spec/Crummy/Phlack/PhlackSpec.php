@@ -52,4 +52,9 @@ class PhlackSpec extends ObjectBehavior
     {
         $this->getAttachmentBuilder()->shouldReturnAnInstanceOf('\Crummy\Phlack\Builder\AttachmentBuilder');
     }
+
+    function it_can_be_statically_created()
+    {
+        $this::create([ 'username' => 'foo', 'token' => 'bar' ])->shouldReturnAnInstanceOf($this);
+    }
 }

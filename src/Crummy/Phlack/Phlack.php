@@ -67,4 +67,13 @@ class Phlack
     {
         return $this->attachmentBuilder;
     }
+
+    /**
+     * @param array $config
+     * @return Phlack
+     */
+    public function create($config = [ ])
+    {
+        return new self(PhlackClient::factory($config));
+    }
 }
