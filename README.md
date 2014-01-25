@@ -56,7 +56,7 @@ The PhlackClient is simply a web service client implemented with [Guzzle](http:/
 
 ### Creating Messages
 
-A Phlack [Message](src/Crummy/Phlack/Message/Message) takes care of structuring the payload for Slack's Incoming Webhooks integration.
+A Phlack [Message](src/Crummy/Phlack/Message/Message.php) takes care of structuring the payload for Slack's Incoming Webhooks integration.
 
 #### via `new Message()`;
 
@@ -102,7 +102,7 @@ echo 'The message was sent: ' . $message;
 
 #### Response
 
-The [Response](src/Crummy/Phlack/Bridge/Guzzle/Response/MessageResponse.php) hash contains the `status`, `reason`, and `text` from the response.
+The [MessageResponse](src/Crummy/Phlack/Bridge/Guzzle/Response/MessageResponse.php) hash contains the `status`, `reason`, and `text` from the response.
 
 Responses from the Incoming Webhooks Integration are very sparse. Success messages will simply return a `status` of `200`. Error messages will contain more details in the response `text` and `reason`.
 
