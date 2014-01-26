@@ -11,6 +11,21 @@ abstract class ScrutinizingCollection extends ArrayCollection
      * {@inheritDoc}
      * @throws ElementNotAcceptedException
      */
+    public function __construct(array $elements = array())
+    {
+        foreach ($elements as $element) {
+            if (!$this->acceptsElement($element)) {
+                throw new ElementNotAcceptedException();
+            }
+        }
+
+        parent::__construct($elements);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @throws ElementNotAcceptedException
+     */
     public function add($value)
     {
         if (!$this->acceptsElement($value)) {

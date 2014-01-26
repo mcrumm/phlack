@@ -2,4 +2,4 @@
 
 namespace Crummy\Phlack\Common\Exception;
 
-class ElementNotAcceptedException extends \InvalidArgumentException implements PhlackException { }
+class ElementNotAcceptedException extends InvalidArgumentException { }
