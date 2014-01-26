@@ -28,7 +28,7 @@ class AttachmentCollectionSpec extends ObjectBehavior
     function it_does_not_allow_other_elements(FieldInterface $field)
     {
         $this
-            ->shouldThrow('\Crummy\Phlack\Exception\ElementNotAcceptedException')
+            ->shouldThrow('\Crummy\Phlack\Common\Exception\ElementNotAcceptedException')
             ->during('add', array($field));
     }
 }
