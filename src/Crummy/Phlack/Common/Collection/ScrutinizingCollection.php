@@ -3,7 +3,6 @@
 namespace Crummy\Phlack\Common\Collection;
 
 use Crummy\Phlack\Common\Exception\ElementNotAcceptedException;
-use Doctrine\Common\Collections\ArrayCollection;
 
 abstract class ScrutinizingCollection extends ArrayCollection
 {
