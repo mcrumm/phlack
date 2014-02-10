@@ -12,6 +12,8 @@ class RequestConverterSpec extends ObjectBehavior
     protected $webhook = [
         'token'        => '',
         'team_id'      => '',
+        'team_domain'  => '',
+        'service_id'   => '',
         'channel_id'   => '',
         'channel_name' => '',
         'timestamp'    => 1391368865.000002,
