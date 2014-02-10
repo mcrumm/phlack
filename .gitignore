@@ -1,6 +1,7 @@
 /apidoc/
 /examples/config.json
-/bin/
+/bin/*
+!/bin/phlackbot
 /vendor/
 composer.lock
 .idea/*
