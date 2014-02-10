@@ -10,7 +10,7 @@ class FieldCollection extends EncodableCollection
      * @param $value
      * @return boolean
      */
-    public function acceptsElement($value)
+    public function acceptsType($value)
     {
         return $value instanceof FieldInterface;
     }

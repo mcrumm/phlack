@@ -16,4 +16,4 @@ interface MessageInterface extends Encodable
      * @return mixed
      */
     public function getAttachments();
-} 
+}

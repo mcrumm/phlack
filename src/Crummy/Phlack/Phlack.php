@@ -3,27 +3,24 @@
 namespace Crummy\Phlack;
 
 use Crummy\Phlack\Bridge\Guzzle\PhlackClient;
-use Crummy\Phlack\Builder\AttachmentBuilder;
-use Crummy\Phlack\Builder\MessageBuilder;
+use Crummy\Phlack\Bridge\Guzzle\Response\MessageResponse;
 use Crummy\Phlack\Message\MessageInterface;
-use Guzzle\Http\Exception\BadResponseException;
+use Guzzle\Common\Collection;
 
-class Phlack
+class Phlack extends Collection
 {
-    const MESSAGE_COMMAND = 'Message';
-
-    private $client;
-    private $messageBuilder;
-    private $attachmentBuilder;
-
     /**
      * @param PhlackClient $client
      */
     public function __construct(PhlackClient $client)
     {
-        $this->client = $client;
-        $this->messageBuilder    = new MessageBuilder();
-        $this->attachmentBuilder = new AttachmentBuilder();
+        parent::__construct([
+            'client'   => $client,
+            'builders' => [],
+            'commands' => [
+                'send' => 'Send'
+            ],
+        ]);
     }
 
     /**
@@ -36,45 +33,52 @@ class Phlack
     }
 
     /**
+     * {@inhertiDoc}
+     */
+    public static function fromConfig(array $config = array(), array $defaults = array(), array $required = array())
+    {
+        return new self($config['client']);
+    }
+
+    /**
      * @param MessageInterface $message
-     * @return array|\Guzzle\Http\Message\Response
+     * @return MessageResponse
      */
     public function send(MessageInterface $message)
     {
-        $command = $this->client->getCommand(self::MESSAGE_COMMAND, $message->jsonSerialize());
-        return $this->client->execute($command);
+        $command = $this['client']->getCommand($this['commands']['send'], $message->jsonSerialize());
+        return $this['client']->execute($command);
     }
 
     /**
-     * @return PhlackClient
+     * @return Bridge\Guzzle\PhlackClient
      */
     public function getClient()
     {
-        return $this->client;
+        return $this['client'];
     }
 
     /**
-     * @return MessageBuilder
+     * @return Builder\MessageBuilder
      */
     public function getMessageBuilder()
     {
-        return $this->messageBuilder;
+        if (!isset($this['builders']['message'])) {
+            $this->setPath('builders/message', new Builder\MessageBuilder());
+        }
+
+        return $this['builders']['message'];
     }
 
     /**
-     * @return AttachmentBuilder
+     * @return Builder\AttachmentBuilder
      */
     public function getAttachmentBuilder()
     {
-        return $this->attachmentBuilder;
-    }
+        if (!isset($this['builders']['attachment'])) {
+            $this->setPath('builders/attachment', new Builder\AttachmentBuilder());
+        }
 
-    /**
-     * @param array $config
-     * @return Phlack
-     */
-    public function create($config = [ ])
-    {
-        return new self(PhlackClient::factory($config));
+        return $this['builders']['attachment'];
     }
 }

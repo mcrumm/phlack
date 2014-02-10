@@ -3,7 +3,7 @@
     "apiVersion": "v1",
     "description": "Slack WebHooks Integration",
     "operations": {
-        "Message": {
+        "Send": {
             "httpMethod": "POST",
             "uri": "/services/hooks/incoming-webhook",
             "summary": "POST Incoming WebHook",
