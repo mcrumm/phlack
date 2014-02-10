@@ -20,7 +20,10 @@ via Composer
 
 ### Configuration
 
-Create a hash containing your slack `username` and integrations `token`:
+Create a hash containing your slack `username` and integrations `token`.
+
+*Your `username` is the unique portion of your [Slack](http://slack.com) subdomain.  For example, if your subdomain was `groundctrl.slack.com`, your username will be `groundctrl`.*
+
 
 ```php
 <?php
@@ -31,14 +34,14 @@ $config = [ 'username' => 'my_slack_user', 'token' => 'my_slack_token' ]);
 
 ### Getting Phlack
 
-Get a [Phlack](src/Crummy/Phlack/Phlack.php) object by instantiating it with a [PhlackClient](src/Crummy/Phlack/Bridge/Guzzle/PhlackClient.php) or using its static `create()` method.
+Get a [Phlack](src/Crummy/Phlack/Phlack.php) object by instantiating it with a [PhlackClient](src/Crummy/Phlack/Bridge/Guzzle/PhlackClient.php) or using its static `factory()` method.
 
-#### via `create()`:
+#### via `factory()`:
 ```php
 <?php
 ...
 use Crummy\Phlack\Phlack;
-$phlack = Phlack::create($config);
+$phlack = Phlack::factory($config);
 ```
 
 #### via `new Phlack()`:
