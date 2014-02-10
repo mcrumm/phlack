@@ -13,6 +13,8 @@ class WebHook extends AbstractCommand implements WebHookInterface
     protected $requiredFields = [
         'token',
         'team_id',
+        'team_domain',
+        'service_id',
         'channel_id',
         'channel_name',
         'timestamp',
