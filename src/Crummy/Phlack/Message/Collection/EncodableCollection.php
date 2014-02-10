@@ -2,10 +2,10 @@
 
 namespace Crummy\Phlack\Message\Collection;
 
-use Crummy\Phlack\Common\Collection\ScrutinizingCollection;
+use Crummy\Phlack\Common\Collection\TypeCollection;
 use Crummy\Phlack\Common\Encodable;
 
-abstract class EncodableCollection extends ScrutinizingCollection implements Encodable
+abstract class EncodableCollection extends TypeCollection implements Encodable
 {
     /**
      * @return string
