@@ -10,6 +10,8 @@ class WebHookSpec extends ObjectBehavior
     protected $defaultFields = [
         'token'        => '',
         'team_id'      => '',
+        'team_domain'  => '',
+        'service_id'   => '',
         'channel_id'   => '',
         'channel_name' => '',
         'timestamp'    => 1391368865.000002,

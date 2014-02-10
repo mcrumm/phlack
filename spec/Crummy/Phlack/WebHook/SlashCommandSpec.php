@@ -11,6 +11,8 @@ class SlashCommandSpec extends ObjectBehavior
     protected $defaultFields = [
         'token'        => '',
         'team_id'      => '',
+        'team_domain'  => '',
+        'service_id'   => '',
         'channel_id'   => '',
         'channel_name' => '',
         'user_id'      => '',

@@ -20,6 +20,6 @@ class StringConverterSpec extends ObjectBehavior
 
     function it_converts_non_commands_to_webhooks()
     {
-        $this->convert('foo bar')->shouldReturnAnInstanceOf('\Crummy\Phlack\WebHook\WebHook');
+        $this->convert('foo: bar')->shouldReturnAnInstanceOf('\Crummy\Phlack\WebHook\WebHook');
     }
 }
