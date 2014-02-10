@@ -1,6 +1,19 @@
 Changelog
 =========
 
+### `v0.4.3` (2014-02-10)
+
+Fixed a bug in RepeaterBot that caused an infinite repeater loop.
+
+### `v0.4.2` (2014-02-10)
+
+Fixed errors in documentation related to the Phlack factory.
+Added notes regarding username when configuring the PhlackClient.
+
+#### `v0.4.1` (2014-02-10)
+
+Updated WebHook struct to match Slack changes.
+
 ### `v0.4.0` (2014-02-09)
 
 Renamed ScrutinizingCollection to TypeCollection.
