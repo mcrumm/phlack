@@ -1,3 +1,6 @@
 formatter.name: nyan.crab
+code_coverage:
+  output: spec/coverage
 extensions:
     - PhpSpec\NyanFormattersExtension\Extension
+#    - PhpSpec\Extension\CodeCoverageExtension
