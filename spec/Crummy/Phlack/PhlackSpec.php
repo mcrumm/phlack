@@ -32,7 +32,7 @@ class PhlackSpec extends ObjectBehavior
     {
         $message->jsonSerialize()->willReturn([ ]);
 
-        $client->getCommand(Phlack::MESSAGE_COMMAND, [ ])->willReturn($command);
+        $client->getCommand('Send', [ ])->willReturn($command);
         $client->execute($command)->willReturn($response);
 
         $this->send($message)->shouldReturn($response);
@@ -51,10 +51,5 @@ class PhlackSpec extends ObjectBehavior
     function it_returns_an_attachment_builder()
     {
         $this->getAttachmentBuilder()->shouldReturnAnInstanceOf('\Crummy\Phlack\Builder\AttachmentBuilder');
-    }
-
-    function it_can_be_statically_created()
-    {
-        $this::create([ 'username' => 'foo', 'token' => 'bar' ])->shouldReturnAnInstanceOf($this);
     }
 }

@@ -11,22 +11,33 @@
     "require": {
         "php": ">=5.4",
         "guzzle/guzzle": "~3.8",
-        "doctrine/collections": "1.1.*"
+        "doctrine/collections": "1.1.*",
+        "symfony/options-resolver": "~2.4"
+    },
+    "suggest": {
+        "symfony/expression-language": "Required to use ExpressionBots",
+        "symfony/http-foundation": "Required to use the RequestAdapter",
+        "symfony/console": "Required to use the ConsoleAdapter"
     },
     "require-dev": {
+        "silex/silex": "~1.1",
+        "symfony/expression-language": "~2.4@stable",
+        "symfony/console": "~2.4@stable",
+        "symfony/http-foundation": "~2.4@stable",
         "behat/behat": "~2.5.0@stable",
         "phpspec/phpspec": "2.0.*@dev",
-        "phpspec/nyan-formatters": "1.*"
+        "phpspec/nyan-formatters": "1.*",
+        "henrikbjorn/phpspec-code-coverage" : "1.0.*-dev@dev"
     },
+    "config": {
+        "bin-dir":"bin/"
+    },
+    "bin": ["bin/phlackbot"],
     "minimum-stability": "stable",
     "autoload": {
         "psr-0": {
             "": "src",
             "Context": "features"
         }
-    },
-    "config": {
-        "bin-dir": "bin"
     }
 }
-

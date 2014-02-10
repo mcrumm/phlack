@@ -6,7 +6,7 @@ use Crummy\Phlack\Message\Collection\AttachmentCollection;
 
 class Message implements MessageInterface
 {
-    private $data;
+    protected $data;
     private $attachments;
 
     /**
