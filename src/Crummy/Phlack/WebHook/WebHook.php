@@ -10,7 +10,7 @@ class WebHook extends AbstractCommand implements WebHookInterface
 {
     const COMMAND_DELIMITER = ':';
 
-    protected $requiredFields = [
+    protected $required = [
         'token',
         'team_id',
         'team_domain',
@@ -26,7 +26,7 @@ class WebHook extends AbstractCommand implements WebHookInterface
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
 
@@ -54,11 +54,11 @@ class WebHook extends AbstractCommand implements WebHookInterface
     }
 
     /**
-     * @return float
+     * {@inheritDoc}
      */
     public function getTimestamp()
     {
-        return $this->options['timestamp'];
+        return $this->data['timestamp'];
     }
 
     /**

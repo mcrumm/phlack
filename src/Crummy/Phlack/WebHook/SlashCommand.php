@@ -12,5 +12,4 @@ class SlashCommand extends AbstractCommand
 
         $resolver->setOptional([ 'team_domain', 'service_id' ]);
     }
-
 }

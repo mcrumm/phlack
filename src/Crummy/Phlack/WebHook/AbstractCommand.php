@@ -2,14 +2,11 @@
 
 namespace Crummy\Phlack\WebHook;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Crummy\Phlack\Common\Hash;
 
-class AbstractCommand implements CommandInterface
+class AbstractCommand extends Hash implements CommandInterface
 {
-    protected $options = [ ];
-
-    protected $requiredFields = [
+    protected $required = [
         'token',
         'team_id',
         'channel_id',
@@ -21,90 +18,71 @@ class AbstractCommand implements CommandInterface
     ];
 
     /**
-     * @param array $options
-     */
-    public function __construct(array $options = [ ])
-    {
-        $resolver = new OptionsResolver();
-        $this->setDefaultOptions($resolver);
-
-        $this->options = $resolver->resolve($options);
-    }
-
-    /**
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setRequired($this->requiredFields);
-    }
-
-    /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getChannelName()
     {
-        return $this->options['channel_name'];
+        return $this->data['channel_name'];
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getChannelId()
     {
-        return $this->options['channel_id'];
+        return $this->data['channel_id'];
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getCommand()
     {
-        return $this->options['command'];
+        return $this->data['command'];
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getTeamId()
     {
-        return $this->options['team_id'];
+        return $this->data['team_id'];
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getText()
     {
-        return $this->options['text'];
+        return $this->data['text'];
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getToken()
     {
-        return $this->options['token'];
+        return $this->data['token'];
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getUserName()
     {
-        return $this->options['user_name'];
+        return $this->data['user_name'];
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getUserId()
     {
-        return $this->options['user_id'];
+        return $this->data['user_id'];
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function __toString()
     {
@@ -112,19 +90,19 @@ class AbstractCommand implements CommandInterface
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function jsonSerialize()
     {
-        return $this->options;
+        return $this->data;
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function toArray()
     {
-        return $this->options;
+        return $this->data;
     }
 
     /**
