@@ -47,6 +47,15 @@ class IterocitorSpec extends ObjectBehavior
         ;
     }
 
+    function it_replies_to_carol()
+    {
+        $this
+            ->reply('carol', 'I got your message.')
+            ->get('text')
+            ->shouldReturn('@carol I got your message.')
+        ;
+    }
+
     function it_returns_an_empty_reply_on_send(MessageInterface $message)
     {
         $message->jsonSerialize()->willReturn([ 'text' => 'ok' ]);

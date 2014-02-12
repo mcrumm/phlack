@@ -69,6 +69,16 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
     }
 
     /**
+     * @param string $user
+     * @param string $text
+     * @return \Crummy\Phlack\WebHook\Reply\Reply
+     */
+    protected function reply($user, $text)
+    {
+        return $this->responder->reply($user, $text);
+    }
+
+    /**
      * @param MessageInterface $message
      * @return \Crummy\Phlack\WebHook\Reply\EmptyReply
      */

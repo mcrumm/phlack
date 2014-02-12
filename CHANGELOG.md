@@ -1,6 +1,14 @@
 Changelog
 =========
 
+### `v0.4.4` (2014-02-12)
+
+Deprecated the `get*()` methods on Hash; replaced with protected properties.
+Deprecated the `get*()` methods on CommandInterface; replaced with `get($key)`.
+Added a `reply($user, $text)` to the ResponderInterface.
+Added `reply($user, $text)` to the Iterocitor in the form of `@`-reply messages.
+Fixed potential infinite loop problems in RepeaterBot by using the `reply()` method.
+
 ### `v0.4.3` (2014-02-10)
 
 Fixed a bug in RepeaterBot that caused an infinite repeater loop.
@@ -10,7 +18,7 @@ Fixed a bug in RepeaterBot that caused an infinite repeater loop.
 Fixed errors in documentation related to the Phlack factory.
 Added notes regarding username when configuring the PhlackClient.
 
-#### `v0.4.1` (2014-02-10)
+### `v0.4.1` (2014-02-10)
 
 Updated WebHook struct to match Slack changes.
 

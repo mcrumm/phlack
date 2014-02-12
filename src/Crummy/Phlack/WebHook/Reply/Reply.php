@@ -6,6 +6,9 @@ use Crummy\Phlack\Common\Hash;
 
 class Reply extends Hash
 {
+    protected $required = [ 'text' ];
+    protected $defaults = [ 'text' => '' ];
+
     /**
      * @param mixed $data
      */
@@ -16,14 +19,6 @@ class Reply extends Hash
         }
 
         parent::__construct($data);
-    }
-
-    /**
-     * @return array
-     */
-    public function getDefaults()
-    {
-        return [ 'text' => '' ];
     }
 
     /**

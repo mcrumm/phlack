@@ -4,20 +4,14 @@ namespace Crummy\Phlack\WebHook\Reply;
 
 class EmptyReply extends Reply
 {
-    /**
-     * @param array $data
-     */
-    public function __construct($data = [])
-    {
-        parent::__construct($this->getDefaults());
-    }
+    protected $defaults = [ 'text' => '' ];
 
     /**
-     * {@inheritDoc}
+     * Constructor.
      */
-    public function getDefaults()
+    public function __construct()
     {
-        return [ 'text' => '' ];
+        parent::__construct($this->defaults);
     }
 
     /**
@@ -33,6 +27,6 @@ class EmptyReply extends Reply
      */
     public function toArray()
     {
-        return $this->getDefaults();
+        return $this->defaults;
     }
 }

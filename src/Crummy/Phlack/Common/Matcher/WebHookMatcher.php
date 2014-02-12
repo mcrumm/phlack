@@ -5,13 +5,15 @@ namespace Crummy\Phlack\Common\Matcher;
 use Crummy\Phlack\WebHook\CommandInterface;
 use Crummy\Phlack\WebHook\WebHookInterface;
 
-class WebHookMatcher extends CommandMatcher
+class WebHookMatcher extends CommandNameMatcher
 {
     /**
      * {@inheritDoc}
      */
     public function matches(CommandInterface $command)
     {
-        return $command instanceof WebHookInterface;
+        return null === $this->commandName
+            ? $command instanceof WebHookInterface
+            : $command instanceof WebHookInterface && parent::matches($command);
     }
 }

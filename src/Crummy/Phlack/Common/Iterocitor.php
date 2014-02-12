@@ -49,6 +49,16 @@ class Iterocitor implements ResponderInterface
     }
 
     /**
+     * @param $user
+     * @param $text
+     * @return Reply
+     */
+    public function reply($user, $text)
+    {
+        return $this->say(sprintf('@%s %s', $user, $text));
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function send(MessageInterface $message)

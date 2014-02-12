@@ -9,6 +9,10 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class Hash extends GuzzleCollection implements Encodable
 {
+    protected $required = [];
+    protected $defaults = [];
+    protected $optional = [];
+
     /**
      * @param array $data
      */
@@ -32,30 +36,33 @@ class Hash extends GuzzleCollection implements Encodable
      * Returns an array of keys and the default values for this Hash.
      * @see \Guzzle\Common\Collection::setDefaults()
      * @return array
+     * @deprecated Will be removed in 0.5.0
      */
     public function getDefaults()
     {
-        return [];
+        return $this->defaults;
     }
 
     /**
      * Returns an array of required keys for this Hash.
      * @see \Guzzle\Common\Collection::setRequired()
      * @return array
+     * @deprecated Will be removed in 0.5.0
      */
     public function getRequired()
     {
-        return [];
+        return $this->required;
     }
 
     /**
      * Returns an array of optional keys for this Hash.
      * @see \Guzzle\Common\Collection::setOptional()
      * @return array
+     * @deprecated Will be removed in 0.5.0
      */
     public function getOptional()
     {
-        return [];
+        return $this->optional;
     }
 
     /**
@@ -79,8 +86,8 @@ class Hash extends GuzzleCollection implements Encodable
      */
     protected function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults($this->getDefaults());
-        $resolver->setRequired($this->getRequired());
-        $resolver->setOptional($this->getOptional());
+        $resolver->setDefaults($this->defaults);
+        $resolver->setRequired($this->required);
+        $resolver->setOptional($this->optional);
     }
 }

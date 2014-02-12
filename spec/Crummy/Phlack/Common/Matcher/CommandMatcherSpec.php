@@ -30,21 +30,15 @@ class CommandMatcherSpec extends ObjectBehavior
         $this->matches($webhook)->shouldReturn(false);
     }
 
-    function it_sets_command_name()
-    {
-        $this->setCommandName('/foo')->shouldReturn($this);
-        $this->getCommandName()->shouldReturn('/foo');
-    }
-
     function it_matches_command_by_name(SlashCommand $command)
     {
-        $command->getCommand()->willReturn('/foo');
+        $command->get('command')->willReturn('/foo');
         $this->setCommandName('/foo')->matches($command)->shouldReturn(true);
     }
 
     function it_does_not_match_unmatched_names(SlashCommand $command)
     {
-        $command->getCommand()->willReturn('/bar');
+        $command->get('command')->willReturn('/bar');
         $this->setCommandName('/foo')->matches($command)->shouldReturn(false);
     }
 }

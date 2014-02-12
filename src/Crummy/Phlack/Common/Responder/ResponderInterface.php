@@ -26,6 +26,13 @@ interface ResponderInterface
     function tell($user, $text);
 
     /**
+     * @param string $user
+     * @param string $text
+     * @return \Crummy\Phlack\WebHook\Reply\Reply
+     */
+    function reply($user, $text);
+
+    /**
      * @param MessageInterface $message
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */

@@ -3,7 +3,6 @@
 namespace Crummy\Phlack\Bot;
 
 use Crummy\Phlack\WebHook\CommandInterface;
-use Crummy\Phlack\WebHook\WebHook;
 
 class RepeaterBot extends AbstractBot
 {
@@ -13,12 +12,15 @@ class RepeaterBot extends AbstractBot
      */
     public function execute(CommandInterface $command)
     {
-        if ($command instanceof WebHook) {
-            $text = str_replace($command->getCommand(), '', $command->getText());
-        } else {
-            $text = $command->getCommand();
+        $name   = $command->get('command');
+        $user   = $command->get('user_name');
+        $text   = $command->get('text');
+
+        // Remove command from text if matching (E.g text "go: back" would become "back")
+        if (0 === strcasecmp($name, substr($text, 0, strlen($name)))) {
+            $text = str_replace($name.' ', '', $text);
         }
 
-        return $this->say($text);
+        return $this->reply($user, $text);
     }
 }
