@@ -9,18 +9,18 @@ use Crummy\Phlack\Common\Matcher\DefaultMatcher;
 use Crummy\Phlack\Common\Matcher\MatcherAggregate;
 use Crummy\Phlack\Common\Matcher\MatcherInterface;
 use Crummy\Phlack\WebHook\CommandInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class Mainframe implements Executable
 {
-    /** @var \Crummy\Phlack\Bot\Mainframe\Cpu */
-    protected $cpu;
+    private $cpu;
 
     /**
-     * @param Cpu $cpu
+     * Constructor.
      */
-    public function __construct(Cpu $cpu = null)
+    public function __construct()
     {
-        $this->cpu = $cpu ?: new Cpu();
+        $this->cpu = new EventDispatcher();
     }
 
     /**

@@ -14,11 +14,6 @@ use Prophecy\Argument;
 
 class MainframeSpec extends ObjectBehavior
 {
-    function let(Cpu $cpu)
-    {
-        $this->beConstructedWith($cpu);
-    }
-
     function it_is_an_executable()
     {
         $this->shouldHaveType('Crummy\Phlack\Bot\Mainframe\Mainframe');
@@ -30,16 +25,9 @@ class MainframeSpec extends ObjectBehavior
         $this->getListener($bot, $matcher)->shouldBeCallable();
     }
 
-    function it_attaches_bots_and_matchers($cpu, BotInterface $bot, DefaultMatcher $matcher)
+    function it_fluently_attaches_bots_and_matchers(BotInterface $bot, DefaultMatcher $matcher)
     {
-        //$cpu->addListener()->shouldBeCalled();
-        //$this->attach($bot, $matcher)->shouldReturn($this);
-    }
-
-    function it_dispatches_command_events_on_execute(Cpu $cpu, CommandInterface $command)
-    {
-        //$cpu->dispatch()->shouldBeCalled();
-        //$this->execute($command);
+        $this->attach($bot, $matcher)->shouldReturn($this);
     }
 
     function its_listener_executes_commands_on_match(BotInterface $bot, MatcherInterface $matcher, CommandInterface $command, Packet $packet)
