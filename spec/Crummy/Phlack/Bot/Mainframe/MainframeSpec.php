@@ -5,7 +5,6 @@ namespace spec\Crummy\Phlack\Bot\Mainframe;
 use Crummy\Phlack\Bot\BotInterface;
 use Crummy\Phlack\Bot\Mainframe\Cpu;
 use Crummy\Phlack\Bot\Mainframe\Packet;
-use Crummy\Phlack\Common\Events;
 use Crummy\Phlack\Common\Matcher\DefaultMatcher;
 use Crummy\Phlack\Common\Matcher\MatcherInterface;
 use Crummy\Phlack\WebHook\CommandInterface;
@@ -53,6 +52,18 @@ class MainframeSpec extends ObjectBehavior
         $bot->execute($command)->shouldNotBeCalled();
 
         $listener = $this->getListener($bot, $matcher);
+        $listener($packet);
+    }
+
+    function its_listener_can_accept_a_callable_as_a_matcher(BotInterface $bot, CommandInterface $command, Packet $packet)
+    {
+        $packet->offsetGet('command')->willReturn($command);
+        $packet->offsetSet('output', null)->shouldBeCalled();
+
+        $packet->stopPropagation()->shouldBeCalled();
+        $bot->execute($command)->shouldBeCalled();
+
+        $listener = $this->getListener($bot, function($command) { return true; });
         $listener($packet);
     }
 }

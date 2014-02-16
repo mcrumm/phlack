@@ -35,16 +35,18 @@ class Mainframe implements Executable
 
     /**
      * @param BotInterface $bot
-     * @param MatcherInterface $matcher
+     * @param MatcherInterface|callable $matcher If callable, it should accept a CommandInterface and return a boolean.
      * @param int $priority
      * @return self
      */
-    public function attach(BotInterface $bot, MatcherInterface $matcher = null, $priority = 0)
+    public function attach(BotInterface $bot, $matcher = null, $priority = 0)
     {
         if (!$matcher && $bot instanceof MatcherAggregate) {
             $matcher = $bot->getMatcher();
         } else {
-            $matcher = new DefaultMatcher();
+            $matcher = function() {
+                return true;
+            };
         }
 
         $this->cpu->addListener(Events::RECEIVED_COMMAND, $this->getListener($bot, $matcher), $priority);
@@ -54,13 +56,19 @@ class Mainframe implements Executable
 
     /**
      * @param BotInterface $bot
-     * @param MatcherInterface $matcher
+     * @param MatcherInterface|callable $matcher If callable, it should accept a CommandInterface and return a boolean.
      * @return callable
      */
-    public function getListener(BotInterface $bot, MatcherInterface $matcher)
+    public function getListener(BotInterface $bot, $matcher)
     {
         return function (Packet $packet) use ($bot, $matcher) {
-            if ($matcher->matches($packet['command'])) {
+            if ($matcher instanceof MatcherInterface) {
+                $isMatch = $matcher->matches($packet['command']);
+            } else {
+                $isMatch = call_user_func($matcher, $packet['command']);
+            }
+
+            if ($isMatch) {
                 $packet->stopPropagation();
                 $packet['output'] = $bot->execute($packet['command']);
             }
