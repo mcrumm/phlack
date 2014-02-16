@@ -66,4 +66,11 @@ class MainframeSpec extends ObjectBehavior
         $listener = $this->getListener($bot, function($command) { return true; });
         $listener($packet);
     }
+
+    function its_listener_throws_an_exception_for_non_callable_matchers(BotInterface $bot)
+    {
+        $this
+            ->shouldThrow('\Crummy\Phlack\Common\Exception\InvalidArgumentException')
+                ->during('getListener', [ $bot, true ]);
+    }
 }

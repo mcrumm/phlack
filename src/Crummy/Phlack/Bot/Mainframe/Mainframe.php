@@ -4,6 +4,7 @@ namespace Crummy\Phlack\Bot\Mainframe;
 
 use Crummy\Phlack\Bot\BotInterface;
 use Crummy\Phlack\Common\Events;
+use Crummy\Phlack\Common\Exception\InvalidArgumentException;
 use Crummy\Phlack\Common\Executable;
 use Crummy\Phlack\Common\Matcher\DefaultMatcher;
 use Crummy\Phlack\Common\Matcher\MatcherAggregate;
@@ -57,10 +58,18 @@ class Mainframe implements Executable
     /**
      * @param BotInterface $bot
      * @param MatcherInterface|callable $matcher If callable, it should accept a CommandInterface and return a boolean.
-     * @return callable
+     * @return callable An anonymous function to be attached to the internal cpu.
+     * @throws \Crummy\Phlack\Common\Exception\InvalidArgumentException When given an invalid matcher.
      */
     public function getListener(BotInterface $bot, $matcher)
     {
+        if (!$matcher instanceof MatcherInterface && !is_callable($matcher)) {
+            throw new InvalidArgumentException(sprintf(
+                'The matcher must be callable, or an instance of MatcherInterface. "%s" given.',
+                is_object($matcher) ? get_class($matcher) : gettype($matcher)
+            ));
+        }
+
         return function (Packet $packet) use ($bot, $matcher) {
             if ($matcher instanceof MatcherInterface) {
                 $isMatch = $matcher->matches($packet['command']);
