@@ -46,7 +46,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
     }
 
     /**
-     * @return Matcher\MatcherInterface
+     * @return Matcher\MatcherInterface|callable
      */
     public function getMatcher()
     {
