@@ -2,6 +2,7 @@
 
 namespace Crummy\Phlack\Bot;
 
+use Crummy\Phlack\Common\Exception\InvalidArgumentException;
 use Crummy\Phlack\Common\Iterocitor;
 use Crummy\Phlack\Common\Matcher;
 use Crummy\Phlack\Common\Responder\ResponderInterface;
@@ -16,18 +17,30 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
      * @param Matcher\MatcherInterface $matcher
      * @param array|ResponderInterface $options
      */
-    public function __construct(Matcher\MatcherInterface $matcher = null, $options = [ ])
+    public function __construct($matcher = null, $options = [ ])
     {
-        $this->matcher   = $matcher ?: new Matcher\DefaultMatcher();
+        if (!$matcher) {
+            $matcher = new Matcher\DefaultMatcher();
+        }
+
+        $this->setMatcher($matcher);
         $this->responder = $options instanceof ResponderInterface ? $options : new Iterocitor($options);
     }
 
     /**
-     * @param Matcher\MatcherInterface $matcher
+     * @param $matcher
      * @return $this
+     * @throws \Crummy\Phlack\Common\Exception\InvalidArgumentException When given an invalid matcher.
      */
-    public function setMatcher(Matcher\MatcherInterface $matcher)
+    public function setMatcher($matcher)
     {
+        if (!$matcher instanceof Matcher\MatcherInterface && !is_callable($matcher)) {
+            throw new InvalidArgumentException(sprintf(
+                'The matcher must be callable, or implement \Crummy\Phlack\Common\Matcher\MatcherInterface. "%" given.',
+                is_object($matcher) ? get_class($matcher) : gettype($matcher)
+            ));
+        }
+
         $this->matcher = $matcher;
         return $this;
     }

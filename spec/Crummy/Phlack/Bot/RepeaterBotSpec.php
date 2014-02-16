@@ -3,6 +3,7 @@
 namespace spec\Crummy\Phlack\Bot;
 
 use Crummy\Phlack\Common\Matcher\NonMatcher;
+use Crummy\Phlack\WebHook\CommandInterface;
 use Crummy\Phlack\WebHook\Reply;
 use Crummy\Phlack\WebHook\WebHook;
 use PhpSpec\ObjectBehavior;
@@ -31,6 +32,23 @@ class RepeaterBotSpec extends ObjectBehavior
     {
         $this->setMatcher($matcher)->shouldReturn($this);
         $this->getMatcher()->shouldReturn($matcher);
+    }
+
+    function it_sets_and_gets_a_callable_matcher()
+    {
+        $matcher = function(CommandInterface $command) {
+            return true;
+        };
+
+        $this->setMatcher($matcher)->shouldReturn($this);
+        $this->getMatcher()->shouldBeCallable();
+    }
+
+    function it_fails_to_set_an_invalid_matcher()
+    {
+        $this
+            ->shouldThrow('\Crummy\Phlack\Common\Exception\InvalidArgumentException')
+                ->during('setMatcher', [ 'matcher' ]);
     }
 
     function it_strips_the_command_from_the_webhook_text(WebHook $command)
