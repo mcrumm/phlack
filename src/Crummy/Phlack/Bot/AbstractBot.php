@@ -72,7 +72,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
     }
 
     /**
-     * @param string $user
+     * @param string $user The user_id to tell
      * @param string $text
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
@@ -82,7 +82,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
     }
 
     /**
-     * @param string $user
+     * @param string|\Crummy\Phlack\WebHook\CommandInterface $user The user_id, or a CommandInterface to inspect.
      * @param string $text
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
