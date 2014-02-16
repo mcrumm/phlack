@@ -33,6 +33,12 @@ interface ResponderInterface
     function reply($user, $text);
 
     /**
+     * @param string $text
+     * @return \Crummy\Phlack\WebHook\Reply\Reply
+     */
+    function shout($text);
+
+    /**
      * @param MessageInterface $message
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */

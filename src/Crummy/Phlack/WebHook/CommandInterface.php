@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * CommandInterface
  */
-interface CommandInterface extends Encodable, ToArrayInterface
+interface CommandInterface extends Encodable, \ArrayAccess, ToArrayInterface
 {
     /**
      * @param $key

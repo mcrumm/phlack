@@ -12,9 +12,21 @@ abstract class AbstractFormatter implements Encodable
     /**
      * @param Encodable $message
      */
-    public function __construct(Encodable $message)
+    public function __construct(Encodable $message = null)
+    {
+        if ($message) {
+            $this->setMessage($message);
+        }
+    }
+
+    /**
+     * @param Encodable $message
+     * @return $this
+     */
+    public function setMessage(Encodable $message)
     {
         $this->message = $message;
+        return $this;
     }
 
     /**
@@ -23,5 +35,15 @@ abstract class AbstractFormatter implements Encodable
     public function __toString()
     {
         return (string)$this->message;
+    }
+
+    /**
+     * @param string $id
+     * @param string $name
+     * @return string
+     */
+    protected function format($id, $name)
+    {
+        return sprintf('<%s|%s>', $id, $name);
     }
 }
