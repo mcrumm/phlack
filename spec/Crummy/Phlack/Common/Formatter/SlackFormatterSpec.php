@@ -30,7 +30,7 @@ class SlackFormatterSpec extends ObjectBehavior
         $command->offsetGet('user_id')->willReturn('U12345');
         $command->offsetGet('user_name')->willReturn('bob');
         $this->setMessage($command);
-        $this->formatUserString()->shouldReturn('<@U12345|bob>');
+        $this->formatUserString()->shouldReturn('[@U12345|bob]');
     }
 
     function it_formats_a_channel_string_from_a_command(CommandInterface $command)
@@ -38,6 +38,24 @@ class SlackFormatterSpec extends ObjectBehavior
         $command->offsetGet('channel_id')->willReturn('C98765');
         $command->offsetGet('channel_name')->willReturn('garage');
         $this->setMessage($command);
-        $this->formatChannelString()->shouldReturn('<#C98765|garage>');
+        $this->formatChannelString()->shouldReturn('[#C98765|garage]');
+    }
+
+    function it_correctly_encodes_identifiers(Message $message)
+    {
+        $message->jsonSerialize()->willReturn([ 'text' => '[@U12345|crumm] <say hi to> [#C01010|botgarage]' ]);
+        $this
+            ->setMessage($message)
+            ->jsonSerialize()['text']
+            ->shouldBeLike('<@U12345|crumm> &lt;say hi to&gt; <#C01010|botgarage>');
+    }
+
+    function it_correctly_encodes_special_commands(Message $message)
+    {
+        $message->jsonSerialize()->willReturn([ 'text' => '[!everyone] important meeting in the conference room.' ]);
+        $this
+            ->setMessage($message)
+            ->jsonSerialize()['text']
+            ->shouldBeLike('<!everyone> important meeting in the conference room.');
     }
 }

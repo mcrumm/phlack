@@ -25,7 +25,7 @@ class RepeaterBotSpec extends ObjectBehavior
         $command->offsetGet('command')->willReturn('would:');
         $this
             ->execute($command)['text']
-                ->shouldReturn('<@U12345|crumm> Would you mind stepping down from there, with your license and registration?');
+                ->shouldReturn('[@U12345|crumm] Would you mind stepping down from there, with your license and registration?');
     }
 
     function it_sets_and_gets_a_matcher(NonMatcher $matcher)
@@ -59,7 +59,7 @@ class RepeaterBotSpec extends ObjectBehavior
         $command->offsetGet('text')->willReturn('foo: bar');
         $this
             ->execute($command)['text']
-                ->shouldReturn('<@U12345|crumm> bar');
+                ->shouldReturn('[@U12345|crumm] bar');
     }
 
     function it_does_not_strip_the_first_word_if_not_the_command(WebHook $command)
@@ -70,7 +70,7 @@ class RepeaterBotSpec extends ObjectBehavior
         $command->offsetGet('text')->willReturn('foo bar');
         $this
             ->execute($command)['text']
-            ->shouldReturn('<@U12345|crumm> foo bar');
+            ->shouldReturn('[@U12345|crumm] foo bar');
     }
 
     function it_does_not_strip_multiple_occurrences(WebHook $command)
@@ -81,6 +81,6 @@ class RepeaterBotSpec extends ObjectBehavior
         $command->offsetGet('text')->willReturn('foo: bar foo: bat foo baz foo: you');
         $this
             ->execute($command)['text']
-            ->shouldReturn('<@U12345|crumm> bar foo: bat foo baz foo: you');
+            ->shouldReturn('[@U12345|crumm] bar foo: bat foo baz foo: you');
     }
 }

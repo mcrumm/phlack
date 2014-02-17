@@ -13,6 +13,7 @@ class SlackFormatter extends AbstractFormatter
     {
         $message = $this->message->jsonSerialize();
         $message['text'] = htmlspecialchars($message['text'], ENT_NOQUOTES);
+        $message['text'] = preg_replace('/\[((?|((?|(@U)|(#C))[0-9]+\|?\w*))|(!\w+))\]/', '<\1>', $message['text']);
         return $message;
     }
 

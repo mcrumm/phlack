@@ -44,6 +44,6 @@ abstract class AbstractFormatter implements Encodable
      */
     protected function format($id, $name)
     {
-        return sprintf('<%s|%s>', $id, $name);
+        return sprintf('[%s|%s]', $id, $name);
     }
 }

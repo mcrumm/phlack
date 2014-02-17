@@ -50,7 +50,7 @@ class Iterocitor implements ResponderInterface
      */
     public function tell($user, $text)
     {
-        return $this->say(sprintf('<@%s> %s', $user, $text));
+        return $this->say(sprintf('[@%s] %s', $user, $text));
     }
 
     /**
@@ -97,6 +97,6 @@ class Iterocitor implements ResponderInterface
      */
     protected function important($where, $text)
     {
-        return $this->say(sprintf('<!%s> %s', $where, $text));
+        return $this->say(sprintf('[!%s] %s', $where, $text));
     }
 }
