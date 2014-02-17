@@ -2,18 +2,20 @@
 
 namespace spec\Crummy\Phlack\Builder;
 
+use Crummy\Phlack\Builder\MessageBuilder;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class AttachmentBuilderSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    function let(MessageBuilder $messageBuilder)
     {
-        $this->shouldHaveType('Crummy\Phlack\Builder\AttachmentBuilder');
+        $this->beConstructedWith($messageBuilder);
     }
 
-    function it_is_a_builder()
+    function it_is_a_BuilderInterface()
     {
+        $this->shouldHaveType('Crummy\Phlack\Builder\AttachmentBuilder');
         $this->shouldImplement('\Crummy\Phlack\Builder\BuilderInterface');
     }
 
@@ -63,5 +65,11 @@ class AttachmentBuilderSpec extends ObjectBehavior
 
         $attachment_1['fields']->shouldHaveCount(1);
         $attachment_2['fields']->shouldHaveCount(2);
+    }
+
+    function it_returns_its_parent_on_end(MessageBuilder $messageBuilder)
+    {
+        $this->setFallback('foo');
+        $this->end()->shouldReturn($messageBuilder);
     }
 }

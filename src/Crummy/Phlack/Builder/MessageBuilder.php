@@ -2,18 +2,23 @@
 
 namespace Crummy\Phlack\Builder;
 
+use Crummy\Phlack\Common\Exception\LogicException;
+use Crummy\Phlack\Message\AttachmentInterface;
+use Crummy\Phlack\Message\Collection\AttachmentCollection;
 use Crummy\Phlack\Message\Message;
 
 class MessageBuilder implements BuilderInterface
 {
-    private $data;
+    private $data = [];
+    private $attachments;
+    private $attachmentBuilder;
 
     /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->refresh();
+        $this->attachments = new AttachmentCollection();
     }
 
     /**
@@ -21,15 +26,22 @@ class MessageBuilder implements BuilderInterface
      */
     public function create()
     {
-        if (empty($this->data['text'])) {
-            throw new \LogicException('Message text cannot be empty.');
+        if (!isset($this->data['text'])) {
+           throw new LogicException(sprintf('The message text must be set before calling %s', __METHOD__));
         }
 
-        $data = $this->data;
+        $message = new Message(
+            $this->data['text'],
+            isset($this->data['channel']) ? $this->data['channel'] : null,
+            isset($this->data['username']) ? $this->data['username'] : null,
+            isset($this->data['icon_emoji']) ? $this->data['icon_emoji'] : null
+        );
+
+        $message['attachments'] = clone $this->attachments;
 
         $this->refresh();
 
-        return new Message($data['text'], $data['channel'], $data['username'], $data['icon_emoji']);
+        return $message;
     }
 
     /**
@@ -77,11 +89,29 @@ class MessageBuilder implements BuilderInterface
      */
     protected function refresh()
     {
-        $this->data = [
-            'text'       => null,
-            'channel'    => null,
-            'username'   => null,
-            'icon_emoji' => null,
-        ];
+        $this->data = [];
+        $this->attachments->clear();
+    }
+
+    /**
+     * @param AttachmentInterface $attachment
+     * @return $this
+     */
+    public function addAttachment(AttachmentInterface $attachment)
+    {
+        $this->attachments->add($attachment);
+        return $this;
+    }
+
+    /**
+     * @return AttachmentBuilder
+     */
+    public function createAttachment()
+    {
+        if (!$this->attachmentBuilder) {
+            $this->attachmentBuilder = new AttachmentBuilder($this);
+        }
+
+        return $this->attachmentBuilder;
     }
 }

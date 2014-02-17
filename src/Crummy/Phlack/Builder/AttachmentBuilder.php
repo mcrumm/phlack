@@ -10,12 +10,14 @@ class AttachmentBuilder implements BuilderInterface
 {
     private $data = [];
     private $fields;
+    private $parent;
 
     /**
      * Constructor.
      */
-    public function __construct()
+    public function __construct(MessageBuilder $parent = null)
     {
+        $this->parent = $parent;
         $this->fields = new FieldCollection();
     }
 
@@ -103,5 +105,17 @@ class AttachmentBuilder implements BuilderInterface
     {
         $this->data = [];
         $this->fields->clear();
+    }
+
+    /**
+     * @return MessageBuilder
+     */
+    public function end()
+    {
+        if ($this->parent) {
+            $this->parent->addAttachment($this->create());
+            return $this->parent;
+        }
+        return $this;
     }
 }
