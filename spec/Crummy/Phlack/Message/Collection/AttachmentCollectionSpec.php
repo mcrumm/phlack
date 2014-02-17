@@ -10,13 +10,14 @@ use Prophecy\Argument;
 
 class AttachmentCollectionSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    function let(AttachmentInterface $attachment)
     {
-        $this->shouldHaveType('Crummy\Phlack\Message\Collection\AttachmentCollection');
+        $this->beConstructedWith([ $attachment ]);
     }
 
-    function it_is_encodable()
+    function it_is_an_encodable_collection()
     {
+        $this->shouldHaveType('Crummy\Phlack\Message\Collection\AttachmentCollection');
         $this->shouldImplement('\Crummy\Phlack\Message\Collection\EncodableCollection');
     }
 

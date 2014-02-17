@@ -9,13 +9,9 @@ use Prophecy\Argument;
 
 class FieldCollectionSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    function it_is_an_encodable_collection()
     {
         $this->shouldHaveType('Crummy\Phlack\Message\Collection\FieldCollection');
-    }
-
-    function it_is_encodable()
-    {
         $this->shouldImplement('\Crummy\Phlack\Message\Collection\EncodableCollection');
     }
 
