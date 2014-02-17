@@ -4,6 +4,8 @@ namespace Crummy\Phlack\Message;
 
 class Field extends Partial implements FieldInterface
 {
+    protected $required = [ 'title', 'value', 'short' ];
+
     /**
      * Constructor.
      * @param string $title
@@ -12,36 +14,40 @@ class Field extends Partial implements FieldInterface
      */
     public function __construct($title = null, $value = null, $isShort = null)
     {
-        if ($title)   { $this->setTitle($title); }
-        if ($value)   { $this->setValue($value); }
-        if (isset($isShort)) { $this->setShort($isShort); }
+        parent::__construct([ 'title' => $title, 'value' => $value, 'short' => $isShort ]);
     }
 
     /**
      * @param string $title
      * @return $this
+     * @deprecated Will be removed in 0.6.0
      */
     public function setTitle($title)
     {
-        return $this->set('title', $title);
+        $this['title'] = $title;
+        return $this;
     }
 
     /**
      * @param string $value
      * @return $this
+     * @deprecated Will be removed in 0.6.0
      */
     public function setValue($value)
     {
-        return $this->set('value', $value);
+        $this['value'] = $value;
+        return $this;
     }
 
     /**
      * @param boolean $isShort
      * @return $this
+     * @deprecated Will be removed in 0.6.0
      */
     public function setShort($isShort)
     {
-        return $this->set('short', (boolean)$isShort);
+        $this['short'] = (boolean)$isShort;
+        return $this;
     }
 
     /**
@@ -49,6 +55,6 @@ class Field extends Partial implements FieldInterface
      */
     public function isShort()
     {
-        return isset($this->data['short']) ? $this->data['short'] : true;
+        return isset($this['short']) ? $this['short'] : false;
     }
 }

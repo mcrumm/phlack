@@ -13,7 +13,7 @@ interface AttachmentInterface extends Encodable
     public function addField(FieldInterface $field);
 
     /**
-     * @return mixed
+     * @return Collection\FieldCollection
      */
     public function getFields();
 }

@@ -13,7 +13,7 @@ interface MessageInterface extends Encodable
     public function addAttachment(AttachmentInterface $attachment);
 
     /**
-     * @return mixed
+     * @return Collection\AttachmentCollection
      */
     public function getAttachments();
 }

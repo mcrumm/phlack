@@ -3,11 +3,13 @@
 namespace Crummy\Phlack\Message;
 
 use Crummy\Phlack\Message\Collection\AttachmentCollection;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class Message implements MessageInterface
+class Message extends Partial implements MessageInterface
 {
-    protected $data;
-    private $attachments;
+    protected $required = [ 'text' ];
+    protected $optional = [ 'channel', 'username', 'icon_emoji', 'attachments' ];
 
     /**
      * @param $text
@@ -17,17 +19,39 @@ class Message implements MessageInterface
      */
     public function __construct($text, $channel = null, $username = null, $iconEmoji = null)
     {
-        $this->attachments = new AttachmentCollection();
+        parent::__construct([
+            'text'          => $text,
+            'channel'       => $channel,
+            'username'      => $username,
+            'icon_emoji'    => $iconEmoji,
+            'attachments'   => new AttachmentCollection(),
+        ]);
+    }
 
-        $this->data = array ('text' => $text);
+    /**
+     * {@inheritDoc}
+     */
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
 
-        if ($channel)   { $this->setChannel($channel); }
-        if ($username)  { $this->setUsername($username); }
-        if ($iconEmoji) { $this->setIconEmoji($iconEmoji); }
+        $resolver->setAllowedTypes([
+            'attachments' => '\Crummy\Phlack\Message\Collection\AttachmentCollection'
+        ]);
+
+        $resolver->setNormalizers([
+            'channel' => function (Options $options, $value) {
+                return empty($value) ? $value : (0 === strpos($value, '#') ? $value : '#' . $value);
+            },
+            'icon_emoji' => function(Options $options, $value) {
+                return empty($value) ? $value : sprintf(':%s:', trim($value, ':'));
+            }
+        ]);
     }
 
     /**
      * @return string
+     * @deprecated Will be removed in 0.6.0
      */
     public function getText()
     {
@@ -37,6 +61,7 @@ class Message implements MessageInterface
     /**
      * @param $channel
      * @return $this
+     * @deprecated Will be removed in 0.6.0
      */
     public function setChannel($channel)
     {
@@ -48,6 +73,7 @@ class Message implements MessageInterface
 
     /**
      * @return string|null
+     * @deprecated Will be removed in 0.6.0
      */
     public function getChannel()
     {
@@ -55,16 +81,9 @@ class Message implements MessageInterface
     }
 
     /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return json_encode($this);
-    }
-
-    /**
      * @param $iconEmoji
      * @return $this
+     * @deprecated Will be removed in 0.6.0
      */
     public function setIconEmoji($iconEmoji)
     {
@@ -76,6 +95,7 @@ class Message implements MessageInterface
 
     /**
      * @return string|null
+     * @deprecated Will be removed in 0.6.0
      */
     public function getIconEmoji()
     {
@@ -85,6 +105,7 @@ class Message implements MessageInterface
     /**
      * @param $username
      * @return $this
+     * @deprecated Will be removed in 0.6.0
      */
     public function setUsername($username)
     {
@@ -96,6 +117,7 @@ class Message implements MessageInterface
 
     /**
      * @return string|null
+     * @deprecated Will be removed in 0.6.0
      */
     public function getUsername()
     {
@@ -103,29 +125,13 @@ class Message implements MessageInterface
     }
 
     /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        $data = array_filter($this->data, function($value) {
-            return (false === $value || !empty($value));
-        });
-
-        if (count($this->attachments) < 1) {
-            return $data;
-        }
-
-        return $data + [ 'attachments' => $this->attachments->jsonSerialize() ];
-    }
-
-    /**
      * @param AttachmentCollection $attachments
      * @return $this
+     * @deprecated Will be removed in 0.6.0
      */
     public function setAttachments(AttachmentCollection $attachments)
     {
-        $this->attachments = $attachments;
-        return $this;
+        return $this->set('attachments', $attachments);
     }
 
     /**
@@ -134,7 +140,7 @@ class Message implements MessageInterface
      */
     public function addAttachment(AttachmentInterface $attachment)
     {
-        $this->attachments->add($attachment);
+        $this['attachments']->add($attachment);
         return $this;
     }
 
@@ -143,6 +149,6 @@ class Message implements MessageInterface
      */
     public function getAttachments()
     {
-        return $this->attachments;
+        return $this->data['attachments'];
     }
 }

@@ -3,75 +3,99 @@
 namespace Crummy\Phlack\Message;
 
 use Crummy\Phlack\Message\Collection\FieldCollection;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class Attachment extends Partial implements AttachmentInterface
 {
-    /**
-     * @var Collection\FieldCollection
-     */
-    private $fields;
+    protected $required = [ 'fallback' ];
+    protected $optional = [ 'text', 'pretext', 'color', 'fields' ];
 
     /**
-     * Constructor.
+     * {@inheritDoc}
      */
-    public function __construct()
+    public function __construct($data = [])
     {
-        $this->fields = new FieldCollection();
+        if (!isset($data['fields'])) {
+            $data['fields'] = new FieldCollection();
+        }
+
+        parent::__construct($data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setAllowedTypes([
+            'fields' => '\Crummy\Phlack\Message\Collection\FieldCollection'
+        ]);
     }
 
     /**
      * @param $fallback
      * @return $this
+     * @deprecated Will be removed in 0.6.0
      */
     public function setFallback($fallback)
     {
-        return $this->set('fallback', $fallback);
+        $this['fallback'] = (string)$fallback;
+        return $this;
     }
 
     /**
      * @param $text
      * @return $this
+     * @deprecated Will be removed in 0.6.0
      */
     public function setText($text)
     {
-        return $this->set('text', $text);
+        $this['text'] = (string)$text;
+        return $this;
     }
 
     /**
      * @param $pretext
      * @return $this
+     * @deprecated Will be removed in 0.6.0
      */
     public function setPretext($pretext)
     {
-        return $this->set('pretext', $pretext);
+        $this['pretext'] = (string)$pretext;
+        return $this;
     }
 
     /**
      * @param $color
      * @return $this
+     * @deprecated Will be removed in 0.6.0
      */
     public function setColor($color)
     {
-        return $this->set('color', $color);
+        $this['color'] = (string)$color;
+        return $this;
     }
 
     /**
      * @param FieldInterface $field
-     * @return $this;
+     * @return $this
      */
     public function addField(FieldInterface $field)
     {
-        $this->fields->add($field);
+        $this['fields']->add($field);
         return $this;
     }
 
     /**
      * @param FieldCollection $fields
      * @return $this
+     * @deprecated Will be removed in 0.6.0
      */
     public function setFields(FieldCollection $fields)
     {
-        $this->fields = $fields;
+        $this['fields'] = $fields;
         return $this;
     }
 
@@ -80,14 +104,6 @@ class Attachment extends Partial implements AttachmentInterface
      */
     public function getFields()
     {
-        return $this->fields;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function jsonSerialize()
-    {
-        return parent::jsonSerialize() + [ 'fields' => $this->fields->jsonSerialize() ];
+        return $this['fields'];
     }
 }

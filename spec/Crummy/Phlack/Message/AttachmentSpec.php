@@ -9,6 +9,11 @@ use Prophecy\Argument;
 
 class AttachmentSpec extends ObjectBehavior
 {
+    function let()
+    {
+        $this->beConstructedWith([ 'fallback' => get_class() ]);
+    }
+
     function it_is_initializable()
     {
         $this->shouldHaveType('Crummy\Phlack\Message\Attachment');
@@ -29,7 +34,7 @@ class AttachmentSpec extends ObjectBehavior
 
     function it_contains_a_field_collection()
     {
-        $this->getFields()->shouldReturnAnInstanceOf('\Crummy\Phlack\Message\Collection\FieldCollection');
+        $this['fields']->shouldReturnAnInstanceOf('\Crummy\Phlack\Message\Collection\FieldCollection');
     }
 
     function it_fluently_adds_field_interfaces(FieldInterface $field)
@@ -51,9 +56,9 @@ class AttachmentSpec extends ObjectBehavior
         $this->getFields()->shouldHaveCount(1);
     }
 
-    function it_adds_fields_to_serialized_output(FieldCollection $fields)
+    function it_adds_fields_to_serialized_output(FieldInterface $field)
     {
-        $fields->jsonSerialize()->shouldBeCalled();
-        $this->setFields($fields)->jsonSerialize();
+        $this->addField($field);
+        $this->jsonSerialize()['fields']->shouldHaveCount(1);
     }
 }

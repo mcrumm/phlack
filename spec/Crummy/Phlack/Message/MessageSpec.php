@@ -27,11 +27,6 @@ class MessageSpec extends ObjectBehavior
         $this->shouldImplement('\Crummy\Phlack\Message\MessageInterface');
     }
 
-    function it_is_encodable()
-    {
-        $this->shouldImplement('\Crummy\Phlack\Common\Encodable');
-    }
-
     function it_contains_text()
     {
         $this->getText()->shouldReturn(self::TEXT);
@@ -87,12 +82,9 @@ class MessageSpec extends ObjectBehavior
         ;
     }
 
-    function it_adds_attachments_to_the_collection(AttachmentCollection $attachments, AttachmentInterface $attachment)
+    function it_sets_an_AttachmentCollection_on_the_Message(AttachmentCollection $attachments, AttachmentInterface $attachment)
     {
-        $attachments->add($attachment)->shouldBeCalled();
-
-        $this->setAttachments($attachments);
-        $this->addAttachment($attachment);
+        $this->setAttachments($attachments)->shouldReturn($this);
     }
 
     function it_returns_an_attachment_collection()
@@ -103,18 +95,13 @@ class MessageSpec extends ObjectBehavior
     function it_increments_the_field_count_on_add(AttachmentInterface $attachment)
     {
         $this->addAttachment($attachment);
-        $this->getAttachments()->shouldHaveCount(1);
+        $this['attachments']->shouldHaveCount(1);
     }
 
     function it_adds_attachments_to_serialized_output(AttachmentCollection $attachments, AttachmentInterface $attachment)
     {
-        $attachments->add($attachment)->shouldBeCalled();
-        $attachments->count()->willReturn(1);
-        $attachments->jsonSerialize()->shouldBeCalled();
-
-        $this->setAttachments($attachments);
         $this->addAttachment($attachment);
-        $this->jsonSerialize();
+        $this->jsonSerialize()['attachments']->shouldHaveCount(1);
     }
 
     function it_does_not_add_attachments_if_empty(AttachmentCollection $attachments)
