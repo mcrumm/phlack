@@ -12,9 +12,30 @@ class SlackFormatter extends AbstractFormatter
     public function jsonSerialize()
     {
         $message = $this->message->jsonSerialize();
-        $message['text'] = htmlspecialchars($message['text'], ENT_NOQUOTES);
-        $message['text'] = preg_replace('/\[((?|((?|(@U)|(#C))[0-9]+\|?\w*))|(!\w+))\]/', '<\1>', $message['text']);
+        if (isset($message['text'])) {
+            $message['text'] = $this->slackEncode($message['text']);
+        }
         return $message;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->slackEncode((string)$this->message);
+    }
+
+    /**
+     * @return string
+     */
+    public function formatText()
+    {
+        if (isset($this->message['text'])) {
+            return $this->slackEncode($this->message['text']);
+        }
+
+        return '';
     }
 
     /**
@@ -39,5 +60,15 @@ class SlackFormatter extends AbstractFormatter
         }
 
         return $this->format('#'.$this->message['channel_id'], $this->message['channel_name']);
+    }
+
+    /**
+     * @param $text
+     * @return string
+     */
+    private function slackEncode($text)
+    {
+        $text = htmlspecialchars($text, ENT_NOQUOTES, 'UTF-8', false);
+        return preg_replace('/\[((?|((?|(@U)|(#C))[0-9]+\|?\w*))|(!\w+))\]/', '<\1>', $text);
     }
 }

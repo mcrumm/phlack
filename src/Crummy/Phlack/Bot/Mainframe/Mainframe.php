@@ -22,6 +22,8 @@ class Mainframe implements Executable
     public function __construct()
     {
         $this->cpu = new EventDispatcher();
+
+        $this->cpu->addSubscriber(new Plugin\EncoderPlugin());
     }
 
     /**
@@ -30,8 +32,8 @@ class Mainframe implements Executable
      */
     public function execute(CommandInterface $command)
     {
-        $packet = new Packet([ 'command' => $command ]);
-        return $this->cpu->dispatch(Events::RECEIVED_COMMAND, $packet);
+        $packet = $this->cpu->dispatch(Events::RECEIVED_COMMAND, new Packet([ 'command' => $command ]));
+        return $this->cpu->dispatch(Events::AFTER_EXECUTE_COMMAND, $packet);
     }
 
     /**

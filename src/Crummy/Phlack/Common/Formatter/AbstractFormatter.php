@@ -30,14 +30,6 @@ abstract class AbstractFormatter implements Encodable
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function __toString()
-    {
-        return (string)$this->message;
-    }
-
-    /**
      * @param string $id
      * @param string $name
      * @return string

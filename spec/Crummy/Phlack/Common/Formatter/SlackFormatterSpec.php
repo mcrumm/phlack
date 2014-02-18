@@ -4,6 +4,7 @@ namespace spec\Crummy\Phlack\Common\Formatter;
 
 use Crummy\Phlack\Message\Message;
 use Crummy\Phlack\WebHook\CommandInterface;
+use Crummy\Phlack\WebHook\Reply\Reply;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -33,12 +34,24 @@ class SlackFormatterSpec extends ObjectBehavior
         $this->formatUserString()->shouldReturn('[@U12345|bob]');
     }
 
+    function it_returns_an_empty_user_string_for_non_commands(Reply $reply)
+    {
+        $this->setMessage($reply);
+        $this->formatUserString()->shouldReturn('');
+    }
+
     function it_formats_a_channel_string_from_a_command(CommandInterface $command)
     {
         $command->offsetGet('channel_id')->willReturn('C98765');
         $command->offsetGet('channel_name')->willReturn('garage');
         $this->setMessage($command);
         $this->formatChannelString()->shouldReturn('[#C98765|garage]');
+    }
+
+    function it_returns_an_empty_channel_string_for_non_commands(Reply $reply)
+    {
+        $this->setMessage($reply);
+        $this->formatChannelString()->shouldReturn('');
     }
 
     function it_correctly_encodes_identifiers(Message $message)
@@ -57,5 +70,26 @@ class SlackFormatterSpec extends ObjectBehavior
             ->setMessage($message)
             ->jsonSerialize()['text']
             ->shouldBeLike('<!everyone> important meeting in the conference room.');
+    }
+
+    function it_can_format_text(Message $message)
+    {
+        $message->offsetExists('text')->willReturn(true);
+        $message->offsetGet('text')->willReturn('hello & good morning to you!');
+        $this->setMessage($message)->formatText()->shouldBe('hello &amp; good morning to you!');
+    }
+
+    function it_returns_an_empty_string_for_messages_with_no_text(Message $message)
+    {
+        $message->offsetExists('text')->willReturn(false);
+        $this->setMessage($message)->formatText()->shouldBe('');
+    }
+
+    function it_returns_the_encoded_string_when_cast(Message $message)
+    {
+        $message->offsetExists('text')->willReturn(true);
+        $message->offsetGet('text')->willReturn('<foo>');
+        $message->__toString()->willReturn('<foo>');
+        $this->setMessage($message)->__toString()->shouldReturn('&lt;foo&gt;');
     }
 }
