@@ -1,9 +1,11 @@
 Phlack
 ======
-[![Build Status](https://travis-ci.org/mcrumm/phlack.png?branch=master)](https://travis-ci.org/mcrumm/phlack)
+
+[![Latest Stable Version](https://poser.pugx.org/mcrumm/phlack/v/stable.png)](https://packagist.org/packages/mcrumm/phlack) [![Build Status](https://travis-ci.org/mcrumm/phlack.png?branch=master)](https://travis-ci.org/mcrumm/phlack) [![Total Downloads](https://poser.pugx.org/mcrumm/phlack/downloads.png)](https://packagist.org/packages/mcrumm/phlack) [![Latest Unstable Version](https://poser.pugx.org/mcrumm/phlack/v/unstable.png)](https://packagist.org/packages/mcrumm/phlack) [![License](https://poser.pugx.org/mcrumm/phlack/license.png)](https://packagist.org/packages/mcrumm/phlack)
+
 Phlack eases the creation of [Slack Integrations](http://slack.com) in PHP.
 
-**Note:** Phlack is not an implementation of the Slack API. However, since an API client in PHP does not yet appear to exist, one may be included in the future.
+**Note:** Phlack is not an implementation of the Slack API. However, since an API client in PHP does not yet appear to exist, this library may provide one in the future.
 
 ## Installation & Configuration
 

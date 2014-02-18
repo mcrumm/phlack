@@ -8,12 +8,17 @@ use Crummy\Phlack\Message\Field;
 
 class AttachmentBuilder implements BuilderInterface
 {
-    private $data;
+    private $data = [];
     private $fields;
+    private $parent;
 
-    public function __construct()
+    /**
+     * Constructor.
+     */
+    public function __construct(MessageBuilder $parent = null)
     {
-        $this->refresh();
+        $this->parent = $parent;
+        $this->fields = new FieldCollection();
     }
 
     /**
@@ -22,16 +27,9 @@ class AttachmentBuilder implements BuilderInterface
      */
     public function create()
     {
-        if (null === ($this->data['fallback'])) {
-            throw new \LogicException('Fallback must be set before creating the Attachment');
-        }
-
-        $data   = $this->data;
-        $fields = $this->fields;
-
+        $attachment = new Attachment( $this->data + [ 'fields' => clone $this->fields ]);
         $this->refresh();
-
-        return $this->build($data, $fields);
+        return $attachment;
     }
 
     /**
@@ -40,7 +38,8 @@ class AttachmentBuilder implements BuilderInterface
      */
     public function setFallback($fallback)
     {
-        return $this->setParameter('fallback', $fallback);
+        $this->data['fallback'] = (string)$fallback;
+        return $this;
     }
 
     /**
@@ -104,32 +103,19 @@ class AttachmentBuilder implements BuilderInterface
      */
     protected function refresh()
     {
-        $this->data = [
-            'fallback' => null,
-            'text'     => null,
-            'pretext'  => null,
-            'color'    => null
-        ];
-
-        $this->fields = new FieldCollection();
+        $this->data = [];
+        $this->fields->clear();
     }
 
     /**
-     * @param array $data
-     * @param FieldCollection $fields
-     * @return Attachment
+     * @return MessageBuilder
      */
-    protected function build(array $data, FieldCollection $fields)
+    public function end()
     {
-        $attachment = new Attachment();
-
-        foreach (array_keys($data) as $key) {
-            $method = 'set'.ucfirst($key);
-            $attachment->{$method}($data[$key]);
+        if ($this->parent) {
+            $this->parent->addAttachment($this->create());
+            return $this->parent;
         }
-
-        $attachment->setFields($fields);
-
-        return $attachment;
+        return $this;
     }
 }

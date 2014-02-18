@@ -1,7 +1,15 @@
 Changelog
 =========
 
-### `v0.4.4` (2014-02-12)
+### `v0.4.6` (2014-02-18)
+
+* [Attachment](src/Crummy/Phlack/Message/Attachment.php)s can now be created and added to the [MessageBuilder](src/Crummy/Phlack/Builder/MessageBuilder.php) via the `createAttachment()` workflow.
+* [Message](src/Crummy/Phlack/Message/Message.php) now extends [Partial](src/Crummy/Phlack/Message/Partial.php), which now extends [Hash](src/Crummy/Phlack/Common/Hash.php), making Hash the common root for all incoming and outgoing message objects.
+* Closures may now for be used Bot matchers, in addition to the previously defined [MatcherInterface](src/Crummy/Phlack/Common/Matcher/MatcherInterface.php).
+* Added a `shout()` method to the ResponderInterface for alert notifications.
+* [Link formatting](src/Crummy/Phlack/Common/Formatter/LinkFormatter.php) and [message escaping](src/Crummy/Phlack/Common/Formatter/EncodeFormatter.php), per [Slack Guidelines](https://api.slack.com/docs/formatting), is now included out of the box. All credit for the regex in the LinkFormatter is due [StevenSloan](https://github.com/stevenosloan) and his [slack-notifier](https://github.com/stevenosloan/slack-notifier) project.
+
+### `v0.4.5` (2014-02-12)
 
 Deprecated the `get*()` methods on Hash; replaced with protected properties.
 Deprecated the `get*()` methods on CommandInterface; replaced with `get($key)`.

@@ -12,16 +12,11 @@ abstract class TypeCollection extends ArrayCollection
      */
     public function __construct(array $elements = [ ])
     {
-        foreach ($elements as $element) {
-            if (!$this->acceptsType($element)) {
-                throw new UnexpectedValueException(sprintf(
-                    '"%s" does not match the expected type.',
-                    is_object($element) ? get_class($element) : gettype($element)
-                ));
-            }
-        }
+        parent::__construct();
 
-        parent::__construct($elements);
+        foreach ($elements as $element) {
+            $this->add($element);
+        }
     }
 
     /**
@@ -31,7 +26,7 @@ abstract class TypeCollection extends ArrayCollection
     public function add($value)
     {
         if (!$this->acceptsType($value)) {
-            throw new UnexpectedValueException();
+            throw $this->doUnexpectedValueError($value);
         }
 
         return parent::add($value);
@@ -44,10 +39,22 @@ abstract class TypeCollection extends ArrayCollection
     public function set($key, $value)
     {
         if (!$this->acceptsType($value)) {
-            throw new UnexpectedValueException();
+            throw $this->doUnexpectedValueError($value);
         }
 
         parent::set($key, $value);
+    }
+
+    /**
+     * @param $element
+     * @return UnexpectedValueException
+     */
+    private function doUnexpectedValueError($element)
+    {
+        return new UnexpectedValueException(sprintf(
+            '"%s" does not match the expected type.',
+            is_object($element) ? get_class($element) : gettype($element)
+        ));
     }
 
     /**

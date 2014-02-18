@@ -5,7 +5,6 @@ namespace spec\Crummy\Phlack\Bot\Mainframe;
 use Crummy\Phlack\Bot\BotInterface;
 use Crummy\Phlack\Bot\Mainframe\Cpu;
 use Crummy\Phlack\Bot\Mainframe\Packet;
-use Crummy\Phlack\Common\Events;
 use Crummy\Phlack\Common\Matcher\DefaultMatcher;
 use Crummy\Phlack\Common\Matcher\MatcherInterface;
 use Crummy\Phlack\WebHook\CommandInterface;
@@ -14,11 +13,6 @@ use Prophecy\Argument;
 
 class MainframeSpec extends ObjectBehavior
 {
-    function let(Cpu $cpu)
-    {
-        $this->beConstructedWith($cpu);
-    }
-
     function it_is_an_executable()
     {
         $this->shouldHaveType('Crummy\Phlack\Bot\Mainframe\Mainframe');
@@ -30,16 +24,9 @@ class MainframeSpec extends ObjectBehavior
         $this->getListener($bot, $matcher)->shouldBeCallable();
     }
 
-    function it_attaches_bots_and_matchers($cpu, BotInterface $bot, DefaultMatcher $matcher)
+    function it_fluently_attaches_bots_and_matchers(BotInterface $bot, DefaultMatcher $matcher)
     {
-        //$cpu->addListener()->shouldBeCalled();
-        //$this->attach($bot, $matcher)->shouldReturn($this);
-    }
-
-    function it_dispatches_command_events_on_execute(Cpu $cpu, CommandInterface $command)
-    {
-        //$cpu->dispatch()->shouldBeCalled();
-        //$this->execute($command);
+        $this->attach($bot, $matcher)->shouldReturn($this);
     }
 
     function its_listener_executes_commands_on_match(BotInterface $bot, MatcherInterface $matcher, CommandInterface $command, Packet $packet)
@@ -66,5 +53,24 @@ class MainframeSpec extends ObjectBehavior
 
         $listener = $this->getListener($bot, $matcher);
         $listener($packet);
+    }
+
+    function its_listener_can_accept_a_callable_as_a_matcher(BotInterface $bot, CommandInterface $command, Packet $packet)
+    {
+        $packet->offsetGet('command')->willReturn($command);
+        $packet->offsetSet('output', null)->shouldBeCalled();
+
+        $packet->stopPropagation()->shouldBeCalled();
+        $bot->execute($command)->shouldBeCalled();
+
+        $listener = $this->getListener($bot, function($command) { return true; });
+        $listener($packet);
+    }
+
+    function its_listener_throws_an_exception_for_non_callable_matchers(BotInterface $bot)
+    {
+        $this
+            ->shouldThrow('\Crummy\Phlack\Common\Exception\InvalidArgumentException')
+                ->during('getListener', [ $bot, true ]);
     }
 }

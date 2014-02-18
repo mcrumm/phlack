@@ -2,43 +2,20 @@
 
 namespace Crummy\Phlack\Message;
 
-use Crummy\Phlack\Common\Encodable;
+use Crummy\Phlack\Common\Hash;
 
-abstract class Partial implements Encodable
+abstract class Partial extends Hash
 {
-    protected $data = [];
-
     /**
-     * Sets values on non-empty parameters.
-     * Set $value to null to remove the custom value.
-     * @param $name
-     * @param $value
-     * @return $this
-     */
-    protected function set($name, $value)
-    {
-        if (null !== $value && false !== $value && empty($value)) { return $this; }
-
-        $this->data[$name] = $value;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritDoc}
+     * @return array
      */
     public function jsonSerialize()
     {
-        return array_filter($this->data, function($value) {
+        return array_filter($this->toArray(), function($value) {
+            if ($value instanceof \Countable) {
+                return 0 < $value->count();
+            }
             return (false === $value || !empty($value));
         });
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return json_encode($this);
     }
 }

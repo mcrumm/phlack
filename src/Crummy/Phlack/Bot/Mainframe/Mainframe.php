@@ -4,23 +4,26 @@ namespace Crummy\Phlack\Bot\Mainframe;
 
 use Crummy\Phlack\Bot\BotInterface;
 use Crummy\Phlack\Common\Events;
+use Crummy\Phlack\Common\Exception\InvalidArgumentException;
 use Crummy\Phlack\Common\Executable;
 use Crummy\Phlack\Common\Matcher\DefaultMatcher;
 use Crummy\Phlack\Common\Matcher\MatcherAggregate;
 use Crummy\Phlack\Common\Matcher\MatcherInterface;
 use Crummy\Phlack\WebHook\CommandInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class Mainframe implements Executable
 {
-    /** @var \Crummy\Phlack\Bot\Mainframe\Cpu */
-    protected $cpu;
+    private $cpu;
 
     /**
-     * @param Cpu $cpu
+     * Constructor.
      */
-    public function __construct(Cpu $cpu = null)
+    public function __construct()
     {
-        $this->cpu = $cpu ?: new Cpu();
+        $this->cpu = new EventDispatcher();
+
+        $this->cpu->addSubscriber(new Plugin\EncoderPlugin());
     }
 
     /**
@@ -29,22 +32,24 @@ class Mainframe implements Executable
      */
     public function execute(CommandInterface $command)
     {
-        $packet = new Packet([ 'command' => $command ]);
-        return $this->cpu->dispatch(Events::RECEIVED_COMMAND, $packet);
+        $packet = $this->cpu->dispatch(Events::RECEIVED_COMMAND, new Packet([ 'command' => $command ]));
+        return $this->cpu->dispatch(Events::AFTER_EXECUTE_COMMAND, $packet);
     }
 
     /**
      * @param BotInterface $bot
-     * @param MatcherInterface $matcher
+     * @param MatcherInterface|callable $matcher If callable, it should accept a CommandInterface and return a boolean.
      * @param int $priority
      * @return self
      */
-    public function attach(BotInterface $bot, MatcherInterface $matcher = null, $priority = 0)
+    public function attach(BotInterface $bot, $matcher = null, $priority = 0)
     {
         if (!$matcher && $bot instanceof MatcherAggregate) {
             $matcher = $bot->getMatcher();
         } else {
-            $matcher = new DefaultMatcher();
+            $matcher = function() {
+                return true;
+            };
         }
 
         $this->cpu->addListener(Events::RECEIVED_COMMAND, $this->getListener($bot, $matcher), $priority);
@@ -54,13 +59,27 @@ class Mainframe implements Executable
 
     /**
      * @param BotInterface $bot
-     * @param MatcherInterface $matcher
-     * @return callable
+     * @param MatcherInterface|callable $matcher If callable, it should accept a CommandInterface and return a boolean.
+     * @return callable An anonymous function to be attached to the internal cpu.
+     * @throws \Crummy\Phlack\Common\Exception\InvalidArgumentException When given an invalid matcher.
      */
-    public function getListener(BotInterface $bot, MatcherInterface $matcher)
+    public function getListener(BotInterface $bot, $matcher)
     {
+        if (!$matcher instanceof MatcherInterface && !is_callable($matcher)) {
+            throw new InvalidArgumentException(sprintf(
+                'The matcher must be callable, or an instance of MatcherInterface. "%s" given.',
+                is_object($matcher) ? get_class($matcher) : gettype($matcher)
+            ));
+        }
+
         return function (Packet $packet) use ($bot, $matcher) {
-            if ($matcher->matches($packet['command'])) {
+            if ($matcher instanceof MatcherInterface) {
+                $isMatch = $matcher->matches($packet['command']);
+            } else {
+                $isMatch = call_user_func($matcher, $packet['command']);
+            }
+
+            if ($isMatch) {
                 $packet->stopPropagation();
                 $packet['output'] = $bot->execute($packet['command']);
             }

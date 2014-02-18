@@ -11,13 +11,9 @@ class FieldSpec extends ObjectBehavior
         $this->beConstructedWith($title, $value, $isShort);
     }
 
-    function it_is_initializable()
+    function it_is_an_encodable()
     {
         $this->shouldHaveType('Crummy\Phlack\Message\Field');
-    }
-
-    function it_is_encodable()
-    {
         $this->shouldImplement('\Crummy\Phlack\Common\Encodable');
     }
 
@@ -30,11 +26,13 @@ class FieldSpec extends ObjectBehavior
 
     function it_should_be_short()
     {
+        $this['short'] = true;
         $this->shouldBeShort();
     }
 
     function it_allows_false_as_a_value_for_short()
     {
-        $this->setShort(false)->isShort()->shouldReturn(false);
+        $this['short'] = false;
+        $this->shouldNotBeShort();
     }
 }

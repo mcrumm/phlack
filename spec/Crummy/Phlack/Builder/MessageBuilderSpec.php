@@ -2,6 +2,7 @@
 
 namespace spec\Crummy\Phlack\Builder;
 
+use Crummy\Phlack\Message\AttachmentInterface;
 use Crummy\Phlack\Message\Message;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -42,6 +43,21 @@ class MessageBuilderSpec extends ObjectBehavior
 
         /** @var Message $message_2 */
         $message_2 = $this->setText('Message #2')->create();
-        $message_2->getChannel()->shouldBeNull();
+        $message_2['channel']->shouldBeNull();
+    }
+
+    function it_adds_attachments(AttachmentInterface $attachment)
+    {
+        $this->addAttachment($attachment)->shouldReturn($this);
+    }
+
+    function it_fluently_creates_attachments()
+    {
+        $this
+            ->setText('Text')
+            ->createAttachment()
+                ->setFallback('The fallback')
+            ->end()
+            ->create()['attachments']->shouldHaveCount(1);
     }
 }

@@ -4,6 +4,7 @@ namespace spec\Crummy\Phlack\Common;
 
 use Crummy\Phlack\Bridge\Guzzle\PhlackClient;
 use Crummy\Phlack\Message\MessageInterface;
+use Crummy\Phlack\WebHook\CommandInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -32,27 +33,31 @@ class IterocitorSpec extends ObjectBehavior
     function it_emotes_a_welcome()
     {
         $this
-            ->emote('welcomes you')
+            ->emote('Welcome!')
             ->get('text')
-            ->shouldReturn('/me welcomes you')
+            ->shouldReturn('<!channel> Welcome!')
         ;
     }
 
-    function it_tells_bob_he_is_great()
+    function it_tells_U12345_he_is_great()
     {
         $this
-            ->tell('bob', 'You rock, sir!')
+            ->tell('U12345', 'You rock, sir!')
             ->get('text')
-            ->shouldReturn('/msg bob You rock, sir!')
+            ->shouldReturn('<@U12345> You rock, sir!')
         ;
     }
 
-    function it_replies_to_carol()
+    function it_replies_to_carol(CommandInterface $command)
     {
+        $command->offsetGet('channel_id')->willReturn('C98765');
+        $command->offsetGet('channel_name')->willReturn('group');
+        $command->offsetGet('user_id')->willReturn('U12346');
+        $command->offsetGet('user_name')->willReturn('carol');
         $this
-            ->reply('carol', 'I got your message.')
+            ->reply($command, 'I got your message.')
             ->get('text')
-            ->shouldReturn('@carol I got your message.')
+            ->shouldReturn('<@U12346|carol> I got your message.')
         ;
     }
 

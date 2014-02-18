@@ -45,11 +45,11 @@ class BotCommand extends Command implements AdapterInterface
 
     /**
      * @param BotInterface $bot
-     * @param MatcherInterface $matcher
+     * @param MatcherInterface|callable $matcher
      * @param int $priority
      * @return self
      */
-    public function attach(BotInterface $bot, MatcherInterface $matcher = null, $priority = 0)
+    public function attach(BotInterface $bot, $matcher = null, $priority = 0)
     {
         $this->adapter->attach($bot, $matcher, $priority);
         return $this;
