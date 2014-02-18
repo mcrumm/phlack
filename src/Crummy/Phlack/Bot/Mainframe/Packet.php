@@ -27,6 +27,11 @@ class Packet extends Event implements Encodable
     {
         $resolver->setRequired([ 'command' ]);
         $resolver->setDefaults([ 'output' => null ]);
+
+        $resolver->setAllowedTypes([
+            'command' => '\Crummy\Phlack\WebHook\CommandInterface',
+            'output' => [ '\Crummy\Phlack\WebHook\Reply\Reply', 'null' ]
+        ]);
     }
 
     /**
