@@ -3,7 +3,7 @@
 namespace Crummy\Phlack\Common;
 
 use Crummy\Phlack\Bridge\Guzzle\PhlackClient;
-use Crummy\Phlack\Common\Formatter\SlackFormatter;
+use Crummy\Phlack\Common\Formatter\Sequencer;
 use Crummy\Phlack\Common\Responder\ResponderInterface;
 use Crummy\Phlack\Message\MessageInterface;
 use Crummy\Phlack\WebHook\CommandInterface;
@@ -13,12 +13,15 @@ use Crummy\Phlack\WebHook\Reply\Reply;
 class Iterocitor implements ResponderInterface
 {
     private $client;
+    private $sequencer;
 
     /**
      * @param array $options
      */
     public function __construct($options = [ ])
     {
+        $this->sequencer = new Sequencer();
+
         if ($options instanceof PhlackClient) {
             $this->client = $options;
         } else {
@@ -50,7 +53,7 @@ class Iterocitor implements ResponderInterface
      */
     public function tell($user, $text)
     {
-        return $this->say(sprintf('[@%s] %s', $user, $text));
+        return $this->say($this->sequencer->format('@'.$user) . ' ' . $text);
     }
 
     /**
@@ -62,8 +65,8 @@ class Iterocitor implements ResponderInterface
     public function reply($user, $text)
     {
         if ($user instanceof CommandInterface) {
-            $user = (new SlackFormatter($user))->formatUserString();
-            return $this->say($user.' '.$text);
+            $sequence = $this->sequencer->command($user);
+            return $this->say($sequence['user'].' '.$text);
         }
 
         return $this->tell($user, $text);
@@ -97,6 +100,6 @@ class Iterocitor implements ResponderInterface
      */
     protected function important($where, $text)
     {
-        return $this->say(sprintf('[!%s] %s', $where, $text));
+        return $this->say($this->sequencer->alert($where) . ' ' . $text);
     }
 }

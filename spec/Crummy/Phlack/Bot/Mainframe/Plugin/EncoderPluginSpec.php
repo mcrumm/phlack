@@ -3,14 +3,14 @@
 namespace spec\Crummy\Phlack\Bot\Mainframe\Plugin;
 
 use Crummy\Phlack\Bot\Mainframe\Packet;
-use Crummy\Phlack\Common\Formatter\SlackFormatter;
+use Crummy\Phlack\Common\Formatter\FormatterInterface;
 use Crummy\Phlack\WebHook\Reply\Reply;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class EncoderPluginSpec extends ObjectBehavior
 {
-    function let(SlackFormatter $formatter)
+    function let(FormatterInterface $formatter)
     {
         $this->beConstructedWith($formatter);
     }
@@ -26,9 +26,9 @@ class EncoderPluginSpec extends ObjectBehavior
         $this->onAfterExecute($packet)->shouldReturn($packet);
     }
 
-    function it_encodes_the_output(SlackFormatter $formatter, Packet $packet, Reply $reply)
+    function it_encodes_the_output(FormatterInterface $formatter, Packet $packet, Reply $reply)
     {
-        $unencoded = '<foo!> [#C01010|botgarage]';
+        $unencoded = '<foo!> <#C01010|botgarage>';
         $encoded   = '&lt;foo!&gt; <#C01010|botgarage>';
 
         $packet->offsetExists('output')->willReturn(true);
@@ -37,9 +37,7 @@ class EncoderPluginSpec extends ObjectBehavior
         $reply->offsetExists('text')->willReturn(true);
         $reply->offsetGet('text')->willReturn($unencoded);
 
-        $formatter->setMessage($reply)->shouldBeCalled();
-        $formatter->formatText()->willReturn($encoded);
-
+        $formatter->format($unencoded)->willReturn($encoded);
         $reply->offsetSet('text', $encoded)->shouldBeCalled();
 
         $this->onAfterExecute($packet);

@@ -4,18 +4,24 @@ namespace Crummy\Phlack\Bot\Mainframe\Plugin;
 
 use Crummy\Phlack\Bot\Mainframe\Packet;
 use Crummy\Phlack\Common\Events;
-use Crummy\Phlack\Common\Formatter\SlackFormatter;
+use Crummy\Phlack\Common\Formatter\EncodeFormatter;
+use Crummy\Phlack\Common\Formatter\FormatterCollection;
+use Crummy\Phlack\Common\Formatter\FormatterInterface;
+use Crummy\Phlack\Common\Formatter\LinkFormatter;
 
 class EncoderPlugin implements PluginInterface
 {
     private $formatter;
 
     /**
-     * @param SlackFormatter $formatter
+     * @param FormatterInterface $formatter
      */
-    function __construct(SlackFormatter $formatter = null)
+    function __construct(FormatterInterface $formatter = null)
     {
-        $this->formatter = $formatter ?: new SlackFormatter();
+        $this->formatter = $formatter ?: new FormatterCollection([
+            new LinkFormatter(),
+            new EncodeFormatter()
+        ]);
     }
 
     /**
@@ -35,8 +41,7 @@ class EncoderPlugin implements PluginInterface
     public function onAfterExecute(Packet $packet)
     {
         if (isset($packet['output'])) {
-            $this->formatter->setMessage($packet['output']);
-            $packet['output']['text'] = $this->formatter->formatText();
+            $packet['output']['text'] = $this->formatter->format($packet['output']['text']);
         }
 
         return $packet;

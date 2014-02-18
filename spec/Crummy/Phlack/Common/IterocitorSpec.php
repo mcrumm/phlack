@@ -35,7 +35,7 @@ class IterocitorSpec extends ObjectBehavior
         $this
             ->emote('Welcome!')
             ->get('text')
-            ->shouldReturn('[!channel] Welcome!')
+            ->shouldReturn('<!channel> Welcome!')
         ;
     }
 
@@ -44,18 +44,20 @@ class IterocitorSpec extends ObjectBehavior
         $this
             ->tell('U12345', 'You rock, sir!')
             ->get('text')
-            ->shouldReturn('[@U12345] You rock, sir!')
+            ->shouldReturn('<@U12345> You rock, sir!')
         ;
     }
 
     function it_replies_to_carol(CommandInterface $command)
     {
+        $command->offsetGet('channel_id')->willReturn('C98765');
+        $command->offsetGet('channel_name')->willReturn('group');
         $command->offsetGet('user_id')->willReturn('U12346');
         $command->offsetGet('user_name')->willReturn('carol');
         $this
             ->reply($command, 'I got your message.')
             ->get('text')
-            ->shouldReturn('[@U12346|carol] I got your message.')
+            ->shouldReturn('<@U12346|carol> I got your message.')
         ;
     }
 
