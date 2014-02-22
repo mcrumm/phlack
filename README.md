@@ -147,8 +147,9 @@ $slack = new ApiClient([ 'token' => 'my_bearer_token' ]);
 The methods currently implemented are:
 
 - [channels.list](https://api.slack.com/methods/channels.list)
-- [users.list](https://api.slack.com/methods/users.list)
+- [groups.list](https://api.slack.com/methods/groups.list)
 - [im.list](https://api.slack.com/methods/im.list)
+- [users.list](https://api.slack.com/methods/users.list)
 
 Consult the client's [service description](src/Crummy/Phlack/Bridge/Guzzle/Resources/slack_api.json) for information on the responses returned by the API methods.
 
