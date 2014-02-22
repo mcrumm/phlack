@@ -52,7 +52,7 @@ $phlack = Phlack::factory($config);
 use Crummy\Phlack\Bridge\Guzzle\PhlackClient;
 use Crummy\Phlack\Phlack;
 
-$client = new PhlackClient($config);
+$client = PhlackClient::factory($config);
 $phlack = new Phlack($client);
 ```
 
