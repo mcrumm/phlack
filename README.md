@@ -147,13 +147,14 @@ $slack = new ApiClient([ 'token' => 'my_bearer_token' ]);
 The methods currently implemented are:
 
 - [channels.list](https://api.slack.com/methods/channels.list)
+- [files.list](https://api.slack.com/methods/files.list)
 - [groups.list](https://api.slack.com/methods/groups.list)
 - [im.list](https://api.slack.com/methods/im.list)
 - [users.list](https://api.slack.com/methods/users.list)
 
 Consult the client's [service description](src/Crummy/Phlack/Bridge/Guzzle/Resources/slack_api.json) for information on the responses returned by the API methods.
 
-### Example: Listing all Channels
+#### Example: Listing all Channels
 
 ```php
 <?php
@@ -164,7 +165,7 @@ $config = [ 'token' => 'my_bearer_token' ];
 $slack = new ApiClient($config);
 
 echo 'Fetching Channels List...' . PHP_EOL;
-$result = $api->ListChannels();
+$result = $slack->ListChannels();
 
 if (!$result['ok']) {
     die('FAIL! Error was: ' . $result['error'] . PHP_EOL);
@@ -174,6 +175,30 @@ foreach ($result['channels'] as $channel) {
     printf('%s: %s' . PHP_EOL, $channel['name'], $channel['purpose']['value']);
 }
 ```
+
+### Iterators
+
+#### Example: ListFilesIterator
+
+The [ListFilesIterator](src/Crummy/Phlack/Bridge/Guzzle/Model/ListFilesIterator.php) eases the ability to iterate through multiple pages of data from the Slack API.  Using the iterator eliminates the need to manually call the API multiple times to retrieve all pages of the result set.
+
+```php
+<?php
+//...
+$iterator = $slack->getIterator('ListFiles');
+
+$i = 0;
+foreach ($iterator as $file) {
+    $i++;
+    echo $file['title'] . PHP_EOL;
+}
+
+echo PHP_EOL . 'Retrieved ' . $i . ' files.' . PHP_EOL;
+```
+
+A [complete example](examples/api/files_iterator.php) is available in the examples directory.
+
+**Note**: The ListFilesIterator is not strictly necessary to page through file results, but it's certainly easier than the alternative.  [An example without the iterator](examples/api/files_list.php) is also available.
 
 #### More Examples
 See the [API examples directory](examples/api) for more use cases.
