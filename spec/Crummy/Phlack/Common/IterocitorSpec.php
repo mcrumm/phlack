@@ -24,18 +24,24 @@ class IterocitorSpec extends ObjectBehavior
     function it_says_hello()
     {
         $this
-            ->say('Hello!')
-            ->get('text')
-            ->shouldReturn('Hello!')
+            ->say('Hello!')['text']
+                ->shouldReturn('Hello!')
         ;
     }
 
     function it_emotes_a_welcome()
     {
         $this
-            ->emote('Welcome!')
-            ->get('text')
-            ->shouldReturn('<!channel> Welcome!')
+            ->emote('Welcome!')['text']
+                ->shouldReturn('<!channel> Welcome!')
+        ;
+    }
+
+    function it_shouts_at_everyone()
+    {
+        $this
+            ->shout('Fire!!')['text']
+                ->shouldReturn('<!everyone> Fire!!')
         ;
     }
 
@@ -55,10 +61,16 @@ class IterocitorSpec extends ObjectBehavior
         $command->offsetGet('user_id')->willReturn('U12346');
         $command->offsetGet('user_name')->willReturn('carol');
         $this
-            ->reply($command, 'I got your message.')
-            ->get('text')
-            ->shouldReturn('<@U12346|carol> I got your message.')
+            ->reply($command, 'I got your message.')['text']
+                    ->shouldReturn('<@U12346|carol> I got your message.')
         ;
+    }
+
+    function it_proxies_reply_to_tell_for_string_input()
+    {
+        $this
+            ->reply('U12A34C6', 'I got your message.')['text']
+                ->shouldReturn('<@U12A34C6> I got your message.');
     }
 
     function it_returns_an_empty_reply_on_send(MessageInterface $message)
@@ -66,9 +78,8 @@ class IterocitorSpec extends ObjectBehavior
         $message->jsonSerialize()->willReturn([ 'text' => 'ok' ]);
 
         $this
-            ->send($message)
-                ->get('text')
-                    ->shouldReturn('')
+            ->send($message)['text']
+                ->shouldReturn('')
         ;
     }
 }

@@ -1,0 +1,632 @@
+{
+    "name": "Slack API",
+    "apiVersion": "v1",
+    "description": "Slack API",
+    "baseUrl": "https://slack.com",
+    "operations": {
+        "ListChannels": {
+            "httpMethod": "GET",
+            "uri": "/api/channels.list",
+            "summary": "Get the list of channels",
+            "responseClass":"ListChannelsOutput",
+            "parameters": {
+                "token": {
+                    "location": "query",
+                    "type": "string",
+                    "required": true
+                },
+                "pretty": {
+                    "location": "query",
+                    "type":     "integer",
+                    "required": false,
+                    "default": 0
+                }
+            },
+            "additionalParameters": {
+                "location": "query"
+            }
+        },
+        "ListFiles": {
+            "httpMethod": "GET",
+            "uri": "/api/files.list",
+            "summary": "Get a list of files",
+            "responseClass":"ListFilesOutput",
+            "parameters": {
+                "token": {
+                    "location": "query",
+                    "type": "string",
+                    "required": true
+                },
+                "pretty": {
+                    "location": "query",
+                    "type":     "integer",
+                    "required": false,
+                    "default": 0
+                },
+                "user": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": false
+                },
+                "from": {
+                    "location": "query",
+                    "sentAs":   "ts_from",
+                    "type":     "integer",
+                    "required": false
+                },
+                "to": {
+                    "location": "query",
+                    "sentAs":   "ts_to",
+                    "type":     "integer",
+                    "required": false
+                },
+                "types": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": false,
+                    "default":  "all"
+                },
+                "count": {
+                    "location": "query",
+                    "type":     "integer",
+                    "required": false,
+                    "default":  100
+                },
+                "page": {
+                    "location": "query",
+                    "type":     "integer",
+                    "required": false,
+                    "default":  1
+                }
+            },
+            "additionalParameters": {
+                "location": "query"
+            }
+        },
+        "ListGroups": {
+            "httpMethod": "GET",
+            "uri": "/api/groups.list",
+            "summary": "Get the list of groups",
+            "responseClass":"ListGroupsOutput",
+            "parameters": {
+                "token": {
+                    "location": "query",
+                    "type": "string",
+                    "required": true
+                },
+                "pretty": {
+                    "location": "query",
+                    "type":     "integer",
+                    "required": false,
+                    "default": 0
+                }
+            },
+            "additionalParameters": {
+                "location": "query"
+            }
+        },
+        "ListIM": {
+            "httpMethod": "GET",
+            "uri": "/api/im.list",
+            "summary": "Get the list of instant message channels",
+            "responseClass":"ListIMOutput",
+            "parameters": {
+                "token": {
+                    "location": "query",
+                    "type": "string",
+                    "required": true
+                }
+            },
+            "additionalParameters": {
+                "location": "query"
+            }
+        },
+        "ListUsers": {
+            "httpMethod": "GET",
+            "uri": "/api/users.list",
+            "summary": "Get the list of users",
+            "responseClass":"ListUsersOutput",
+            "parameters": {
+                "token": {
+                    "location": "query",
+                    "type": "string",
+                    "required": true
+                }
+            },
+            "additionalParameters": {
+                "location": "query"
+            }
+        }
+    },
+    "models": {
+        "Channel": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "name": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "created": {
+                    "location": "json",
+                    "type": "float"
+                },
+                "creator": {
+                    "location": "json",
+                    "type": "number"
+                },
+                "is_archived": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "is_member": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "num_members": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "topic": {
+                    "$ref": "Topic"
+                },
+                "purpose": {
+                    "$ref": "Topic"
+                }
+            }
+        },
+        "File": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "timestamp": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "name": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "title": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "mimetype": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "filetype": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "pretty_type": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "user": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "mode": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "editable": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "is_external": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "external_type": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "size": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "url": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "url_download": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "url_private": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "url_private_download": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "thumb_64": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "thumb_80": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "thumb_360": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "thumb_360_gif": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "thumb_360_w": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "thumb_360_h": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "permalink": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "edit_link": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "preview": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "preview_highlight": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "lines": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "lines_more": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "is_public": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "public_url_shared": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "channels": {
+                    "location": "json",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "groups": {
+                    "location": "json",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "initial_comment": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "num_stars": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "is_starred": {
+                    "location": "json",
+                    "type": "boolean"
+                }
+            }
+        },
+        "Group": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "name": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "creator": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "created": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "is_archived": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "members": {
+                    "location": "json",
+                    "type": "array"
+                },
+                "topic": {
+                    "$ref": "Topic"
+                },
+                "purpose": {
+                    "$ref": "Topic"
+                }
+            }
+        },
+        "IM": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "user": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "created": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "is_user_deleted": {
+                    "location": "json",
+                    "type": "boolean"
+                }
+            }
+        },
+        "Paging": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "total": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "page": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "pages": {
+                    "location": "json",
+                    "type": "integer"
+                }
+            }
+        },
+        "Profile": {
+            "type": "object",
+            "properties": {
+                "first_name": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "last_name": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "phone": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "skype": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "title": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "real_name": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "email": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "image_24": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "image_32": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "image_48": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "image_72": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "image_192": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "image_original": {
+                    "location": "json",
+                    "type": "string"
+                }
+            }
+        },
+        "Topic": {
+            "type": "object",
+            "properties": {
+                "value": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "creator": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "last_set": {
+                    "location": "json",
+                    "type": "string"
+                }
+            }
+        },
+        "User": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "name": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "deleted": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "status": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "color": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "real_name": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "skype": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "phone": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "tz": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "is_admin": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "is_owner": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "is_primary_owner": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "has_files": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "profile": {
+                    "$ref": "Profile"
+                }
+            }
+        },
+        "ListChannelsOutput": {
+            "type": "object",
+            "properties": {
+                "ok": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "channels": {
+                    "location": "json",
+                    "type": "array",
+                    "items": {
+                        "$ref": "Channel"
+                    }
+                }
+            }
+        },
+        "ListFilesOutput": {
+            "type": "object",
+            "properties": {
+                "ok": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "files": {
+                    "location": "json",
+                    "type": "array",
+                    "items": {
+                        "$ref": "File"
+                    }
+                },
+                "paging": {
+                    "location": "json",
+                    "$ref": "Paging"
+                }
+            }
+        },
+        "ListGroupsOutput": {
+            "type": "object",
+            "properties": {
+                "ok": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "groups": {
+                    "location": "json",
+                    "type": "array",
+                    "items": {
+                        "$ref": "Channel"
+                    }
+                }
+            }
+        },
+        "ListIMOutput": {
+            "type": "object",
+            "properties": {
+                "ok": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "ims": {
+                    "location": "json",
+                    "type": "array",
+                    "items": {
+                        "$ref": "IM"
+                    }
+                }
+            }
+        },
+        "ListUsersOutput": {
+            "type": "object",
+            "properties": {
+                "ok": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "members": {
+                    "location": "json",
+                    "type": "array",
+                    "items": {
+                        "$ref": "User"
+                    }
+                }
+            }
+        }
+    }
+}

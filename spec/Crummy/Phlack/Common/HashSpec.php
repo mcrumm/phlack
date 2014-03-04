@@ -29,4 +29,19 @@ class HashSpec extends ObjectBehavior
         $this->offsetSet('text', 'Hello!');
         $this->__toString()->shouldReturn('{"text":"Hello!"}');
     }
+
+    function it_has_no_default_parameters()
+    {
+        $this->getDefaults()->shouldBe([]);
+    }
+
+    function it_has_no_optional_parameters()
+    {
+        $this->getOptional()->shouldBe([]);
+    }
+
+    function it_has_no_required_parameters()
+    {
+        $this->getRequired()->shouldBe([]);
+    }
 }
