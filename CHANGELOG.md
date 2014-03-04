@@ -1,6 +1,11 @@
 Changelog
 =========
 
+### `v0.5.0` (2014-03-04)
+
+* Phlack now contains a (partial) implementation of the [Slack API](https://api.slack.com)
+* Fixed some typos in the examples.
+
 ### `v0.4.6` (2014-02-18)
 
 * [Attachment](src/Crummy/Phlack/Message/Attachment.php)s can now be created and added to the [MessageBuilder](src/Crummy/Phlack/Builder/MessageBuilder.php) via the `createAttachment()` workflow.

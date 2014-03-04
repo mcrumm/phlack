@@ -202,3 +202,12 @@ A [complete example](examples/api/files_iterator.php) is available in the exampl
 
 #### More Examples
 See the [API examples directory](examples/api) for more use cases.
+
+---
+## Disclaimer
+
+Any undocumented portion of this library should be considered *EXPERIMENTAL AT BEST*. Proceed with caution, and, as always, pull requests are welcome.
+
+## Acknowledgements
+
+1. The regex in the [LinkFormatter](src/Crummy/Phlack/Common/Formatter/LinkFormatter.php) was pulled directly from [StevenSloan](https://github.com/stevenosloan) and his [slack-notifier](https://github.com/stevenosloan/slack-notifier) project.
