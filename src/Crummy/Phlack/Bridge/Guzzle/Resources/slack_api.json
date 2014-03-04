@@ -26,6 +26,63 @@
                 "location": "query"
             }
         },
+        "ListFiles": {
+            "httpMethod": "GET",
+            "uri": "/api/files.list",
+            "summary": "Get a list of files",
+            "responseClass":"ListFilesOutput",
+            "parameters": {
+                "token": {
+                    "location": "query",
+                    "type": "string",
+                    "required": true
+                },
+                "pretty": {
+                    "location": "query",
+                    "type":     "integer",
+                    "required": false,
+                    "default": 0
+                },
+                "user": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": false
+                },
+                "from": {
+                    "location": "query",
+                    "sentAs":   "ts_from",
+                    "type":     "integer",
+                    "required": false
+                },
+                "to": {
+                    "location": "query",
+                    "sentAs":   "ts_to",
+                    "type":     "integer",
+                    "required": false
+                },
+                "types": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": false,
+                    "default":  "all"
+                },
+                "count": {
+                    "location": "query",
+                    "type":     "integer",
+                    "required": false,
+                    "default":  100
+                },
+                "page": {
+                    "location": "query",
+                    "type":     "integer",
+                    "required": false,
+                    "default":  1
+                }
+            },
+            "additionalParameters": {
+                "location": "query"
+            }
+        },
         "ListGroups": {
             "httpMethod": "GET",
             "uri": "/api/groups.list",
@@ -121,6 +178,161 @@
                 }
             }
         },
+        "File": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "timestamp": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "name": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "title": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "mimetype": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "filetype": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "pretty_type": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "user": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "mode": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "editable": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "is_external": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "external_type": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "size": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "url": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "url_download": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "url_private": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "url_private_download": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "thumb_64": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "thumb_80": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "thumb_360": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "thumb_360_gif": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "thumb_360_w": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "thumb_360_h": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "permalink": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "edit_link": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "preview": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "preview_highlight": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "lines": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "lines_more": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "is_public": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "public_url_shared": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "channels": {
+                    "location": "json",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "groups": {
+                    "location": "json",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "initial_comment": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "num_stars": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "is_starred": {
+                    "location": "json",
+                    "type": "boolean"
+                }
+            }
+        },
         "Group": {
             "type": "object",
             "properties": {
@@ -174,6 +386,27 @@
                 "is_user_deleted": {
                     "location": "json",
                     "type": "boolean"
+                }
+            }
+        },
+        "Paging": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "total": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "page": {
+                    "location": "json",
+                    "type": "integer"
+                },
+                "pages": {
+                    "location": "json",
+                    "type": "integer"
                 }
             }
         },
@@ -324,6 +557,26 @@
                     "items": {
                         "$ref": "Channel"
                     }
+                }
+            }
+        },
+        "ListFilesOutput": {
+            "type": "object",
+            "properties": {
+                "ok": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "files": {
+                    "location": "json",
+                    "type": "array",
+                    "items": {
+                        "$ref": "File"
+                    }
+                },
+                "paging": {
+                    "location": "json",
+                    "$ref": "Paging"
                 }
             }
         },
