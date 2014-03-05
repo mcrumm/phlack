@@ -2,7 +2,7 @@
 <?php
 
 define('PHLACKBOT_NAME',    'phlackbot');
-define('PHLACKBOT_VERSION', '0.5.0-PREVIEW');
+define('PHLACKBOT_VERSION', '0.5.1-PREVIEW');
 
 if (is_dir($vendor = getcwd() . '/vendor')) {
     require $vendor . '/autoload.php';
