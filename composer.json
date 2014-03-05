@@ -11,7 +11,7 @@
     "require": {
         "php": ">=5.4",
         "guzzle/guzzle": "~3.8",
-        "doctrine/collections": "1.1.*",
+        "doctrine/collections": "~1",
         "symfony/options-resolver": "~2.4"
     },
     "suggest": {
