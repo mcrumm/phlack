@@ -3,7 +3,7 @@ Changelog
 
 ### `v0.5.1` (2014-03-05)
 
-* Hotfix to update `doctrine/collections` to >= 1.0
+* Upgrade composer requirements to the latest doctrine/collections
 
 ### `v0.5.0` (2014-03-04)
 
