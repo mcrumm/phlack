@@ -1,6 +1,10 @@
 Changelog
 =========
 
+### `v0.5.1` (2014-03-05)
+
+* Hotfix to update `doctrine/collections` to >= 1.0
+
 ### `v0.5.0` (2014-03-04)
 
 * Phlack now contains a (partial) implementation of the [Slack API](https://api.slack.com)
