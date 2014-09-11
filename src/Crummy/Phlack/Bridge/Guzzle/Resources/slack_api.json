@@ -154,6 +154,27 @@
             "required": true
         }
         }
+        },
+      "ChannelsSetPurpose": {
+        "httpMethod": "GET",
+        "uri": "/api/channels.setPurpose",
+        "summary": "Change the purpose of a channel",
+        "responseClass":"ChannelsSetPurposeOutput",
+        "parameters": {
+          "token": {
+            "location": "query",
+            "type": "string",
+            "required": true
+          },
+          "channel": {
+            "location": "query",
+            "type":     "string",
+            "required": true
+          },
+          "purpose": {
+            "location": "query",
+            "type":     "string",
+            "required": true
       }
     },
     "models": {
@@ -655,6 +676,19 @@
                 },
                 "channel": {
                     "$ref": "Channel"
+                }
+            }
+        },
+        "ChannelsSetPurposeOutput": {
+          "type": "object",
+          "properties": {
+            "ok": {
+              "location": "json",
+              "type": "boolean"
+            },
+            "purpose": {
+              "location": "json",
+              "type": "string"
                 }
             }
         }
