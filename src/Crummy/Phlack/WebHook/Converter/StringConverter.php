@@ -30,7 +30,7 @@ class StringConverter implements ConverterInterface
 
     /**
      * @param $command
-     * @return SlashCommand|WebHook
+     * @return \Crummy\Phlack\WebHook\CommandInterface
      */
     public function convert($command)
     {

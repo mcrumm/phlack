@@ -4,7 +4,6 @@ namespace Crummy\Phlack\WebHook;
 
 use Crummy\Phlack\Common\Encodable;
 use Guzzle\Common\ToArrayInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * CommandInterface
@@ -12,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 interface CommandInterface extends Encodable, \ArrayAccess, ToArrayInterface
 {
     /**
-     * @param $key
+     * @param string $key
      * @return mixed
      */
     public function get($key);
