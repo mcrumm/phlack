@@ -72,7 +72,7 @@ class AttachmentBuilder implements BuilderInterface
     /**
      * Sets values on non-empty parameters.
      * Set $value to null to remove the custom value.
-     * @param $name
+     * @param string $name
      * @param $value
      * @return $this
      */

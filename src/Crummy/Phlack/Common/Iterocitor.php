@@ -96,7 +96,7 @@ class Iterocitor implements ResponderInterface
     /**
      * @param string $where
      * @param string $text
-     * @return string
+     * @return Reply
      */
     protected function important($where, $text)
     {

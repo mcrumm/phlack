@@ -21,7 +21,7 @@ class LinkFormatter implements FormatterInterface
     /**
      * @param integer $linkIdx The index of the matches containing the resource link
      * @param integer $labelIdx The index of the matches containing the label (if one exists)
-     * @return callable A callable to be passed to preg_replace_callback
+     * @return \Closure A callable to be passed to preg_replace_callback
      */
     protected function getMatchFormatter($linkIdx = 1, $labelIdx = 2)
     {

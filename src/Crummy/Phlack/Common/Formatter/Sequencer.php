@@ -19,7 +19,7 @@ class Sequencer implements FormatterInterface
     }
 
     /**
-     * @param $text
+     * @param string $text
      * @param null $label
      * @return string
      */
@@ -42,7 +42,7 @@ class Sequencer implements FormatterInterface
     }
 
     /**
-     * @param $channel
+     * @param string $channel
      * @return string
      */
     static public function alert($channel)
