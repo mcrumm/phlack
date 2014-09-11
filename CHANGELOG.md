@@ -1,6 +1,10 @@
 Changelog
 =========
 
+### `v0.5.2` (2014-09-11)
+
+* Adds methods for the new `channels.join` and `channels.setPurpose` API actions. (Courtesy @tijsverkoyen)
+
 ### `v0.5.1` (2014-03-05)
 
 * Upgrade composer requirements to the latest doctrine/collections
