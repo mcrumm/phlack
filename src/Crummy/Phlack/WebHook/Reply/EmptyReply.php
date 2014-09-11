@@ -19,7 +19,7 @@ class EmptyReply extends Reply
      */
     public function offsetSet($offset, $value)
     {
-        return;
+        // no-op
     }
 
     /**

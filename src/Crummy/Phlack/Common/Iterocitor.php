@@ -88,7 +88,7 @@ class Iterocitor implements ResponderInterface
      * @param string $text
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
-    function shout($text)
+    public function shout($text)
     {
         return $this->important('everyone', $text);
     }

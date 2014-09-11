@@ -20,7 +20,7 @@ class MainframeKernel extends AbstractAdapter implements HttpKernelInterface
      * @param Mainframe $mainframe
      * @param RequestConverter $converter
      */
-    function __construct(Mainframe $mainframe = null, RequestConverter $converter = null)
+    public function __construct(Mainframe $mainframe = null, RequestConverter $converter = null)
     {
         $mainframe = $mainframe ?: new Mainframe();
         $converter = $converter ?: new RequestConverter();

@@ -20,7 +20,7 @@ class AbstractAdapter implements AdapterInterface
      * @param Mainframe $mainframe
      * @param ConverterInterface $converter
      */
-    function __construct(Mainframe $mainframe, ConverterInterface $converter = null)
+    public function __construct(Mainframe $mainframe, ConverterInterface $converter = null)
     {
         $this->setMainframe($mainframe);
         $this->converter = $converter ?: new StringConverter();
