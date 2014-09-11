@@ -136,7 +136,25 @@
             "additionalParameters": {
                 "location": "query"
             }
+        },
+      "ChannelsJoin": {
+        "httpMethod": "GET",
+        "uri": "/api/channels.join",
+        "summary": "Join a channel. If the channel does not exists, it is created",
+        "responseClass":"ChannelsJoinOutput",
+        "parameters": {
+          "token": {
+            "location": "query",
+            "type": "string",
+            "required": true
+          },
+          "name": {
+            "location": "query",
+            "type":     "string",
+            "required": true
         }
+        }
+      }
     },
     "models": {
         "Channel": {
@@ -625,6 +643,18 @@
                     "items": {
                         "$ref": "User"
                     }
+                }
+            }
+        },
+        "ChannelsJoinOutput": {
+            "type": "object",
+            "properties": {
+                "ok": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "channel": {
+                    "$ref": "Channel"
                 }
             }
         }
