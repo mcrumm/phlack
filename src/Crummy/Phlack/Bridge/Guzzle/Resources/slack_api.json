@@ -136,6 +136,47 @@
             "additionalParameters": {
                 "location": "query"
             }
+        },
+        "ChannelsJoin": {
+            "httpMethod": "GET",
+            "uri": "/api/channels.join",
+            "summary": "Join a channel. If the channel does not exists, it is created",
+            "responseClass":"ChannelsJoinOutput",
+            "parameters": {
+                "token": {
+                    "location": "query",
+                    "type": "string",
+                    "required": true
+                },
+                "name": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": true
+                }
+            }
+        },
+        "ChannelsSetPurpose": {
+            "httpMethod": "GET",
+            "uri": "/api/channels.setPurpose",
+            "summary": "Change the purpose of a channel",
+            "responseClass":"ChannelsSetPurposeOutput",
+            "parameters": {
+                "token": {
+                    "location": "query",
+                    "type": "string",
+                    "required": true
+                },
+                "channel": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": true
+                },
+                "purpose": {
+                    "location": "query",
+                    "type":     "string",
+                      "required": true
+                }
+            }
         }
     },
     "models": {
@@ -625,6 +666,31 @@
                     "items": {
                         "$ref": "User"
                     }
+                }
+            }
+        },
+        "ChannelsJoinOutput": {
+            "type": "object",
+            "properties": {
+                "ok": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "channel": {
+                    "$ref": "Channel"
+                }
+            }
+        },
+        "ChannelsSetPurposeOutput": {
+            "type": "object",
+            "properties": {
+                "ok": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "purpose": {
+                    "location": "json",
+                    "type": "string"
                 }
             }
         }
