@@ -1,6 +1,10 @@
 Changelog
 =========
 
+### `v0.5.3` (2014-09-11)
+
+* Miscellaneous fixes suggested by scrutinizer-ci.com
+
 ### `v0.5.2` (2014-09-11)
 
 * Adds methods for the new `channels.join` and `channels.setPurpose` API actions. (Courtesy @tijsverkoyen)

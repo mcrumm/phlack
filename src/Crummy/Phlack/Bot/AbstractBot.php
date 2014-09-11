@@ -28,7 +28,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
     }
 
     /**
-     * @param $matcher
+     * @param Matcher\MatcherInterface $matcher
      * @return $this
      * @throws \Crummy\Phlack\Common\Exception\InvalidArgumentException When given an invalid matcher.
      */
@@ -82,7 +82,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
     }
 
     /**
-     * @param string|\Crummy\Phlack\WebHook\CommandInterface $user The user_id, or a CommandInterface to inspect.
+     * @param \Crummy\Phlack\WebHook\CommandInterface $user The user_id, or a CommandInterface to inspect.
      * @param string $text
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */

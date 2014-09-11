@@ -16,7 +16,7 @@ class EncoderPlugin implements PluginInterface
     /**
      * @param FormatterInterface $formatter
      */
-    function __construct(FormatterInterface $formatter = null)
+    public function __construct(FormatterInterface $formatter = null)
     {
         $this->formatter = $formatter ?: new FormatterCollection([
             new LinkFormatter(),

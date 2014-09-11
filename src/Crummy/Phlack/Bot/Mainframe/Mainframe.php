@@ -6,7 +6,6 @@ use Crummy\Phlack\Bot\BotInterface;
 use Crummy\Phlack\Common\Events;
 use Crummy\Phlack\Common\Exception\InvalidArgumentException;
 use Crummy\Phlack\Common\Executable;
-use Crummy\Phlack\Common\Matcher\DefaultMatcher;
 use Crummy\Phlack\Common\Matcher\MatcherAggregate;
 use Crummy\Phlack\Common\Matcher\MatcherInterface;
 use Crummy\Phlack\WebHook\CommandInterface;
@@ -60,7 +59,7 @@ class Mainframe implements Executable
     /**
      * @param BotInterface $bot
      * @param MatcherInterface|callable $matcher If callable, it should accept a CommandInterface and return a boolean.
-     * @return callable An anonymous function to be attached to the internal cpu.
+     * @return \Closure An anonymous function to be attached to the internal cpu.
      * @throws \Crummy\Phlack\Common\Exception\InvalidArgumentException When given an invalid matcher.
      */
     public function getListener(BotInterface $bot, $matcher)

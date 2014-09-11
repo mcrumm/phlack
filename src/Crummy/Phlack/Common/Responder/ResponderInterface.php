@@ -10,37 +10,37 @@ interface ResponderInterface
      * @param string $text
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
-    function say($text);
+    public function say($text);
 
     /**
      * @param string $text
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
-    function emote($text);
-
-    /**
-     * @param string $user
-     * @param string $text
-     * @return \Crummy\Phlack\WebHook\Reply\Reply
-     */
-    function tell($user, $text);
+    public function emote($text);
 
     /**
      * @param string $user
      * @param string $text
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
-    function reply($user, $text);
+    public function tell($user, $text);
+
+    /**
+     * @param string $user
+     * @param string $text
+     * @return \Crummy\Phlack\WebHook\Reply\Reply
+     */
+    public function reply($user, $text);
 
     /**
      * @param string $text
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
-    function shout($text);
+    public function shout($text);
 
     /**
      * @param MessageInterface $message
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
-    function send(MessageInterface $message);
+    public function send(MessageInterface $message);
 }
