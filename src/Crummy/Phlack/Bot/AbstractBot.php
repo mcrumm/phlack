@@ -8,23 +8,28 @@ use Crummy\Phlack\Common\Matcher;
 use Crummy\Phlack\Common\Responder\ResponderInterface;
 use Crummy\Phlack\Message\MessageInterface;
 
-abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
+abstract class AbstractBot implements ResponderAware, Matcher\MatcherAggregate
 {
     private $matcher;
-    private $responder;
 
     /**
-     * @param Matcher\MatcherInterface $matcher
-     * @param array|ResponderInterface $options
+     * @var \Crummy\Phlack\Common\Responder\ResponderInterface
      */
-    public function __construct($matcher = null, $options = [])
+    protected $responder;
+
+    /**
+     * @param Matcher\MatcherInterface|\Closure $matcher
+     * @param ResponderInterface $responder
+     */
+    public function __construct($matcher = null, ResponderInterface $responder = null)
     {
-        if (!$matcher) {
-            $matcher = new Matcher\DefaultMatcher();
-        }
+        $matcher = $matcher ?: new Matcher\DefaultMatcher();
 
         $this->setMatcher($matcher);
-        $this->responder = $options instanceof ResponderInterface ? $options : new Iterocitor($options);
+
+        if ($responder) {
+            $this->setResponder($responder);
+        }
     }
 
     /**
@@ -54,6 +59,16 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
     public function getMatcher()
     {
         return $this->matcher;
+    }
+
+    /**
+     * @param ResponderInterface $responder
+     * @return self
+     */
+    public function setResponder(ResponderInterface $responder)
+    {
+        $this->responder = $responder;
+        return $this;
     }
 
     /**
