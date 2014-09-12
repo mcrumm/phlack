@@ -9,6 +9,11 @@ class PhlackClientSpec extends ObjectBehavior
     public static $mockUrl = 'https://hooks.slack.com/services/AAAA/BBBB/CCCC';
     public static $mockConfig = ['username' => 'foo', 'token' => 'bar'];
 
+    function let()
+    {
+        $this->beConstructedWith('', [ 'username' => 'username', 'token' => 'foo' ]);
+    }
+
     function it_is_initializable()
     {
         $this->shouldHaveType('Crummy\Phlack\Bridge\Guzzle\PhlackClient');
