@@ -3,6 +3,7 @@
 namespace Crummy\Phlack\Bot;
 
 use Crummy\Phlack\Common\Matcher\CommandMatcher;
+use Crummy\Phlack\Common\Responder\ResponderInterface;
 use Crummy\Phlack\WebHook\CommandInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\ExpressionLanguage\SyntaxError;
@@ -15,12 +16,13 @@ class ExpressionBot extends AbstractBot
     /**
      * @param string             $commandName
      * @param ExpressionLanguage $language
+     * @param ResponderInterface $responder
      */
-    public function __construct($commandName = '/expr', ExpressionLanguage $language = null)
+    public function __construct($commandName = '/expr', ExpressionLanguage $language = null, ResponderInterface $responder = null)
     {
         $this->language = $language ?: new ExpressionLanguage();
 
-        parent::__construct(new CommandMatcher($commandName));
+        parent::__construct(new CommandMatcher($commandName), $responder);
     }
 
     /**
