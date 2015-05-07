@@ -177,6 +177,86 @@
                       "required": true
                 }
             }
+        },
+        "PostMessage": {
+            "httpMethod": "POST",
+            "uri": "/api/chat.postMessage",
+            "summary": "Post a message to a channel",
+            "responseClass":"PostMessageOutput",
+            "parameters": {
+                "token": {
+                    "location": "query",
+                    "type": "string",
+                    "required": true
+                },
+                "channel": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": true
+                },
+                "text": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": true
+                },
+                "username": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": false,
+                    "default": "Bot"
+                }
+            }
+        },
+        "DeleteMessage": {
+            "httpMethod": "POST",
+            "uri": "/api/chat.delete",
+            "summary": "Remove a message from a channel",
+            "responseClass":"DeleteMessageOutput",
+            "parameters": {
+                "token": {
+                    "location": "query",
+                    "type": "string",
+                    "required": true
+                },
+                "ts": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": true
+                },
+                "channel": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": true
+                }
+            }
+        },
+        "UpdateMessage": {
+            "httpMethod": "POST",
+            "uri": "/api/chat.update",
+            "summary": "Update a message in a channel",
+            "responseClass":"UpdateMessageOutput",
+            "parameters": {
+                "token": {
+                    "location": "query",
+                    "type": "string",
+                    "required": true
+                },
+                "ts": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": true
+                },
+                "channel": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": true
+                },
+                "text": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": true
+                }
+            }
         }
     },
     "models": {
@@ -689,6 +769,65 @@
                     "type": "boolean"
                 },
                 "purpose": {
+                    "location": "json",
+                    "type": "string"
+                }
+            }
+        },
+        "PostMessageOutput": {
+            "type": "object",
+            "properties": {
+                "ok": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "ts": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "channel": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "message": {
+                    "location": "json",
+                    "type": "string"
+                }
+            }
+        },
+        "DeleteMessageOutput": {
+            "type": "object",
+            "properties": {
+                "ok": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "channel": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "ts": {
+                    "location": "json",
+                    "type": "string"
+                }
+            }
+        },
+        "UpdateMessageOutput": {
+            "type": "object",
+            "properties": {
+                "ok": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "channel": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "ts": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "text": {
                     "location": "json",
                     "type": "string"
                 }
