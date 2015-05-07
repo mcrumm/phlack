@@ -204,6 +204,21 @@
                     "type":     "string",
                     "required": false,
                     "default": "Bot"
+                },
+                "as_user": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": false
+                },
+                "icon_url": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": false
+                },
+                "icon_emoji": {
+                    "location": "query",
+                    "type":     "string",
+                    "required": false
                 }
             }
         },
