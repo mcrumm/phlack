@@ -1,6 +1,10 @@
 Changelog
 =========
 
+### `v0.5.4` (2015-05-14)
+
+* Add methods for `chat.delete`, `chat.postMessage`, and `chat.update` API actions. (Courtesy @kordero)
+
 ### `v0.5.3` (2014-09-11)
 
 * Miscellaneous fixes suggested by scrutinizer-ci.com
