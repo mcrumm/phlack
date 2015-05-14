@@ -147,6 +147,9 @@ $slack = new ApiClient([ 'token' => 'my_bearer_token' ]);
 The methods currently implemented are:
 
 - [channels.list](https://api.slack.com/methods/channels.list)
+- [chat.delete](https://api.slack.com/methods/chat.delete)
+- [chat.postMessage](https://api.slack.com/methods/chat.postMessage)
+- [chat.update](https://api.slack.com/methods/chat.update)
 - [files.list](https://api.slack.com/methods/files.list)
 - [groups.list](https://api.slack.com/methods/groups.list)
 - [im.list](https://api.slack.com/methods/im.list)
