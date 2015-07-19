@@ -4,8 +4,7 @@ namespace Crummy\Phlack\Bot\Mainframe;
 
 use Crummy\Phlack\Common\Encodable;
 use Crummy\Phlack\Common\Event;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Crummy\Phlack\Common\OptionsResolver;
 
 class Packet extends Event implements Encodable
 {
@@ -21,14 +20,14 @@ class Packet extends Event implements Encodable
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired([ 'command' ]);
         $resolver->setDefaults([ 'output' => null ]);
 
-        $resolver->setAllowedTypes([
+        $resolver->setTypesAllowed([
             'command' => '\Crummy\Phlack\WebHook\CommandInterface',
             'output' => [ '\Crummy\Phlack\WebHook\Reply\Reply', 'null' ]
         ]);

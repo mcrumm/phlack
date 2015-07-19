@@ -2,14 +2,14 @@
 
 namespace Crummy\Phlack\WebHook;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Crummy\Phlack\Common\OptionsResolver;
 
 class SlashCommand extends AbstractCommand
 {
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
         parent::setDefaultOptions($resolver);
 
-        $resolver->setOptional([ 'team_domain', 'service_id' ]);
+        $resolver->setDefined([ 'team_domain', 'service_id' ]);
     }
 }

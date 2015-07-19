@@ -3,8 +3,8 @@
 namespace Crummy\Phlack\WebHook;
 
 use Crummy\Phlack\Common\Exception\RuntimeException;
+use Crummy\Phlack\Common\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class WebHook extends AbstractCommand implements WebHookInterface
 {
@@ -24,9 +24,9 @@ class WebHook extends AbstractCommand implements WebHookInterface
     ];
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         parent::setDefaultOptions($resolver);
 

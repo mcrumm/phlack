@@ -3,8 +3,6 @@
 namespace Crummy\Phlack\Common;
 
 use Guzzle\Common\Event as GuzzleEvent;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class Event extends GuzzleEvent
 {
@@ -20,9 +18,9 @@ class Event extends GuzzleEvent
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         // noop
     }
