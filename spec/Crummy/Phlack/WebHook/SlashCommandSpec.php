@@ -4,7 +4,6 @@ namespace spec\Crummy\Phlack\WebHook;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class SlashCommandSpec extends ObjectBehavior
 {

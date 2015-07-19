@@ -2,8 +2,8 @@
 
 namespace Crummy\Phlack\Message;
 
+use Crummy\Phlack\Common\OptionsResolver;
 use Crummy\Phlack\Message\Collection\FieldCollection;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class Attachment extends Partial implements AttachmentInterface
 {
@@ -25,11 +25,11 @@ class Attachment extends Partial implements AttachmentInterface
     /**
      * {@inheritDoc}
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         parent::setDefaultOptions($resolver);
 
-        $resolver->setAllowedTypes([
+        $resolver->setTypesAllowed([
             'fields' => '\Crummy\Phlack\Message\Collection\FieldCollection'
         ]);
     }
