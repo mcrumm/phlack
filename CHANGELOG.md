@@ -1,6 +1,10 @@
 Changelog
 =========
 
+### `v0.5.5` (2015-07-19)
+
+* Add support for symfony/options-resolver >= 2.6. (Bug reported by @adamgoose)
+
 ### `v0.5.4` (2015-05-14)
 
 * Add methods for `chat.delete`, `chat.postMessage`, and `chat.update` API actions. (Courtesy @kordero)
