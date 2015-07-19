@@ -2,9 +2,9 @@
 
 namespace Crummy\Phlack\Message;
 
+use Crummy\Phlack\Common\OptionsResolver;
 use Crummy\Phlack\Message\Collection\AttachmentCollection;
 use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class Message extends Partial implements MessageInterface
 {
@@ -31,11 +31,11 @@ class Message extends Partial implements MessageInterface
     /**
      * {@inheritDoc}
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         parent::setDefaultOptions($resolver);
 
-        $resolver->setAllowedTypes([
+        $resolver->setTypesAllowed([
             'attachments' => '\Crummy\Phlack\Message\Collection\AttachmentCollection'
         ]);
 

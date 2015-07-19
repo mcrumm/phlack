@@ -4,8 +4,6 @@ namespace Crummy\Phlack\Common;
 
 use Crummy\Phlack\Common\Exception\RuntimeException;
 use Guzzle\Common\Collection as GuzzleCollection;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class Hash extends GuzzleCollection implements Encodable
 {
@@ -82,12 +80,12 @@ class Hash extends GuzzleCollection implements Encodable
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired($this->required);
-        $resolver->setOptional($this->optional);
+        $resolver->setDefined($this->optional);
         $resolver->setDefaults($this->defaults);
     }
 }

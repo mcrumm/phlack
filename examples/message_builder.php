@@ -4,7 +4,9 @@ $client  = require __DIR__ . '/client.php';
 $phlack  = new \Crummy\Phlack\Phlack($client);
 $message = $phlack->getMessageBuilder()
                         ->setText('This message was sent at: ' . date('Y-m-d H:i:s'))
-                        ->setIconEmoji('clock3')
+                        ->setChannel('general')
+                        ->setUsername('message-builder')
+                        ->setIconEmoji('clock330')
                         ->create();
 
 echo 'Message Payload:' . PHP_EOL . $message . PHP_EOL;
