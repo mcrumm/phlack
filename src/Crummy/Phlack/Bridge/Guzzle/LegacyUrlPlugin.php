@@ -6,9 +6,10 @@ use Guzzle\Common\Event;
 use Guzzle\Http\Message\RequestInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class PhlackPlugin implements EventSubscriberInterface
+class LegacyUrlPlugin implements EventSubscriberInterface
 {
     const BASE_URL = '%s.slack.com';
+    const WEBHOOK_PATH = '/services/hooks/incoming-webhook';
 
     private $username;
     private $token;
@@ -43,7 +44,8 @@ class PhlackPlugin implements EventSubscriberInterface
 
         $url = $request->getUrl(true)
             ->setScheme('https')
-            ->setHost(sprintf(self::BASE_URL, $this->username));
+            ->setHost(sprintf(self::BASE_URL, $this->username))
+            ->setPath(self::WEBHOOK_PATH);
 
         $request->setUrl($url)
             ->getQuery()

@@ -4,16 +4,26 @@ namespace Crummy\Phlack;
 
 use Crummy\Phlack\Bridge\Guzzle\PhlackClient;
 use Crummy\Phlack\Bridge\Guzzle\Response\MessageResponse;
+use Crummy\Phlack\Common\Exception\UnexpectedTypeException;
 use Crummy\Phlack\Message\MessageInterface;
 use Guzzle\Common\Collection;
 
 class Phlack extends Collection
 {
     /**
-     * @param PhlackClient $client
+     * Phlack Constructor.
+     *
+     * @param mixed $client
+     * @throws UnexpectedTypeException
      */
-    public function __construct(PhlackClient $client)
+    public function __construct($client)
     {
+        if (is_string($client) || is_array($client)) {
+            $client = new PhlackClient($client);
+        } elseif (! $client instanceof PhlackClient) {
+            throw new UnexpectedTypeException($client, ['string', 'array', 'Crummy\Phlack\Bridge\Guzzle\PhlackClient']);
+        }
+
         parent::__construct([
             'client'   => $client,
             'builders' => [],
@@ -24,20 +34,22 @@ class Phlack extends Collection
     }
 
     /**
-     * @param array $config
+     * Phlack Factory.
+     *
+     * @param array|string $config
      * @return Phlack
      */
-    static public function factory(array $config = [ ])
+    static public function factory($config = [ ])
     {
-        return new self(PhlackClient::factory($config));
+        return new self(new PhlackClient($config));
     }
 
     /**
-     * {@inhertiDoc}
+     * @return Phlack
      */
     public static function fromConfig(array $config = array(), array $defaults = array(), array $required = array())
     {
-        return new self($config['client']);
+        return new self(new PhlackClient($config));
     }
 
     /**
