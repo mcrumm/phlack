@@ -7,54 +7,65 @@ Phlack eases the creation of [Slack Integrations](http://slack.com) in PHP.
 
 **Update:** Phlack now contains a partial implementation of the [Slack API](http://api.slack.com). For details, see the [API Docs](#slack-api) section below.
 
-## Installation & Configuration
+## Installation
 
-### Installation
-via Composer
+via [composer](https://packagist.org/packages/mcrumm/phlack):
 
-```json
-{
-    "require": {
-        "mcrumm/phlack": "dev-master"
-    }
+```
+composer require mcrumm/phlack
+```
+
+## Basic Usage
+
+### Send a Message
+
+```php
+<?php
+$phlack = new Crummy\Phlack\Phlack('https://my.webhook.url');
+
+$response = $phlack->send('Hello, from Phlack!');
+
+if (200 === $response['status']) {
+    echo 'Success!';
 }
 ```
 
-### Configuration
+## Advanced Usage
 
-Create a hash containing your slack `username` and integrations `token`.
+### Configuration Options
 
-*Your `username` is the unique portion of your [Slack](http://slack.com) subdomain.  For example, if your subdomain was `groundctrl.slack.com`, your username will be `groundctrl`.*
+#### Legacy WebHook URLs
 
+A previous version of Incoming Webhooks used a generic webhook path for every team URL. If your webhook URL starts with something like `myteam.slack.com`, give Phlack your team name and Incoming Webhook token, and it will do the rest:
 
 ```php
 <?php
-$config = [ 'username' => 'my_slack_user', 'token' => 'my_slack_token' ]);
+$phlack  = new Crummy\Phlack\Phlack([
+    'username' => 'myteam',
+    'token'    => 'my_webhook_token'
+]);
 ```
 
-## Usage
-
-### Getting Phlack
-
-Get a [Phlack](src/Crummy/Phlack/Phlack.php) object by instantiating it with a [PhlackClient](src/Crummy/Phlack/Bridge/Guzzle/PhlackClient.php) or using its static `factory()` method.
-
 #### via `factory()`:
+
+If you prefer, you can instantiate Phlack via its static `factory()` method:
+
 ```php
 <?php
-//...
-use Crummy\Phlack\Phlack;
-$phlack = Phlack::factory($config);
+$phlack = Crummy\Phlack\Phlack::factory($config);
 ```
 
 #### via `new Phlack()`:
+
+Besides a webhook url or an array configuration, Phlack will also accept a `PhlackClient` instance as a constructor argument:
+
 ```php
 <?php
-use Crummy\Phlack\Bridge\Guzzle\PhlackClient;
-use Crummy\Phlack\Phlack;
-
-$client = PhlackClient::factory($config);
-$phlack = new Phlack($client);
+$client = new Crummy\Phlack\Bridge\Guzzle\PhlackClient('https://my.webhook.url');
+$phlack = new Crummy\Phlack\Phlack($client);
 ```
+
+>**Note:** The constructor and factory method both accept the same types of arguments: a string representing the webhook url, an array of client config options, or a `PhlackClient` object.
 
 #### :heart: for Guzzle
 The PhlackClient is simply a web service client implemented with [Guzzle](http://guzzlephp.org).  Examine its [service description](src/Crummy/Phlack/Bridge/Guzzle/Resources/slack.json) for more details.
@@ -104,6 +115,23 @@ if (200 != $response['status']) {
 
 echo 'The message was sent: ' . $message;
 ```
+
+### Custom Message Parameters
+
+Custom messages can be sent by using an array of [valid parameters](https://api.slack.com/incoming-webhooks):
+
+```php
+<?php
+$phlack->send([
+    'channel'      => '#random',
+    'icon_emoji'   => ':taco:',
+    'username'     => 'Phlack',
+    'unfurl_links' => true,
+    'text'         => 'I :heart: the <http://api.slack.com|Slack API>!',
+]);
+```
+
+> Note: No input validation is performed on custom message parameters. You are responsible for formatting channels, emojis, and text data yourself.
 
 #### Response
 

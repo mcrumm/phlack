@@ -1,6 +1,13 @@
 Changelog
 =========
 
+### `v0.5.6` (2015-08-14)
+
+* Add support for sending direct messages to a user. (Courtesy @atomasevic)
+* Add support for new Incoming Webhook URL format.
+* Add support for sending simple messages from a string value.
+* Add support for sending custom message parameters.
+
 ### `v0.5.5` (2015-07-19)
 
 * Add support for symfony/options-resolver >= 2.6. (Bug reported by @adamgoose)
