@@ -44,6 +44,11 @@ class MessageSpec extends ObjectBehavior
         $this->setChannel($withHash)->getChannel()->shouldReturn($withHash);
     }
 
+    function it_allows_for_direct_messages_in_channel()
+    {
+        $this->setChannel('@mcrumm')->getChannel()->shouldReturn('@mcrumm');
+    }
+
     function it_fluently_accepts_an_icon_emoji()
     {
         $this->setIconEmoji(self::ICON_EMOJI)->shouldReturn($this);
