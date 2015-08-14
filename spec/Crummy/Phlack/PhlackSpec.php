@@ -19,6 +19,8 @@ class PhlackSpec extends ObjectBehavior
     {
         $client->execute($command)->willReturn($response);
 
+        $command->execute()->willReturn($response);
+
         $this->beConstructedWith($client);
     }
 
@@ -66,6 +68,47 @@ class PhlackSpec extends ObjectBehavior
         $this->beConstructedThrough('factory', [ self::$mockConfig ]);
 
         $this->getClient()->shouldReturnAnInstanceOf('Crummy\Phlack\Bridge\Guzzle\PhlackClient');
+    }
+
+    function it_sends_a_string_message($client, OperationCommand $command, MessageResponse $response)
+    {
+        $client
+            ->getCommand('Send', Argument::withEntry('text', 'Hello'))
+            ->shouldBeCalled()
+            ->willReturn($command);
+
+        $this->send('Hello')->shouldReturn($response);
+    }
+
+    function it_sends_an_array_of_message_parameters($client, OperationCommand $command, MessageResponse $response)
+    {
+        $message = [
+            'text'       => 'Howdy!',
+            'username'   => 'incoming-webhook',
+            'channel'    => '#random',
+        ];
+
+        $client
+            ->getCommand('Send', $message)
+            ->shouldBeCalled()
+            ->willReturn($command);
+
+        $this->send($message)->shouldReturn($response);
+    }
+
+    function it_sends_any_JsonSerializable_that_returns_an_array($client, \JsonSerializable $message, OperationCommand $command, MessageResponse $response)
+    {
+        $message->jsonSerialize()->willReturn([ ]);
+
+        $client->getCommand('Send', [ ])->willReturn($command);
+
+        $this->send($message)->shouldReturn($response);
+    }
+
+    function it_fails_to_send_nonsense($client, \Iterator $iterator)
+    {
+        $this->shouldThrow('\InvalidArgumentException')
+            ->during('send', [$iterator]);
     }
 
     function it_sends_messages($client, Message $message, OperationCommand $command, MessageResponse $response)

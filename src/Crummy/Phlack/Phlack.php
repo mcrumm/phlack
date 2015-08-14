@@ -5,8 +5,8 @@ namespace Crummy\Phlack;
 use Crummy\Phlack\Bridge\Guzzle\PhlackClient;
 use Crummy\Phlack\Bridge\Guzzle\Response\MessageResponse;
 use Crummy\Phlack\Common\Exception\UnexpectedTypeException;
-use Crummy\Phlack\Message\MessageInterface;
 use Guzzle\Common\Collection;
+use JsonSerializable;
 
 class Phlack extends Collection
 {
@@ -53,13 +53,13 @@ class Phlack extends Collection
     }
 
     /**
-     * @param MessageInterface $message
+     * @param string|array|JsonSerializable $message
      * @return MessageResponse
+     * @throws UnexpectedTypeException
      */
-    public function send(MessageInterface $message)
+    public function send($message)
     {
-        $command = $this['client']->getCommand($this['commands']['send'], $message->jsonSerialize());
-        return $this['client']->execute($command);
+        return $this['client']->getCommand($this['commands']['send'], $this->toParameters($message))->execute();
     }
 
     /**
@@ -92,5 +92,23 @@ class Phlack extends Collection
         }
 
         return $this['builders']['attachment'];
+    }
+
+    /**
+     * @param mixed $message
+     * @return array
+     * @throws UnexpectedTypeException
+     */
+    private function toParameters($message)
+    {
+        if (is_string($message)) {
+            return $this->getMessageBuilder()->setText($message)->create()->jsonSerialize();
+        } elseif (is_array($message)) {
+            return $message;
+        } elseif ($message instanceof JsonSerializable) {
+            return $message->jsonSerialize();
+        }
+
+        throw new UnexpectedTypeException($message, ['string', 'array', 'JsonSerializable']);
     }
 }

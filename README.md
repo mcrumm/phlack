@@ -22,9 +22,12 @@ composer require mcrumm/phlack
 ```php
 <?php
 $phlack = new Crummy\Phlack\Phlack('https://my.webhook.url');
-$message = new Crummy\Phlack\Message\Message('Hello, from Phlack!');
 
-$phlack->send($message);
+$response = $phlack->send('Hello, from Phlack!');
+
+if (200 === $response['status']) {
+    echo 'Success!';
+}
 ```
 
 ## Advanced Usage
@@ -112,6 +115,23 @@ if (200 != $response['status']) {
 
 echo 'The message was sent: ' . $message;
 ```
+
+### Custom Message Parameters
+
+Custom messages can be sent by using an array of [valid parameters](https://api.slack.com/incoming-webhooks):
+
+```php
+<?php
+$phlack->send([
+    'channel'      => '#random',
+    'icon_emoji'   => ':taco:',
+    'username'     => 'Phlack',
+    'unfurl_links' => true,
+    'text'         => 'I :heart: the <http://api.slack.com|Slack API>!',
+]);
+```
+
+> Note: No input validation is performed on custom message parameters. You are responsible for formatting channels, emojis, and text data yourself.
 
 #### Response
 
