@@ -5,7 +5,6 @@
     "operations": {
         "Send": {
             "httpMethod": "POST",
-            "uri": "/services/hooks/incoming-webhook",
             "summary": "POST Incoming WebHook",
             "responseClass":"\\Crummy\\Phlack\\Bridge\\Guzzle\\Response\\MessageResponse",
             "parameters": {

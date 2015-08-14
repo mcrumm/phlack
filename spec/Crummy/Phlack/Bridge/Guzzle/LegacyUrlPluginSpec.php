@@ -2,7 +2,7 @@
 
 namespace spec\Crummy\Phlack\Bridge\Guzzle;
 
-use Crummy\Phlack\Bridge\Guzzle\PhlackPlugin;
+use Crummy\Phlack\Bridge\Guzzle\LegacyUrlPlugin;
 use Guzzle\Common\Event;
 use Guzzle\Http\Message\Request;
 use Guzzle\Http\QueryString;
@@ -10,7 +10,7 @@ use Guzzle\Http\Url;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class PhlackPluginSpec extends ObjectBehavior
+class LegacyUrlPluginSpec extends ObjectBehavior
 {
     function let()
     {
@@ -19,7 +19,7 @@ class PhlackPluginSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Crummy\Phlack\Bridge\Guzzle\PhlackPlugin');
+        $this->shouldHaveType('Crummy\Phlack\Bridge\Guzzle\LegacyUrlPlugin');
     }
 
     function it_is_an_event_subscriber()
@@ -36,23 +36,12 @@ class PhlackPluginSpec extends ObjectBehavior
     {
         $e->offsetGet('request')->willReturn($request);
         $request->getUrl(true)->willReturn($url);
-        $url->setHost(sprintf(PhlackPlugin::BASE_URL, 'username'))->willReturn($url);
+        $url->setHost(sprintf(LegacyUrlPlugin::BASE_URL, 'username'))->willReturn($url);
+        $url->setPath(LegacyUrlPlugin::WEBHOOK_PATH)->willReturn($url);
         $url->setScheme('https')->willReturn($url);
         $request->setUrl($url)->shouldBeCalled()->willReturn($request);
         $request->getQuery()->shouldBeCalled()->willReturn($q);
 
         $this->onRequestBeforeSend($e)->shouldReturn(null);
-    }
-
-    public function getMatchers()
-    {
-        return [
-            'haveKey' => function($subject, $key) {
-                return array_key_exists($key, $subject);
-            },
-            'haveValue' => function($subject, $value) {
-                return in_array($value, $subject);
-            },
-        ];
     }
 }
