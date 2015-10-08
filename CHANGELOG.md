@@ -1,6 +1,10 @@
 Changelog
 =========
 
+### `v0.5.7` (2015-10-08)
+
+* Adds support for additional Attachment properties:  `author_name`, `author_link`, `author_icon`, `title`, `title_link`, `image_url`, `thumb_url`, `mrkdwn_in` (Courtesy @errodr)
+
 ### `v0.5.6` (2015-08-14)
 
 * Add support for sending direct messages to a user. (Courtesy @atomasevic)

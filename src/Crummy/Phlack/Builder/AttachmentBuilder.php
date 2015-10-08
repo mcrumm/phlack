@@ -70,6 +70,78 @@ class AttachmentBuilder implements BuilderInterface
     }
 
     /**
+     * @param $author_name
+     * @return $this
+     */
+    public function setAuthorName($author_name)
+    {
+        return $this->setParameter('author_name', $author_name);
+    }
+
+    /**
+     * @param $author_link
+     * @return $this
+     */
+    public function setAuthorLink($author_link)
+    {
+        return $this->setParameter('author_link', $author_link);
+    }
+
+    /**
+     * @param $author_icon
+     * @return $this
+     */
+    public function setAuthorIcon($author_icon)
+    {
+        return $this->setParameter('author_icon', $author_icon);
+    }
+
+    /**
+     * @param $title
+     * @return $this
+     */
+    public function setTitle($title)
+    {
+        return $this->setParameter('title', $title);
+    }
+
+    /**
+     * @param $title_link
+     * @return $this
+     */
+    public function setTitleLink($title_link)
+    {
+        return $this->setParameter('title_link', $title_link);
+    }
+
+    /**
+     * @param $image_url
+     * @return $this
+     */
+    public function setImageUrl($image_url)
+    {
+        return $this->setParameter('image_url', $image_url);
+    }
+
+    /**
+     * @param $thumb_url
+     * @return $this
+     */
+    public function setThumbUrl($thumb_url)
+    {
+        return $this->setParameter('thumb_url', $thumb_url);
+    }
+
+    /**
+     * @param $mrkdwn_in
+     * @return $this
+     */
+    public function setMrkdwnIn($mrkdwn_in)
+    {
+        return $this->setParameter('mrkdwn_in', $mrkdwn_in);
+    }
+
+    /**
      * Sets values on non-empty parameters.
      * Set $value to null to remove the custom value.
      * @param string $name

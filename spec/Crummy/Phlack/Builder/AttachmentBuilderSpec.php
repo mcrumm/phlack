@@ -25,6 +25,14 @@ class AttachmentBuilderSpec extends ObjectBehavior
         $this->setText('text')->shouldReturn($this);
         $this->setPretext('pretext')->shouldReturn($this);
         $this->setColor('danger')->shouldReturn($this);
+        $this->setAuthorName('author name')->shouldReturn($this);
+        $this->setAuthorLink('author link')->shouldReturn($this);
+        $this->setAuthorIcon('http://domain.com/icon.png')->shouldReturn($this);
+        $this->setTitle('title')->shouldReturn($this);
+        $this->setTitleLink('http://www.title-link.com/')->shouldReturn($this);
+        $this->setImageUrl('http://domain.com/image.png')->shouldReturn($this);
+        $this->setThumbUrl('http://domain.com/thumb.png')->shouldReturn($this);
+        $this->setMrkdwnIn(['text', 'pretext'])->shouldReturn($this);
     }
 
     function it_fails_on_empty_fallback()
