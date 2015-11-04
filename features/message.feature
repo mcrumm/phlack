@@ -33,7 +33,7 @@ Feature: Phlack Message
     Then I get the output:
       | output                                 |
       | {"text":"Default"}                     |
-      | {"text":"Dev","channel":"#dev"}        |
+      | {"text":"Dev","channel":"dev"}        |
       | {"text":"Ops","channel":"#ops"}        |
       | {"text":"Banana","channel":"##banana"} |
 
@@ -92,10 +92,11 @@ Feature: Phlack Message
       | 001  |         |          | package     |
       | 010  |         | albert   |             |
       | 011  |         | bob      | clock       |
-      | 100  | nbc     |          |             |
-      | 101  | cbs     |          | hourglass   |
-      | 110  | abc     | carl     |             |
-      | 111  | fox     | doge     | copyright   |
+      | 100  | #nbc     |          |             |
+      | 101  | #cbs     |          | hourglass   |
+      | 110  | #abc     | carl     |             |
+      | 111  | #fox     | doge     | copyright   |
+      | 112  | id       | test     |             |
     When I echo the message
     Then I get the output:
       | output                                                                       |
@@ -107,6 +108,7 @@ Feature: Phlack Message
       | {"text":"101","channel":"#cbs","icon_emoji":":hourglass:"}                   |
       | {"text":"110","channel":"#abc","username":"carl"}                            |
       | {"text":"111","channel":"#fox","username":"doge","icon_emoji":":copyright:"} |
+      | {"text":"112","channel":"id","username":"test"} |
 
   Scenario: Message Attachments
     Given these messages:

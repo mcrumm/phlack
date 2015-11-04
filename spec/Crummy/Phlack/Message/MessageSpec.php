@@ -37,16 +37,14 @@ class MessageSpec extends ObjectBehavior
         $this->setChannel(self::CHANNEL)->shouldReturn($this);
     }
 
-    function it_ensures_channel_begins_with_a_hash()
-    {
-        $withHash = '#'.self::CHANNEL;
-        $this->setChannel(self::CHANNEL)->getChannel()->shouldReturn($withHash);
-        $this->setChannel($withHash)->getChannel()->shouldReturn($withHash);
-    }
-
     function it_allows_for_direct_messages_in_channel()
     {
         $this->setChannel('@mcrumm')->getChannel()->shouldReturn('@mcrumm');
+    }
+
+    function it_does_not_alter_passed_channel()
+    {
+        $this->setChannel(':channel_id')->getChannel()->shouldReturn(':channel_id');
     }
 
     function it_fluently_accepts_an_icon_emoji()
@@ -82,7 +80,7 @@ class MessageSpec extends ObjectBehavior
             ->__toString()
             ->shouldReturn(json_encode([
                 'text'        => self::TEXT,
-                'channel'     => '#'.self::CHANNEL
+                'channel'     => self::CHANNEL
             ]))
         ;
     }
