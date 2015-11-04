@@ -15,10 +15,10 @@ Feature: Message Builder
     When I build the messages:
       | message            | channel |
       | A default message. |         |
-      | Message for bars.  | bar     |
+      | Message for bars.  | #bar    |
       | Message for foos.  | foo     |
     Then I should get the payload:
       | payload                                       |
       | {"text":"A default message."}                 |
       | {"text":"Message for bars.","channel":"#bar"} |
-      | {"text":"Message for foos.","channel":"#foo"} |
+      | {"text":"Message for foos.","channel":"foo"} |

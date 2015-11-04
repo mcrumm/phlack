@@ -40,9 +40,6 @@ class Message extends Partial implements MessageInterface
         ]);
 
         $resolver->setNormalizers([
-            'channel' => function (Options $options, $value) {
-                return empty($value) ? $value : (0 === strpos($value, '#') ? $value : (0 === strpos($value, '@') ? $value : '#' . $value));
-            },
             'icon_emoji' => function(Options $options, $value) {
                 return empty($value) ? $value : sprintf(':%s:', trim($value, ':'));
             }
@@ -66,7 +63,7 @@ class Message extends Partial implements MessageInterface
     public function setChannel($channel)
     {
         if (!empty($channel)) {
-            $this->data['channel'] = (0 === strpos($channel, '#') ? $channel : (0 === strpos($channel, '@') ? $channel : '#' . $channel));
+            $this->data['channel'] = $channel;
         }
         return $this;
     }
