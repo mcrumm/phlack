@@ -1,7 +1,7 @@
 <?php
 
-$client  = require __DIR__ . '/client.php';
-$phlack  = new \Crummy\Phlack\Phlack($client);
+$client = require __DIR__.'/client.php';
+$phlack = new \Crummy\Phlack\Phlack($client);
 
 $response = $phlack->send([
     'channel'      => '#random',
@@ -11,5 +11,5 @@ $response = $phlack->send([
     'text'         => 'I :heart: the <http://api.slack.com|Slack API>!',
 ]);
 
-echo 'Response:' . PHP_EOL;
+echo 'Response:'.PHP_EOL;
 var_dump($response);

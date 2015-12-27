@@ -8,7 +8,7 @@ use Crummy\Phlack\WebHook\WebHookInterface;
 class WebHookMatcher extends CommandNameMatcher
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function matches(CommandInterface $command)
     {

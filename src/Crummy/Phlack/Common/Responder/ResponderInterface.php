@@ -8,12 +8,14 @@ interface ResponderInterface
 {
     /**
      * @param string $text
+     *
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
     public function say($text);
 
     /**
      * @param string $text
+     *
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
     public function emote($text);
@@ -21,6 +23,7 @@ interface ResponderInterface
     /**
      * @param string $user
      * @param string $text
+     *
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
     public function tell($user, $text);
@@ -28,18 +31,21 @@ interface ResponderInterface
     /**
      * @param string $user
      * @param string $text
+     *
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
     public function reply($user, $text);
 
     /**
      * @param string $text
+     *
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
     public function shout($text);
 
     /**
      * @param MessageInterface $message
+     *
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
     public function send(MessageInterface $message);

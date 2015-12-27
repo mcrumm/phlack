@@ -4,20 +4,18 @@ namespace spec\Crummy\Phlack\Bot;
 
 use Crummy\Phlack\Common\Matcher\NonMatcher;
 use Crummy\Phlack\WebHook\CommandInterface;
-use Crummy\Phlack\WebHook\Reply;
 use Crummy\Phlack\WebHook\WebHook;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class RepeaterBotSpec extends ObjectBehavior
 {
-    function it_is_a_repeater_bot()
+    public function it_is_a_repeater_bot()
     {
         $this->shouldHaveType('Crummy\Phlack\Bot\RepeaterBot');
         $this->shouldBeAnInstanceOf('\Crummy\Phlack\Bot\AbstractBot');
     }
 
-    function it_does_the_repeater(WebHook $command)
+    public function it_does_the_repeater(WebHook $command)
     {
         $command->offsetGet('channel_id')->willReturn('C98765');
         $command->offsetGet('channel_name')->willReturn('group');
@@ -30,15 +28,15 @@ class RepeaterBotSpec extends ObjectBehavior
                 ->shouldReturn('<@U12345|crumm> Would you mind stepping down from there, with your license and registration?');
     }
 
-    function it_sets_and_gets_a_matcher(NonMatcher $matcher)
+    public function it_sets_and_gets_a_matcher(NonMatcher $matcher)
     {
         $this->setMatcher($matcher)->shouldReturn($this);
         $this->getMatcher()->shouldReturn($matcher);
     }
 
-    function it_sets_and_gets_a_callable_matcher()
+    public function it_sets_and_gets_a_callable_matcher()
     {
-        $matcher = function(CommandInterface $command) {
+        $matcher = function (CommandInterface $command) {
             return true;
         };
 
@@ -46,14 +44,14 @@ class RepeaterBotSpec extends ObjectBehavior
         $this->getMatcher()->shouldBeCallable();
     }
 
-    function it_fails_to_set_an_invalid_matcher()
+    public function it_fails_to_set_an_invalid_matcher()
     {
         $this
             ->shouldThrow('\Crummy\Phlack\Common\Exception\InvalidArgumentException')
-                ->during('setMatcher', [ 'matcher' ]);
+                ->during('setMatcher', ['matcher']);
     }
 
-    function it_strips_the_command_from_the_webhook_text(WebHook $command)
+    public function it_strips_the_command_from_the_webhook_text(WebHook $command)
     {
         $command->offsetGet('channel_id')->willReturn('C98765');
         $command->offsetGet('channel_name')->willReturn('group');
@@ -66,7 +64,7 @@ class RepeaterBotSpec extends ObjectBehavior
                 ->shouldReturn('<@U12345|crumm> bar');
     }
 
-    function it_does_not_strip_the_first_word_if_not_the_command(WebHook $command)
+    public function it_does_not_strip_the_first_word_if_not_the_command(WebHook $command)
     {
         $command->offsetGet('channel_id')->willReturn('C98765');
         $command->offsetGet('channel_name')->willReturn('group');
@@ -79,7 +77,7 @@ class RepeaterBotSpec extends ObjectBehavior
             ->shouldReturn('<@U12345|crumm> foo bar');
     }
 
-    function it_does_not_strip_multiple_occurrences(WebHook $command)
+    public function it_does_not_strip_multiple_occurrences(WebHook $command)
     {
         $command->offsetGet('channel_id')->willReturn('C98765');
         $command->offsetGet('channel_name')->willReturn('group');

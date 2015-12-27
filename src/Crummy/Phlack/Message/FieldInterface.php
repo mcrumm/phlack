@@ -7,7 +7,7 @@ use Crummy\Phlack\Common\Encodable;
 interface FieldInterface extends Encodable
 {
     /**
-     * @return boolean
+     * @return bool
      */
     public function isShort();
 }

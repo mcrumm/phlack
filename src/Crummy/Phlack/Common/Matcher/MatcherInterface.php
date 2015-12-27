@@ -8,7 +8,8 @@ interface MatcherInterface
 {
     /**
      * @param CommandInterface $command
-     * @return boolean
+     *
+     * @return bool
      */
     public function matches(CommandInterface $command);
 }

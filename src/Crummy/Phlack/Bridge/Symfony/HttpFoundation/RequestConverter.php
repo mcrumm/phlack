@@ -17,16 +17,13 @@ class RequestConverter implements ConverterInterface
 
             if (array_key_exists('command', $parameters)) {
                 return new SlashCommand($parameters);
-            }
-            elseif (empty($parameters)) {
+            } elseif (empty($parameters)) {
                 $parameters = $request->query->all();
             }
 
             return new WebHook($parameters);
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             throw new UnexpectedValueException('Request could not be converted.', 0, $exception);
         }
     }
 }
-

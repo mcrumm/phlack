@@ -8,6 +8,7 @@ class RepeaterBot extends AbstractBot
 {
     /**
      * @param CommandInterface $command
+     *
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
     public function execute(CommandInterface $command)

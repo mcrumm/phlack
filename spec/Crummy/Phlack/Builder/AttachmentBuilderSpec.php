@@ -4,22 +4,21 @@ namespace spec\Crummy\Phlack\Builder;
 
 use Crummy\Phlack\Builder\MessageBuilder;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class AttachmentBuilderSpec extends ObjectBehavior
 {
-    function let(MessageBuilder $messageBuilder)
+    public function let(MessageBuilder $messageBuilder)
     {
         $this->beConstructedWith($messageBuilder);
     }
 
-    function it_is_a_BuilderInterface()
+    public function it_is_a_BuilderInterface()
     {
         $this->shouldHaveType('Crummy\Phlack\Builder\AttachmentBuilder');
         $this->shouldImplement('\Crummy\Phlack\Builder\BuilderInterface');
     }
 
-    function it_provides_a_fluent_interface()
+    public function it_provides_a_fluent_interface()
     {
         $this->setFallback('fallback')->shouldReturn($this);
         $this->setText('text')->shouldReturn($this);
@@ -35,12 +34,12 @@ class AttachmentBuilderSpec extends ObjectBehavior
         $this->setMrkdwnIn(['text', 'pretext'])->shouldReturn($this);
     }
 
-    function it_fails_on_empty_fallback()
+    public function it_fails_on_empty_fallback()
     {
         $this->shouldThrow('\LogicException')->during('create');
     }
 
-    function it_creates_an_attachment()
+    public function it_creates_an_attachment()
     {
         $this
             ->setFallback('fallback')
@@ -48,20 +47,20 @@ class AttachmentBuilderSpec extends ObjectBehavior
                 ->shouldReturnAnInstanceOf('\Crummy\Phlack\Message\Attachment');
     }
 
-    function it_fluently_accepts_field_data()
+    public function it_fluently_accepts_field_data()
     {
         $this
             ->addField('title', 'value', true)
             ->shouldReturn($this);
     }
 
-    function it_adds_fields_to_the_attachment()
+    public function it_adds_fields_to_the_attachment()
     {
         $attachment = $this->setFallback('fallback')->addField('title', 'value', true)->create();
         $attachment['fields']->shouldHaveCount(1);
     }
 
-    function it_refreshes_data_on_create()
+    public function it_refreshes_data_on_create()
     {
         $attachment_1 = $this->setFallback('attachment 1')->addField('attach', '1', true)->create();
 
@@ -75,7 +74,7 @@ class AttachmentBuilderSpec extends ObjectBehavior
         $attachment_2['fields']->shouldHaveCount(2);
     }
 
-    function it_returns_its_parent_on_end(MessageBuilder $messageBuilder)
+    public function it_returns_its_parent_on_end(MessageBuilder $messageBuilder)
     {
         $this->setFallback('foo');
         $this->end()->shouldReturn($messageBuilder);

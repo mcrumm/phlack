@@ -17,7 +17,7 @@ class AbstractAdapter implements AdapterInterface
     protected $converter;
 
     /**
-     * @param Mainframe $mainframe
+     * @param Mainframe          $mainframe
      * @param ConverterInterface $converter
      */
     public function __construct(Mainframe $mainframe, ConverterInterface $converter = null)
@@ -28,11 +28,13 @@ class AbstractAdapter implements AdapterInterface
 
     /**
      * @param Mainframe $mainframe
+     *
      * @return self
      */
     public function setMainframe(Mainframe $mainframe)
     {
         $this->mainframe = $mainframe;
+
         return $this;
     }
 
@@ -45,14 +47,16 @@ class AbstractAdapter implements AdapterInterface
     }
 
     /**
-     * @param BotInterface $bot
+     * @param BotInterface              $bot
      * @param MatcherInterface|callable $matcher
-     * @param int $priority
+     * @param int                       $priority
+     *
      * @return self
      */
     public function attach(BotInterface $bot, $matcher = null, $priority = 0)
     {
         $this->mainframe->attach($bot, $matcher, $priority);
+
         return $this;
     }
 }

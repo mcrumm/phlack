@@ -8,6 +8,7 @@ class FormatterCollection extends TypeCollection implements FormatterInterface
 {
     /**
      * @param string $text
+     *
      * @return string
      */
     public function format($text)
@@ -22,7 +23,8 @@ class FormatterCollection extends TypeCollection implements FormatterInterface
 
     /**
      * @param $value
-     * @return boolean
+     *
+     * @return bool
      */
     public function acceptsType($value)
     {

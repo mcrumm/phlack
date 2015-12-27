@@ -8,31 +8,30 @@ use Guzzle\Http\Message\Request;
 use Guzzle\Http\QueryString;
 use Guzzle\Http\Url;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class LegacyUrlPluginSpec extends ObjectBehavior
 {
-    function let()
+    public function let()
     {
         $this->beConstructedWith('username', 'token');
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Crummy\Phlack\Bridge\Guzzle\LegacyUrlPlugin');
     }
 
-    function it_is_an_event_subscriber()
+    public function it_is_an_event_subscriber()
     {
         $this->shouldImplement('\Symfony\Component\EventDispatcher\EventSubscriberInterface');
     }
 
-    function it_subscribes_to_guzzle_events()
+    public function it_subscribes_to_guzzle_events()
     {
         $this->getSubscribedEvents()->shouldHaveKey('request.before_send');
     }
 
-    function it_dispatches_before_send(Event $e, Request $request, Url $url, QueryString $q)
+    public function it_dispatches_before_send(Event $e, Request $request, Url $url, QueryString $q)
     {
         $e->offsetGet('request')->willReturn($request);
         $request->getUrl(true)->willReturn($url);

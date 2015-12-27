@@ -17,7 +17,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
      * @param Matcher\MatcherInterface $matcher
      * @param array|ResponderInterface $options
      */
-    public function __construct($matcher = null, $options = [ ])
+    public function __construct($matcher = null, $options = [])
     {
         if (!$matcher) {
             $matcher = new Matcher\DefaultMatcher();
@@ -29,8 +29,10 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
 
     /**
      * @param Matcher\MatcherInterface $matcher
-     * @return $this
+     *
      * @throws \Crummy\Phlack\Common\Exception\InvalidArgumentException When given an invalid matcher.
+     *
+     * @return $this
      */
     public function setMatcher($matcher)
     {
@@ -42,6 +44,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
         }
 
         $this->matcher = $matcher;
+
         return $this;
     }
 
@@ -55,6 +58,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
 
     /**
      * @param string $text
+     *
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
     protected function say($text)
@@ -64,6 +68,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
 
     /**
      * @param string $text
+     *
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
     protected function emote($text)
@@ -74,6 +79,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
     /**
      * @param string $user The user_id to tell
      * @param string $text
+     *
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
     protected function tell($user, $text)
@@ -83,7 +89,8 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
 
     /**
      * @param \Crummy\Phlack\WebHook\CommandInterface $user The user_id, or a CommandInterface to inspect.
-     * @param string $text
+     * @param string                                  $text
+     *
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
     protected function reply($user, $text)
@@ -93,6 +100,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
 
     /**
      * @param string $text
+     *
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
     protected function shout($text)
@@ -102,6 +110,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
 
     /**
      * @param MessageInterface $message
+     *
      * @return \Crummy\Phlack\WebHook\Reply\EmptyReply
      */
     protected function send(MessageInterface $message)
