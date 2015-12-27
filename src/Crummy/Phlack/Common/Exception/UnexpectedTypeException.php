@@ -12,7 +12,7 @@ class UnexpectedTypeException extends \InvalidArgumentException
     {
         parent::__construct(sprintf(
             'Expected argument of type %s, %s given.',
-            is_array($expectedType) ? '(' . implode(' | ', $expectedType) . ')' : $expectedType,
+            is_array($expectedType) ? '('.implode(' | ', $expectedType).')' : $expectedType,
             is_object($value) ? get_class($value) : gettype($value)
         ));
     }

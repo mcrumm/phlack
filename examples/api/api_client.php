@@ -8,7 +8,7 @@ if (!file_exists(__DIR__.'/../config.json')) {
     throw new \RuntimeException('Please create examples/config.json before running the examples.');
 }
 
-/**
+/*
  * Using the ServiceBuilder is not necessary,
  * it just simplifies loading configurations for the examples.
  * @var \Guzzle\Service\Builder\ServiceBuilder

@@ -14,11 +14,11 @@ class AbstractCommand extends Hash implements CommandInterface
         'user_id',
         'user_name',
         'command',
-        'text'
+        'text',
     ];
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getChannelName()
     {
@@ -26,7 +26,7 @@ class AbstractCommand extends Hash implements CommandInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getChannelId()
     {
@@ -34,7 +34,7 @@ class AbstractCommand extends Hash implements CommandInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getCommand()
     {
@@ -42,7 +42,7 @@ class AbstractCommand extends Hash implements CommandInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTeamId()
     {
@@ -50,7 +50,7 @@ class AbstractCommand extends Hash implements CommandInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getText()
     {
@@ -58,7 +58,7 @@ class AbstractCommand extends Hash implements CommandInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getToken()
     {
@@ -66,7 +66,7 @@ class AbstractCommand extends Hash implements CommandInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserName()
     {
@@ -74,7 +74,7 @@ class AbstractCommand extends Hash implements CommandInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserId()
     {
@@ -82,7 +82,7 @@ class AbstractCommand extends Hash implements CommandInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __toString()
     {
@@ -90,7 +90,7 @@ class AbstractCommand extends Hash implements CommandInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function jsonSerialize()
     {
@@ -98,7 +98,7 @@ class AbstractCommand extends Hash implements CommandInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function toArray()
     {
@@ -108,7 +108,7 @@ class AbstractCommand extends Hash implements CommandInterface
     /**
      * @return static
      */
-    static public function fromPost()
+    public static function fromPost()
     {
         return new static($_POST);
     }
@@ -116,7 +116,7 @@ class AbstractCommand extends Hash implements CommandInterface
     /**
      * @return static
      */
-    static public function fromGet()
+    public static function fromGet()
     {
         return new static($_GET);
     }

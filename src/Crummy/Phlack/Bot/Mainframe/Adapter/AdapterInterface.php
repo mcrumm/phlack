@@ -10,6 +10,7 @@ interface AdapterInterface
 {
     /**
      * @param Mainframe $mainframe
+     *
      * @return self
      */
     public function setMainframe(Mainframe $mainframe);
@@ -20,9 +21,10 @@ interface AdapterInterface
     public function getConverter();
 
     /**
-     * @param BotInterface $bot
+     * @param BotInterface              $bot
      * @param MatcherInterface|callable $matcher
-     * @param int $priority
+     * @param int                       $priority
+     *
      * @return self
      */
     public function attach(BotInterface $bot, $matcher = null, $priority = 0);

@@ -18,7 +18,8 @@ class CommandNameMatcher implements MatcherInterface
 
     /**
      * @param CommandInterface $command
-     * @return boolean
+     *
+     * @return bool
      */
     public function matches(CommandInterface $command)
     {
@@ -27,11 +28,13 @@ class CommandNameMatcher implements MatcherInterface
 
     /**
      * @param $command
+     *
      * @return $this
      */
     public function setCommandName($command)
     {
         $this->commandName = $command;
+
         return $this;
     }
 

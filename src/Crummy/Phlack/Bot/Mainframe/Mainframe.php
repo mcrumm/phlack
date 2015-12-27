@@ -27,18 +27,21 @@ class Mainframe implements Executable
 
     /**
      * @param CommandInterface $command
+     *
      * @return Packet
      */
     public function execute(CommandInterface $command)
     {
-        $packet = $this->cpu->dispatch(Events::RECEIVED_COMMAND, new Packet([ 'command' => $command ]));
+        $packet = $this->cpu->dispatch(Events::RECEIVED_COMMAND, new Packet(['command' => $command]));
+
         return $this->cpu->dispatch(Events::AFTER_EXECUTE_COMMAND, $packet);
     }
 
     /**
-     * @param BotInterface $bot
-     * @param MatcherInterface|callable $matcher If callable, it should accept a CommandInterface and return a boolean.
-     * @param int $priority
+     * @param BotInterface              $bot
+     * @param MatcherInterface|callable $matcher  If callable, it should accept a CommandInterface and return a boolean.
+     * @param int                       $priority
+     *
      * @return self
      */
     public function attach(BotInterface $bot, $matcher = null, $priority = 0)
@@ -46,7 +49,7 @@ class Mainframe implements Executable
         if (!$matcher && $bot instanceof MatcherAggregate) {
             $matcher = $bot->getMatcher();
         } else {
-            $matcher = function() {
+            $matcher = function () {
                 return true;
             };
         }
@@ -57,10 +60,12 @@ class Mainframe implements Executable
     }
 
     /**
-     * @param BotInterface $bot
+     * @param BotInterface              $bot
      * @param MatcherInterface|callable $matcher If callable, it should accept a CommandInterface and return a boolean.
-     * @return \Closure An anonymous function to be attached to the internal cpu.
+     *
      * @throws \Crummy\Phlack\Common\Exception\InvalidArgumentException When given an invalid matcher.
+     *
+     * @return \Closure An anonymous function to be attached to the internal cpu.
      */
     public function getListener(BotInterface $bot, $matcher)
     {

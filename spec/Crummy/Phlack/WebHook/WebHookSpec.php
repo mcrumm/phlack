@@ -3,7 +3,6 @@
 namespace spec\Crummy\Phlack\WebHook;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class WebHookSpec extends ObjectBehavior
 {
@@ -17,35 +16,35 @@ class WebHookSpec extends ObjectBehavior
         'timestamp'    => 1391368865.000002,
         'user_id'      => '',
         'user_name'    => '',
-        'text'         => ''
+        'text'         => '',
     ];
 
     protected $postBackup;
 
-    function let()
+    public function let()
     {
         $this->postBackup = $_POST;
-        $_POST            = $this->defaultFields;
-        $_POST['token']   = 'POST';
+        $_POST = $this->defaultFields;
+        $_POST['token'] = 'POST';
 
         $this->beConstructedWith($this->defaultFields);
     }
 
-    function it_is_a_webhook_command()
+    public function it_is_a_webhook_command()
     {
         $this->shouldHaveType('Crummy\Phlack\WebHook\WebHook');
         $this->shouldBeAnInstanceOf('\Crummy\Phlack\WebHook\AbstractCommand');
         $this->shouldImplement('\Crummy\Phlack\WebHook\WebHookInterface');
     }
 
-    function it_will_fail_on_fromGet()
+    public function it_will_fail_on_fromGet()
     {
         $this
             ->shouldThrow('\Crummy\Phlack\Common\Exception\RuntimeException')
                 ->during('fromGet');
     }
 
-    function its_command_is_delimited_with_a_colon()
+    public function its_command_is_delimited_with_a_colon()
     {
         $commands = [
             'hello:' => 'hello: world',
@@ -55,13 +54,13 @@ class WebHookSpec extends ObjectBehavior
 
         $postBackup = $_POST;
         foreach ($commands as $command => $text) {
-            $_POST = [ 'text' => $text ] + $postBackup;
+            $_POST = ['text' => $text] + $postBackup;
             $this::fromPost()->getCommand()->shouldReturn($command);
         }
         $_POST = $postBackup;
     }
 
-    function it_normalizes_commands_without_a_delimiter()
+    public function it_normalizes_commands_without_a_delimiter()
     {
         $commands = [
             'hello:' => 'hello world',
@@ -70,12 +69,12 @@ class WebHookSpec extends ObjectBehavior
             'where:' => 'Where in the world is Carmen San Diego?',
             'where:' => 'WhErE cAn I gEt A dRiNk?',
             'wtf:'   => 'WTF',
-            'wtf:'   => 'WTF?!?!?!?!'
+            'wtf:'   => 'WTF?!?!?!?!',
         ];
 
         $postBackup = $_POST;
         foreach ($commands as $command => $text) {
-            $_POST = [ 'text' => $text ] + $postBackup;
+            $_POST = ['text' => $text] + $postBackup;
             $this::fromPost()->getCommand()->shouldReturn($command);
         }
         $_POST = $postBackup;

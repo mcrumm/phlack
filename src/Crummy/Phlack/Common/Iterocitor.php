@@ -18,7 +18,7 @@ class Iterocitor implements ResponderInterface
     /**
      * @param array $options
      */
-    public function __construct($options = [ ])
+    public function __construct($options = [])
     {
         $this->sequencer = new Sequencer();
 
@@ -30,16 +30,16 @@ class Iterocitor implements ResponderInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function say($text)
     {
-        return new Reply( ['text' => $text ]);
+        return new Reply(['text' => $text]);
     }
 
     /**
      * "Emotes" a message into the channel.
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function emote($text)
     {
@@ -48,24 +48,28 @@ class Iterocitor implements ResponderInterface
 
     /**
      * Send a message to a user.
+     *
      * @param string $user user_id
-     * {@inheritDoc}
+     *                     {@inheritdoc}
      */
     public function tell($user, $text)
     {
-        return $this->say($this->sequencer->format('@'.$user) . ' ' . $text);
+        return $this->say($this->sequencer->format('@'.$user).' '.$text);
     }
 
     /**
      * Respond with a reply to a user.
+     *
      * @param CommandInterface|string user_id, or a CommandInterface containing user_id and user_name.
      * @param $text
+     *
      * @return Reply
      */
     public function reply($user, $text)
     {
         if ($user instanceof CommandInterface) {
             $sequence = $this->sequencer->command($user);
+
             return $this->say($sequence['user'].' '.$text);
         }
 
@@ -73,7 +77,7 @@ class Iterocitor implements ResponderInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function send(MessageInterface $message)
     {
@@ -86,6 +90,7 @@ class Iterocitor implements ResponderInterface
 
     /**
      * @param string $text
+     *
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
     public function shout($text)
@@ -96,10 +101,11 @@ class Iterocitor implements ResponderInterface
     /**
      * @param string $where
      * @param string $text
+     *
      * @return Reply
      */
     protected function important($where, $text)
     {
-        return $this->say($this->sequencer->alert($where) . ' ' . $text);
+        return $this->say($this->sequencer->alert($where).' '.$text);
     }
 }

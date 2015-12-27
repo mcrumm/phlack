@@ -14,7 +14,7 @@ class ApiClient extends Client
      */
     public function __construct($config = [])
     {
-        $config = Collection::fromConfig($config, [], [ 'token' ]);
+        $config = Collection::fromConfig($config, [], ['token']);
         parent::__construct('', $config);
 
         $description = ServiceDescription::factory(__DIR__.'/Resources/slack_api.json');
@@ -27,6 +27,7 @@ class ApiClient extends Client
 
     /**
      * @param array $config
+     *
      * @return ApiClient
      */
     public static function factory($config = [])

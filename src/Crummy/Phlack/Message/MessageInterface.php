@@ -8,6 +8,7 @@ interface MessageInterface extends Encodable
 {
     /**
      * @param AttachmentInterface $attachment
+     *
      * @return self
      */
     public function addAttachment(AttachmentInterface $attachment);

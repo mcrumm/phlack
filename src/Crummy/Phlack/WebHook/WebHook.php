@@ -20,7 +20,7 @@ class WebHook extends AbstractCommand implements WebHookInterface
         'timestamp',
         'user_id',
         'user_name',
-        'text'
+        'text',
     ];
 
     /**
@@ -31,13 +31,13 @@ class WebHook extends AbstractCommand implements WebHookInterface
         parent::setDefaultOptions($resolver);
 
         $resolver->setDefaults([
-            'command' => function(Options $options) {
-                $text         = $options['text'];
+            'command' => function (Options $options) {
+                $text = $options['text'];
                 $delimiterPos = strpos($text, self::COMMAND_DELIMITER);
                 $delimiterPos = false === $delimiterPos ? strpos($text, ' ') : $delimiterPos;
 
                 return false === $delimiterPos ? $text : substr($text, 0, $delimiterPos);
-            }
+            },
         ]);
 
         $resolver->setNormalizers([
@@ -48,13 +48,14 @@ class WebHook extends AbstractCommand implements WebHookInterface
                         $value .= self::COMMAND_DELIMITER;
                     }
                 }
+
                 return $value;
-            }
+            },
         ]);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTimestamp()
     {
@@ -62,10 +63,11 @@ class WebHook extends AbstractCommand implements WebHookInterface
     }
 
     /**
-     * @return void
      * @throws \Crummy\Phlack\Common\Exception\RuntimeException
+     *
+     * @return void
      */
-    static public function fromGet()
+    public static function fromGet()
     {
         throw new RuntimeException('GET requests from WebHooks are not allowed.');
     }

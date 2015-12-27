@@ -4,7 +4,7 @@ namespace Crummy\Phlack\WebHook\Reply;
 
 class EmptyReply extends Reply
 {
-    protected $defaults = [ 'text' => '' ];
+    protected $defaults = ['text' => ''];
 
     /**
      * Constructor.
@@ -15,7 +15,7 @@ class EmptyReply extends Reply
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetSet($offset, $value)
     {
@@ -23,7 +23,7 @@ class EmptyReply extends Reply
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function toArray()
     {

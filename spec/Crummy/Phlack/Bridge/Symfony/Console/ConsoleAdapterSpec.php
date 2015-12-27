@@ -8,23 +8,22 @@ use Crummy\Phlack\WebHook\Converter\StringConverter;
 use Crummy\Phlack\WebHook\Reply\Reply;
 use Crummy\Phlack\WebHook\SlashCommand;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleAdapterSpec extends ObjectBehavior
 {
-    function let(Mainframe $mainframe, StringConverter $converter)
+    public function let(Mainframe $mainframe, StringConverter $converter)
     {
         $this->beConstructedWith($mainframe, $converter);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Crummy\Phlack\Bridge\Symfony\Console\ConsoleAdapter');
     }
 
-    function it_executes_the_command_argument($mainframe, $converter, InputInterface $input, SlashCommand $cmd, OutputInterface $output, Packet $p)
+    public function it_executes_the_command_argument($mainframe, $converter, InputInterface $input, SlashCommand $cmd, OutputInterface $output, Packet $p)
     {
         $input->getArgument('command')->willReturn('/expr 2 + 2');
         $converter->convert('/expr 2 + 2')->willReturn($cmd);

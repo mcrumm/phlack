@@ -14,13 +14,14 @@ class Phlack extends Collection
      * Phlack Constructor.
      *
      * @param mixed $client
+     *
      * @throws UnexpectedTypeException
      */
     public function __construct($client)
     {
         if (is_string($client) || is_array($client)) {
             $client = new PhlackClient($client);
-        } elseif (! $client instanceof PhlackClient) {
+        } elseif (!$client instanceof PhlackClient) {
             throw new UnexpectedTypeException($client, ['string', 'array', 'Crummy\Phlack\Bridge\Guzzle\PhlackClient']);
         }
 
@@ -28,7 +29,7 @@ class Phlack extends Collection
             'client'   => $client,
             'builders' => [],
             'commands' => [
-                'send' => 'Send'
+                'send' => 'Send',
             ],
         ]);
     }
@@ -37,9 +38,10 @@ class Phlack extends Collection
      * Phlack Factory.
      *
      * @param array|string $config
+     *
      * @return Phlack
      */
-    static public function factory($config = [ ])
+    public static function factory($config = [])
     {
         return new self(new PhlackClient($config));
     }
@@ -47,15 +49,17 @@ class Phlack extends Collection
     /**
      * @return Phlack
      */
-    public static function fromConfig(array $config = array(), array $defaults = array(), array $required = array())
+    public static function fromConfig(array $config = [], array $defaults = [], array $required = [])
     {
         return new self(new PhlackClient($config));
     }
 
     /**
      * @param string|array|JsonSerializable $message
-     * @return MessageResponse
+     *
      * @throws UnexpectedTypeException
+     *
+     * @return MessageResponse
      */
     public function send($message)
     {
@@ -96,8 +100,10 @@ class Phlack extends Collection
 
     /**
      * @param mixed $message
-     * @return array
+     *
      * @throws UnexpectedTypeException
+     *
+     * @return array
      */
     private function toParameters($message)
     {

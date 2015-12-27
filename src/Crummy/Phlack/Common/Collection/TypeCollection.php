@@ -7,10 +7,11 @@ use Crummy\Phlack\Common\Exception\UnexpectedValueException;
 abstract class TypeCollection extends ArrayCollection
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
+     *
      * @throws UnexpectedValueException
      */
-    public function __construct(array $elements = [ ])
+    public function __construct(array $elements = [])
     {
         parent::__construct();
 
@@ -20,7 +21,8 @@ abstract class TypeCollection extends ArrayCollection
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
+     *
      * @throws UnexpectedValueException
      */
     public function add($value)
@@ -33,7 +35,8 @@ abstract class TypeCollection extends ArrayCollection
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
+     *
      * @throws UnexpectedValueException
      */
     public function set($key, $value)
@@ -47,6 +50,7 @@ abstract class TypeCollection extends ArrayCollection
 
     /**
      * @param $element
+     *
      * @return UnexpectedValueException
      */
     private function doUnexpectedValueError($element)
@@ -59,8 +63,8 @@ abstract class TypeCollection extends ArrayCollection
 
     /**
      * @param $value
-     * @return boolean
+     *
+     * @return bool
      */
     abstract public function acceptsType($value);
 }
- 

@@ -8,7 +8,8 @@ class AttachmentCollection extends EncodableCollection
 {
     /**
      * @param $value
-     * @return boolean
+     *
+     * @return bool
      */
     public function acceptsType($value)
     {

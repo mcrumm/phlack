@@ -7,9 +7,9 @@ use Guzzle\Common\Event as GuzzleEvent;
 class Event extends GuzzleEvent
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function __construct(array $context = [ ])
+    public function __construct(array $context = [])
     {
         $resolver = new OptionsResolver();
         $this->setDefaultOptions($resolver);

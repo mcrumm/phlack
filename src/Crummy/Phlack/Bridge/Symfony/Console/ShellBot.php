@@ -12,7 +12,8 @@ class ShellBot extends Application
     private $bot;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
+     *
      * @param BotCommand $botCommand The BotCommand that executes for this ShellBot.
      */
     public function __construct($name = 'phlackbot', $version = 'UNKNOWN', BotCommand $botCommand = null)
@@ -23,7 +24,7 @@ class ShellBot extends Application
 
     /**
      * Overrides commandName for this ShellBot.
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getCommandName(InputInterface $input)
     {
@@ -32,25 +33,27 @@ class ShellBot extends Application
 
     /**
      * Adds BotCommand as the sole command for this ShellBot.
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getDefaultCommands()
     {
-        $defaultCommands   = parent::getDefaultCommands();
+        $defaultCommands = parent::getDefaultCommands();
         $defaultCommands[] = $this->bot;
+
         return $defaultCommands;
     }
 
     /**
      * Replaces the default InputDefinition with one containing only the 'command' argument.
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDefinition()
     {
         $inputDefinition = parent::getDefinition();
-        $inputDefinition->setArguments(array(
-            new InputArgument('command', InputArgument::OPTIONAL|InputArgument::IS_ARRAY, 'The input command')
-        ));
+        $inputDefinition->setArguments([
+            new InputArgument('command', InputArgument::OPTIONAL | InputArgument::IS_ARRAY, 'The input command'),
+        ]);
+
         return $inputDefinition;
     }
 }

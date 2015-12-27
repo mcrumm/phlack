@@ -8,7 +8,8 @@ class FieldCollection extends EncodableCollection
 {
     /**
      * @param $value
-     * @return boolean
+     *
+     * @return bool
      */
     public function acceptsType($value)
     {

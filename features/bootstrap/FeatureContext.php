@@ -1,11 +1,6 @@
 <?php
 
-use Behat\Behat\Context\ClosuredContextInterface,
-    Behat\Behat\Context\TranslatedContextInterface,
-    Behat\Behat\Context\BehatContext,
-    Behat\Behat\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode,
-    Behat\Gherkin\Node\TableNode;
+use Behat\Behat\Context\BehatContext;
 
 //
 // Require 3rd-party libraries here:
@@ -33,5 +28,4 @@ class FeatureContext extends BehatContext
         $this->useContext('phlack_message_builder', new MessageBuilderContext($parameters));
         $this->useContext('phlack_attachment', new MessageAttachmentContext($parameters));
     }
-
 }

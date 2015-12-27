@@ -20,22 +20,23 @@ class EncoderPlugin implements PluginInterface
     {
         $this->formatter = $formatter ?: new FormatterCollection([
             new LinkFormatter(),
-            new EncodeFormatter()
+            new EncodeFormatter(),
         ]);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getSubscribedEvents()
     {
-       return [
-           Events::AFTER_EXECUTE_COMMAND => 'onAfterExecute'
+        return [
+           Events::AFTER_EXECUTE_COMMAND => 'onAfterExecute',
        ];
     }
 
     /**
      * @param Packet $packet
+     *
      * @return Packet
      */
     public function onAfterExecute(Packet $packet)

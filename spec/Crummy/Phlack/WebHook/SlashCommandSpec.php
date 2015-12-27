@@ -3,7 +3,6 @@
 namespace spec\Crummy\Phlack\WebHook;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class SlashCommandSpec extends ObjectBehavior
 {
@@ -17,26 +16,26 @@ class SlashCommandSpec extends ObjectBehavior
         'user_id'      => '',
         'user_name'    => '',
         'command'      => '',
-        'text'         => ''
+        'text'         => '',
     ];
 
     protected $postBackup;
     protected $getBackup;
 
-    function let()
+    public function let()
     {
         $this->postBackup = $_POST;
-        $_POST            = $this->defaultFields;
-        $_POST['token']   = 'POST';
+        $_POST = $this->defaultFields;
+        $_POST['token'] = 'POST';
 
-        $this->getBackup  = $_GET;
-        $_GET             = $this->defaultFields;
-        $_GET['token']    = 'GET';
+        $this->getBackup = $_GET;
+        $_GET = $this->defaultFields;
+        $_GET['token'] = 'GET';
 
         $this->beConstructedWith($this->defaultFields);
     }
 
-    function it_is_a_webhook_command()
+    public function it_is_a_webhook_command()
     {
         $this->shouldHaveType('Crummy\Phlack\WebHook\SlashCommand');
         $this->shouldBeAnInstanceOf('\Crummy\Phlack\WebHook\AbstractCommand');
@@ -44,19 +43,19 @@ class SlashCommandSpec extends ObjectBehavior
         $this->shouldImplement('\Crummy\Phlack\Common\Encodable');
     }
 
-    function it_defaults_to_post_global()
+    public function it_defaults_to_post_global()
     {
-        $this::fromPost()->toArray()->shouldReturn([ 'token' => 'POST' ] + $this->defaultFields);
+        $this::fromPost()->toArray()->shouldReturn(['token' => 'POST'] + $this->defaultFields);
     }
 
-    function it_can_use_get_global_too()
+    public function it_can_use_get_global_too()
     {
-        $this::fromGet()->toArray()->shouldReturn([ 'token' => 'GET' ] + $this->defaultFields);
+        $this::fromGet()->toArray()->shouldReturn(['token' => 'GET'] + $this->defaultFields);
     }
 
     public function letgo()
     {
-        $_GET  = $this->getBackup;
+        $_GET = $this->getBackup;
         $_POST = $this->postBackup;
     }
 }

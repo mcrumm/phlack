@@ -11,11 +11,12 @@ abstract class Partial extends Hash
      */
     public function jsonSerialize()
     {
-        return array_filter($this->toArray(), function($value) {
+        return array_filter($this->toArray(), function ($value) {
             if ($value instanceof \Countable) {
                 return 0 < $value->count();
             }
-            return (false === $value || !empty($value));
+
+            return false === $value || !empty($value);
         });
     }
 }

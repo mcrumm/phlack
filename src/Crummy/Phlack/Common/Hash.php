@@ -22,18 +22,22 @@ class Hash extends GuzzleCollection implements Encodable
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
+     *
      * @throws RuntimeException if a parameter is missing
      */
-    static public function fromConfig(array $config = array(), array $defaults = array(), array $required = array())
+    public static function fromConfig(array $config = [], array $defaults = [], array $required = [])
     {
-        throw new RuntimeException(get_called_class() . ' cannot be instantiated statically.');
+        throw new RuntimeException(get_called_class().' cannot be instantiated statically.');
     }
 
     /**
      * Returns an array of keys and the default values for this Hash.
+     *
      * @see \Guzzle\Common\Collection::setDefaults()
+     *
      * @return array
+     *
      * @deprecated Will be removed in 0.6.0
      */
     public function getDefaults()
@@ -43,8 +47,11 @@ class Hash extends GuzzleCollection implements Encodable
 
     /**
      * Returns an array of required keys for this Hash.
+     *
      * @see \Guzzle\Common\Collection::setRequired()
+     *
      * @return array
+     *
      * @deprecated Will be removed in 0.6.0
      */
     public function getRequired()
@@ -54,8 +61,11 @@ class Hash extends GuzzleCollection implements Encodable
 
     /**
      * Returns an array of optional keys for this Hash.
+     *
      * @see \Guzzle\Common\Collection::setOptional()
+     *
      * @return array
+     *
      * @deprecated Will be removed in 0.6.0
      */
     public function getOptional()
@@ -64,7 +74,7 @@ class Hash extends GuzzleCollection implements Encodable
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __toString()
     {
@@ -72,7 +82,7 @@ class Hash extends GuzzleCollection implements Encodable
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function jsonSerialize()
     {
