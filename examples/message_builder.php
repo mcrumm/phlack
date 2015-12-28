@@ -4,7 +4,7 @@ $client = require __DIR__.'/client.php';
 $phlack = new \Crummy\Phlack\Phlack($client);
 $message = $phlack->getMessageBuilder()
                         ->setText('This message was sent at: '.date('Y-m-d H:i:s'))
-                        ->setChannel('general')
+                        ->setChannel('#general')
                         ->setUsername('message-builder')
                         ->setIconEmoji('clock330')
                         ->create();

@@ -17,13 +17,6 @@ class FieldSpec extends ObjectBehavior
         $this->shouldImplement('\Crummy\Phlack\Common\Encodable');
     }
 
-    public function it_provides_a_fluent_interface($title, $value, $short)
-    {
-        $this->setTitle($title)->shouldReturn($this);
-        $this->setValue($value)->shouldReturn($this);
-        $this->setShort($short)->shouldReturn($this);
-    }
-
     public function it_should_be_short()
     {
         $this['short'] = true;

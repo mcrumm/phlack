@@ -19,48 +19,6 @@ class Field extends Partial implements FieldInterface
     }
 
     /**
-     * @param string $title
-     *
-     * @return $this
-     *
-     * @deprecated Will be removed in 0.6.0
-     */
-    public function setTitle($title)
-    {
-        $this['title'] = $title;
-
-        return $this;
-    }
-
-    /**
-     * @param string $value
-     *
-     * @return $this
-     *
-     * @deprecated Will be removed in 0.6.0
-     */
-    public function setValue($value)
-    {
-        $this['value'] = $value;
-
-        return $this;
-    }
-
-    /**
-     * @param bool $isShort
-     *
-     * @return $this
-     *
-     * @deprecated Will be removed in 0.6.0
-     */
-    public function setShort($isShort)
-    {
-        $this['short'] = (boolean) $isShort;
-
-        return $this;
-    }
-
-    /**
      * @return bool
      */
     public function isShort()

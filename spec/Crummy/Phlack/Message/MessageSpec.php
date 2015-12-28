@@ -26,64 +26,51 @@ class MessageSpec extends ObjectBehavior
 
     public function it_contains_text()
     {
-        $this->getText()->shouldReturn(self::TEXT);
-    }
-
-    public function it_fluently_accepts_an_optional_channel()
-    {
-        $this->setChannel(self::CHANNEL)->shouldReturn($this);
+        $this->offsetGet('text')->shouldReturn(self::TEXT);
     }
 
     public function it_allows_for_direct_messages_in_channel()
     {
-        $this->setChannel('@mcrumm')->getChannel()->shouldReturn('@mcrumm');
+        $this->beConstructedWith(self::TEXT, '@mcrumm');
+
+        $this->offsetGet('channel')->shouldBe('@mcrumm');
     }
 
     public function it_does_not_alter_passed_channel()
     {
-        $this->setChannel(':channel_id')->getChannel()->shouldReturn(':channel_id');
+        $this->beConstructedWith(self::TEXT, ':channel_id');
+
+        $this->offsetGet('channel')->shouldBe(':channel_id');
     }
 
-    public function it_fluently_accepts_an_icon_emoji()
-    {
-        $this->setIconEmoji(self::ICON_EMOJI)->shouldReturn($this);
-    }
-
-    public function it_wraps_icon_emoji_in_colons()
+    public function it_wraps_icon_emoji_in_colons_on_construct()
     {
         $wrapped = ':'.self::ICON_EMOJI.':';
 
-        $this
-            ->setIconEmoji(self::ICON_EMOJI)
-            ->getIconEmoji()
-                ->shouldReturn($wrapped);
+        $this->beConstructedWith(self::TEXT, self::CHANNEL, self::USERNAME, self::ICON_EMOJI);
 
-        $this
-            ->setIconEmoji($wrapped)
-            ->getIconEmoji()
-                ->shouldReturn($wrapped);
+        $this->offsetGet('icon_emoji')->shouldBe($wrapped);
     }
 
-    public function it_fluently_accepts_an_username()
+    public function it_does_not_double_wrap_the_icon_emoji()
     {
-        $this->setUsername(self::USERNAME)->shouldReturn($this);
-        $this->getUsername()->shouldReturn(self::USERNAME);
+        $wrapped = ':'.self::ICON_EMOJI.':';
+
+        $this->beConstructedWith(self::TEXT, self::CHANNEL, self::USERNAME, $wrapped);
+
+        $this->offsetGet('icon_emoji')->shouldBe($wrapped);
     }
 
     public function it_prints_as_json()
     {
+        $this->beConstructedWith(self::TEXT, self::CHANNEL);
+
         $this
-            ->setChannel(self::CHANNEL)
             ->__toString()
             ->shouldReturn(json_encode([
                 'text'        => self::TEXT,
                 'channel'     => self::CHANNEL,
             ]));
-    }
-
-    public function it_sets_an_AttachmentCollection_on_the_Message(AttachmentCollection $attachments, AttachmentInterface $attachment)
-    {
-        $this->setAttachments($attachments)->shouldReturn($this);
     }
 
     public function it_returns_an_attachment_collection()
@@ -108,6 +95,8 @@ class MessageSpec extends ObjectBehavior
         $attachments->count()->shouldBeCalled();
         $attachments->jsonSerialize()->shouldNotBeCalled();
 
-        $this->setAttachments($attachments)->jsonSerialize();
+        $this->offsetSet('attachments', $attachments);
+
+        $this->jsonSerialize();
     }
 }
