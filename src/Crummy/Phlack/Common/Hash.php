@@ -32,48 +32,6 @@ class Hash extends GuzzleCollection implements Encodable
     }
 
     /**
-     * Returns an array of keys and the default values for this Hash.
-     *
-     * @see \Guzzle\Common\Collection::setDefaults()
-     *
-     * @return array
-     *
-     * @deprecated Will be removed in 0.6.0
-     */
-    public function getDefaults()
-    {
-        return $this->defaults;
-    }
-
-    /**
-     * Returns an array of required keys for this Hash.
-     *
-     * @see \Guzzle\Common\Collection::setRequired()
-     *
-     * @return array
-     *
-     * @deprecated Will be removed in 0.6.0
-     */
-    public function getRequired()
-    {
-        return $this->required;
-    }
-
-    /**
-     * Returns an array of optional keys for this Hash.
-     *
-     * @see \Guzzle\Common\Collection::setOptional()
-     *
-     * @return array
-     *
-     * @deprecated Will be removed in 0.6.0
-     */
-    public function getOptional()
-    {
-        return $this->optional;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function __toString()

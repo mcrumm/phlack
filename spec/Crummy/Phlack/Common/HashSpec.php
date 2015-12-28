@@ -29,18 +29,8 @@ class HashSpec extends ObjectBehavior
         $this->__toString()->shouldReturn('{"text":"Hello!"}');
     }
 
-    public function it_has_no_default_parameters()
+    public function it_has_no_defined_parameters()
     {
-        $this->getDefaults()->shouldBe([]);
-    }
-
-    public function it_has_no_optional_parameters()
-    {
-        $this->getOptional()->shouldBe([]);
-    }
-
-    public function it_has_no_required_parameters()
-    {
-        $this->getRequired()->shouldBe([]);
+        $this->jsonSerialize()->shouldBe([]);
     }
 }

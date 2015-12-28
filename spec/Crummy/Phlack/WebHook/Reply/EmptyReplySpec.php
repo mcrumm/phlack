@@ -14,7 +14,7 @@ class EmptyReplySpec extends ObjectBehavior
 
     public function its_default_is_empty_text()
     {
-        $this->getDefaults()->shouldReturn(['text' => '']);
+        $this->toArray()->shouldReturn(['text' => '']);
     }
 
     public function its_text_is_immutable()
