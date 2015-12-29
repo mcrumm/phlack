@@ -18,9 +18,21 @@ class HashSpec extends ObjectBehavior
         $this->shouldImplement('\Crummy\Phlack\Common\Encodable');
     }
 
-    public function it_cannot_be_instantiated_fromConfig()
+    public function it_can_be_instantiated_fromConfig()
     {
-        $this->shouldThrow('\Crummy\Phlack\Common\Exception\RuntimeException')->during('fromConfig');
+        $this->beConstructedThrough('fromConfig', [[]]);
+
+        $this->toArray()->shouldBe([]);
+    }
+
+    public function it_does_not_support_defaults_fromConfig()
+    {
+        $this->shouldThrow('\LogicException')->duringFromConfig([], ['foo' => 'bar']);
+    }
+
+    public function it_does_not_support_required_fromConfig()
+    {
+        $this->shouldThrow('\LogicException')->duringFromConfig([], [], ['foo' => 'bar']);
     }
 
     public function it_echoes_a_json_hash()
