@@ -101,7 +101,7 @@ class MessageContext extends BehatContext
         foreach ($messagesTable->getHash() as $messageHash) {
             $args = [$messageHash['text']];
             foreach (['channel', 'username', 'icon_emoji'] as $parameter) {
-                $args[] = isset ($messageHash[$parameter]) ? $messageHash[$parameter] : null;
+                $args[] = isset($messageHash[$parameter]) ? $messageHash[$parameter] : null;
             }
             list($text, $channel, $username, $icon) = $args;
             $messages[] = new Message($text, $channel, $username, $icon);

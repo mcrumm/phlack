@@ -20,7 +20,7 @@ class Attachment extends Partial implements AttachmentInterface
         'title_link',
         'image_url',
         'thumb_url',
-        'mrkdwn_in'
+        'mrkdwn_in',
     ];
 
     /**
