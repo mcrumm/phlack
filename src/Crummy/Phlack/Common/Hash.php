@@ -2,7 +2,7 @@
 
 namespace Crummy\Phlack\Common;
 
-use Crummy\Phlack\Common\Exception\RuntimeException;
+use Crummy\Phlack\Common\Exception\LogicException;
 use Guzzle\Common\Collection as GuzzleCollection;
 
 class Hash extends GuzzleCollection implements Encodable
@@ -23,12 +23,14 @@ class Hash extends GuzzleCollection implements Encodable
 
     /**
      * {@inheritdoc}
-     *
-     * @throws RuntimeException if a parameter is missing
      */
     public static function fromConfig(array $config = [], array $defaults = [], array $required = [])
     {
-        throw new RuntimeException(get_called_class().' cannot be instantiated statically.');
+        if (!empty($defaults) || !empty($required)) {
+            throw new LogicException('Setting options on fromConfig is not allowed.');
+        }
+
+        return new static($config);
     }
 
     /**

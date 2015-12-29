@@ -7,7 +7,7 @@ use PhpSpec\ObjectBehavior;
 class SlashCommandSpec extends ObjectBehavior
 {
     protected $defaultFields = [
-        'token'        => '',
+        'token'        => 'phlack_spec_token',
         'team_id'      => '',
         'team_domain'  => '',
         'service_id'   => '',
@@ -19,19 +19,8 @@ class SlashCommandSpec extends ObjectBehavior
         'text'         => '',
     ];
 
-    protected $postBackup;
-    protected $getBackup;
-
     public function let()
     {
-        $this->postBackup = $_POST;
-        $_POST = $this->defaultFields;
-        $_POST['token'] = 'POST';
-
-        $this->getBackup = $_GET;
-        $_GET = $this->defaultFields;
-        $_GET['token'] = 'GET';
-
         $this->beConstructedWith($this->defaultFields);
     }
 
@@ -43,19 +32,11 @@ class SlashCommandSpec extends ObjectBehavior
         $this->shouldImplement('\Crummy\Phlack\Common\Encodable');
     }
 
-    public function it_defaults_to_post_global()
+    public function it_can_be_created_fromConfig()
     {
-        $this::fromPost()->toArray()->shouldReturn(['token' => 'POST'] + $this->defaultFields);
-    }
+        $config = ['team_domain' => 'http://phlack.slack.com'] + $this->defaultFields;
+        $this->beConstructedThrough('fromConfig', [$config]);
 
-    public function it_can_use_get_global_too()
-    {
-        $this::fromGet()->toArray()->shouldReturn(['token' => 'GET'] + $this->defaultFields);
-    }
-
-    public function letgo()
-    {
-        $_GET = $this->getBackup;
-        $_POST = $this->postBackup;
+        $this->toArray()->shouldReturn($config);
     }
 }
