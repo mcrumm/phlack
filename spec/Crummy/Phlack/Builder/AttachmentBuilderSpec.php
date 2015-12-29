@@ -79,4 +79,17 @@ class AttachmentBuilderSpec extends ObjectBehavior
         $this->setFallback('foo');
         $this->end()->shouldReturn($messageBuilder);
     }
+
+    public function it_returns_self_on_end_when_no_parent_is_set()
+    {
+        $this->beConstructedWith();
+        $this->end()->shouldReturn($this);
+    }
+
+    public function it_does_not_set_an_empty_value()
+    {
+        $attachment = $this->setFallback('fallback')->setFallback('')->create();
+
+        $attachment['fallback']->shouldBe('fallback');
+    }
 }
