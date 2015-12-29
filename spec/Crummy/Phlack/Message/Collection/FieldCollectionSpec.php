@@ -25,4 +25,58 @@ class FieldCollectionSpec extends ObjectBehavior
             ->shouldThrow('\Crummy\Phlack\Common\Exception\RuntimeException')
             ->during('add', [$attachment]);
     }
+
+    /**
+     *  @dataProvider fieldExamples
+     */
+    public function it_can_be_passed_to_json_encode($field, $expected)
+    {
+        $this->add($field);
+
+        $this->jsonSerialize()->shouldBeLike($expected);
+    }
+
+    /**
+     *  @dataProvider jsonExamples
+     */
+    public function it_can_be_cast_as_a_json_string($field, $expected)
+    {
+        $this->add($field);
+
+        $this->__toString()->shouldBe($expected);
+    }
+
+    public function fieldExamples()
+    {
+        return $this->getExamples(function ($example) {
+            $field = Field::fromConfig($example);
+            return [$field, [$field]];
+        });
+    }
+
+    public function jsonExamples()
+    {
+        return $this->getExamples(function ($example) {
+            $field = Field::fromConfig($example);
+            return [$field, json_encode([$field])];
+        });
+    }
+
+    public function getExamples(callable $callback)
+    {
+        $data = [
+            [
+                'title' => 'Field 1',
+                'value' => 1,
+                'short' => true
+            ],
+            [
+                'title' => 'Field 2',
+                'value' => 2,
+                'short' => false
+            ],
+        ];
+
+        return array_map($callback, $data);
+    }
 }

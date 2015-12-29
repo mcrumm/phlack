@@ -2,7 +2,6 @@
 
 namespace spec\Crummy\Phlack\Message;
 
-use Crummy\Phlack\Message\Collection\FieldCollection;
 use Crummy\Phlack\Message\FieldInterface;
 use PhpSpec\ObjectBehavior;
 
@@ -48,5 +47,16 @@ class AttachmentSpec extends ObjectBehavior
     {
         $this->addField($field);
         $this->jsonSerialize()['fields']->shouldHaveCount(1);
+    }
+
+    public function it_returns_its_fields_as_a_collection()
+    {
+        $this->getFields()->shouldBeAnInstanceOf('Crummy\Phlack\Message\Collection\FieldCollection');
+    }
+
+    public function it_returns_a_collection_containing_the_added_field(FieldInterface $field)
+    {
+        $this->addField($field);
+        $this->getFields()->toArray()->shouldContain($field);
     }
 }
