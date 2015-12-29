@@ -2,7 +2,7 @@
 
 namespace Crummy\Phlack\Common;
 
-use Crummy\Phlack\Common\Exception\RuntimeException;
+use Crummy\Phlack\Common\Exception\LogicException;
 use Guzzle\Common\Collection as GuzzleCollection;
 
 class Hash extends GuzzleCollection implements Encodable
@@ -23,54 +23,14 @@ class Hash extends GuzzleCollection implements Encodable
 
     /**
      * {@inheritdoc}
-     *
-     * @throws RuntimeException if a parameter is missing
      */
     public static function fromConfig(array $config = [], array $defaults = [], array $required = [])
     {
-        throw new RuntimeException(get_called_class().' cannot be instantiated statically.');
-    }
+        if (!empty($defaults) || !empty($required)) {
+            throw new LogicException('Setting options on fromConfig is not allowed.');
+        }
 
-    /**
-     * Returns an array of keys and the default values for this Hash.
-     *
-     * @see \Guzzle\Common\Collection::setDefaults()
-     *
-     * @return array
-     *
-     * @deprecated Will be removed in 0.6.0
-     */
-    public function getDefaults()
-    {
-        return $this->defaults;
-    }
-
-    /**
-     * Returns an array of required keys for this Hash.
-     *
-     * @see \Guzzle\Common\Collection::setRequired()
-     *
-     * @return array
-     *
-     * @deprecated Will be removed in 0.6.0
-     */
-    public function getRequired()
-    {
-        return $this->required;
-    }
-
-    /**
-     * Returns an array of optional keys for this Hash.
-     *
-     * @see \Guzzle\Common\Collection::setOptional()
-     *
-     * @return array
-     *
-     * @deprecated Will be removed in 0.6.0
-     */
-    public function getOptional()
-    {
-        return $this->optional;
+        return new static($config);
     }
 
     /**

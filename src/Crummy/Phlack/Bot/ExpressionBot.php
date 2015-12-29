@@ -47,7 +47,7 @@ class ExpressionBot extends AbstractBot
      */
     protected function evaluate(CommandInterface $command, $values = [])
     {
-        return $this->language->evaluate($command->getText(), $values);
+        return $this->language->evaluate($command['text'], $values);
     }
 
     /**

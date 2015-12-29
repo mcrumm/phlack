@@ -41,9 +41,7 @@ class AttachmentBuilder implements BuilderInterface
      */
     public function setFallback($fallback)
     {
-        $this->data['fallback'] = (string) $fallback;
-
-        return $this;
+        return $this->setParameter('fallback', (string) $fallback);
     }
 
     /**

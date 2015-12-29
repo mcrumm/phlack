@@ -33,7 +33,7 @@ Feature: Phlack Message
     Then I get the output:
       | output                                 |
       | {"text":"Default"}                     |
-      | {"text":"Dev","channel":"dev"}        |
+      | {"text":"Dev","channel":"dev"}         |
       | {"text":"Ops","channel":"#ops"}        |
       | {"text":"Banana","channel":"##banana"} |
 
@@ -54,12 +54,12 @@ Feature: Phlack Message
      | copyright: |
    And I echo the message
    Then I get the output:
-     | output                                                      |
-     | {"text":"This is the default."}                             |
-     | {"text":"This is a Package.","icon_emoji":":package:"}      |
-     | {"text":"This is a Cookie.","icon_emoji":":cookie:"}        |
-     | {"text":"This is an Hourglass.","icon_emoji":":hourglass:"} |
-     | {"text":"This is a Copyright.","icon_emoji":":copyright:"}  |
+     | output                                                     |
+     | {"text":"This is the default."}                            |
+     | {"text":"This is a Package.","icon_emoji":"package"}       |
+     | {"text":"This is a Cookie.","icon_emoji":":cookie:"}       |
+     | {"text":"This is an Hourglass.","icon_emoji":":hourglass"} |
+     | {"text":"This is a Copyright.","icon_emoji":"copyright:"}  |
 
   Scenario: Messages with usernames
     Given there are messages:
@@ -87,11 +87,11 @@ Feature: Phlack Message
 
   Scenario: The kitchen sink of Messages
     Given these messages:
-      | text | channel | username | icon_emoji  |
-      | 000  |         |          |             |
-      | 001  |         |          | package     |
-      | 010  |         | albert   |             |
-      | 011  |         | bob      | clock       |
+      | text | channel  | username | icon_emoji  |
+      | 000  |          |          |             |
+      | 001  |          |          | package     |
+      | 010  |          | albert   |             |
+      | 011  |          | bob      | clock       |
       | 100  | #nbc     |          |             |
       | 101  | #cbs     |          | hourglass   |
       | 110  | #abc     | carl     |             |

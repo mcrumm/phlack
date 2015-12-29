@@ -8,7 +8,7 @@ class ReplySpec extends ObjectBehavior
 {
     public function let()
     {
-        $this->beConstructedWith(['text' => 'ok']);
+        $this->beConstructedWith([]);
     }
 
     public function it_is_initializable()
@@ -19,22 +19,25 @@ class ReplySpec extends ObjectBehavior
 
     public function it_defaults_to_empty_text()
     {
-        $this->getDefaults()->shouldReturn(['text' => '']);
+        $this->toArray()->shouldReturn(['text' => '']);
     }
 
     public function it_stores_text_in_the_array()
     {
+        $this->offsetSet('text', 'ok');
         $this->toArray()->shouldReturn(['text' => 'ok']);
     }
 
     public function it_only_serializes_text()
     {
+        $this->offsetSet('text', 'bar');
         $this->offsetSet('channel', 'foo');
-        $this->jsonSerialize()->shouldReturn(['text' => 'ok']);
+        $this->jsonSerialize()->shouldReturn(['text' => 'bar']);
     }
 
     public function it_only_echoes_text()
     {
+        $this->offsetSet('text', 'ok');
         $this->offsetSet('iconEmoji', 'ghost');
         $this->__toString()->shouldReturn('{"text":"ok"}');
     }
