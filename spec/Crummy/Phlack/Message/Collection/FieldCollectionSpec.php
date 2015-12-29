@@ -50,6 +50,7 @@ class FieldCollectionSpec extends ObjectBehavior
     {
         return $this->getExamples(function ($example) {
             $field = Field::fromConfig($example);
+
             return [$field, [$field]];
         });
     }
@@ -58,6 +59,7 @@ class FieldCollectionSpec extends ObjectBehavior
     {
         return $this->getExamples(function ($example) {
             $field = Field::fromConfig($example);
+
             return [$field, json_encode([$field])];
         });
     }
@@ -68,12 +70,12 @@ class FieldCollectionSpec extends ObjectBehavior
             [
                 'title' => 'Field 1',
                 'value' => 1,
-                'short' => true
+                'short' => true,
             ],
             [
                 'title' => 'Field 2',
                 'value' => 2,
-                'short' => false
+                'short' => false,
             ],
         ];
 
