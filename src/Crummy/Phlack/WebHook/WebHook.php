@@ -2,7 +2,6 @@
 
 namespace Crummy\Phlack\WebHook;
 
-use Crummy\Phlack\Common\Exception\RuntimeException;
 use Crummy\Phlack\Common\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
 
@@ -52,23 +51,5 @@ class WebHook extends AbstractCommand implements WebHookInterface
                 return $value;
             },
         ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getTimestamp()
-    {
-        return $this->data['timestamp'];
-    }
-
-    /**
-     * @throws \Crummy\Phlack\Common\Exception\RuntimeException
-     *
-     * @return void
-     */
-    public static function fromGet()
-    {
-        throw new RuntimeException('GET requests from WebHooks are not allowed.');
     }
 }

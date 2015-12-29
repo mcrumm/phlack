@@ -26,7 +26,7 @@ class MessageBuilderContext extends BehatContext
         /** @var Message $message */
         foreach ($messages as $message) {
             if ($this->attachments) {
-                $message->setAttachments($this->attachments);
+                $message['attachments'] = $this->attachments;
             }
             OutputContext::pushOutput((string) $message);
         }

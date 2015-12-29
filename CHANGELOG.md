@@ -1,6 +1,17 @@
 Changelog
 =========
 
+### `v0.6.0` (2015-12-29)
+
+**BC BREAK**: The `channel` message parameter is no longer normalized to ensure a `#` prefix. This allows you to use `@username` as the channel to send a DM, or to use the channel id (`C_____`) directly.
+
+**BC BREAK**: Message objects no longer contain setter/getter methods for parameters.  Use the `ArrayAccess` syntax to access or mutate these properties.
+
+* [#26](https://github.com/mcrumm/phlack/pull/26): Remove normalization for `channel` to allow for DMs and raw channel ids (Courtesy @errodr)
+* Remove deprecated methods from `Message` classes
+* Add some missing tests
+* Add more documentation
+
 ### `v0.5.7` (2015-10-08)
 
 * Adds support for additional Attachment properties:  `author_name`, `author_link`, `author_icon`, `title`, `title_link`, `image_url`, `thumb_url`, `mrkdwn_in` (Courtesy @errodr)

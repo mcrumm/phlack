@@ -7,5 +7,6 @@ code_coverage:
     html: spec/coverage
     clover: spec/coverage/clover.xml
 extensions:
+    - Coduo\PhpSpec\DataProvider\DataProviderExtension
     - PhpSpec\NyanFormattersExtension\Extension
     - PhpSpec\Extension\CodeCoverageExtension

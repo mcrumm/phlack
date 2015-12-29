@@ -5,7 +5,31 @@ Phlack
 
 Phlack eases the creation of [Slack Integrations](http://slack.com) in PHP.
 
-**Update:** Phlack now contains a partial implementation of the [Slack API](http://api.slack.com). For details, see the [API Docs](#slack-api) section below.
+- [Installation](#installation)
+- [Basic Usage](#basic-usage)
+  - [Send a Message](#send-a-message)
+- [Advanced Usage](#advanced-usage)
+  - [Legacy WebHook URLs](#legacy-webhook-urls)
+  - [Factory Method](#factory-method)
+  - [New Instance](#new-instance)
+- [Messages](#messages)
+  - [Creating Messages](#creating-messages)
+    - [Message Builder](#message-builder)
+    - [Attachment Builder](#attachment-builder)
+    - [Message Object](#message-object)
+  - [Sending Messages](#sending-messages)
+    - [Custom Messages](#custom-messages)
+    - [Message Response](#message-response)
+  - [More Examples](#more-examples)
+- [Slack API](#slack-api)
+  - [Getting a Client](#getting-a-client)
+  - [Methods](#api-methods)
+  - [Resource Iterators](#resource-iterators)
+  - [Examples](#more-api-examples)
+- [Disclaimer](#disclaimer)
+- [Credits](#credits)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Installation
 
@@ -32,11 +56,9 @@ if (200 === $response['status']) {
 
 ## Advanced Usage
 
-### Configuration Options
+### Legacy WebHook URLs
 
-#### Legacy WebHook URLs
-
-A previous version of Incoming Webhooks used a generic webhook path for every team URL. If your webhook URL starts with something like `myteam.slack.com`, give Phlack your team name and Incoming Webhook token, and it will do the rest:
+Early versions of Incoming Webhooks used a generic webhook path for all teams. If your webhook URL starts with something like `myteam.slack.com`, give Phlack your team name and Incoming Webhook token, and it will do the rest:
 
 ```php
 <?php
@@ -46,7 +68,7 @@ $phlack  = new Crummy\Phlack\Phlack([
 ]);
 ```
 
-#### via `factory()`:
+### Factory Method
 
 If you prefer, you can instantiate Phlack via its static `factory()` method:
 
@@ -55,7 +77,7 @@ If you prefer, you can instantiate Phlack via its static `factory()` method:
 $phlack = Crummy\Phlack\Phlack::factory($config);
 ```
 
-#### via `new Phlack()`:
+### New Instance
 
 Besides a webhook url or an array configuration, Phlack will also accept a `PhlackClient` instance as a constructor argument:
 
@@ -70,24 +92,17 @@ $phlack = new Crummy\Phlack\Phlack($client);
 #### :heart: for Guzzle
 The PhlackClient is simply a web service client implemented with [Guzzle](http://guzzlephp.org).  Examine its [service description](src/Crummy/Phlack/Bridge/Guzzle/Resources/slack.json) for more details.
 
+## Messages
+
+> Messages represent the payload for Slack's Incoming WebHook integration.
+
 ### Creating Messages
 
-A Phlack [Message](src/Crummy/Phlack/Message/Message.php) takes care of structuring the payload for Slack's Incoming Webhooks integration.
+Messages can be created using the provided builders, or they can be instantiated directly.
 
-#### via `new Message()`;
+#### Message Builder
 
-```php
-<?php
-//...
-use Crummy\Phlack\Message\Message;
-$message = new Message('Hello, from phlack!');
-echo 'The message payload: ' . PHP_EOL:
-echo $message;
-```
-
-### via the `MessageBuilder`
-
-A [MessageBuilder](src/Crummy/Phlack/Builder/MessageBuilder.php) is also provided:
+> The [MessageBuilder](src/Crummy/Phlack/Builder/MessageBuilder.php) allows for programmatic creation of a Message object.
 
 ```php
 <?php
@@ -98,6 +113,89 @@ $messageBuilder
   ->setChannel('testing')
   ->setIconEmoji('ghost');
 $message = $messageBuilder->create();
+```
+
+You can also use the `MessageBuilder` directly to create the `Message` object *and* add Attachments.  The `MessageBuilder` supports method chaining to allow for adding multiple `Attachment` objects to a single message.
+
+```php
+$messageBuilder = $phlack->getMessageBuilder(); // Get the MessageBuilder
+
+$messageBuilder
+    ->setText('This message contains multiple attachments.') // Message text.
+    ->createAttachment()  // Returns the AttachmentBuilder.
+        ->setTitle($title)
+        ->setTitleLink($link)
+        ->setPretext($pretext)
+        ->setText($body)
+        ->setColor($color)
+        ->setFallback($title . ' ' . $pretext)
+    ->end() // Creates the first attachment and returns the MessageBuilder
+    ->setUsername($username) // Sets username on the Message object.
+    ->createAttachment() // Returns the AttachmentBuilder.
+        ->setTitle('Attachment #2')
+        ->setFallback('Attachment #2 for example purposes')
+        ->setText('Add multiple attachments to a Phlack Message via method chaining.')
+    ->end() // Creates the second attachment and returns the MessageBuilder.
+;
+
+$message = $messageBuilder->create();
+```
+
+> *Note:* When adding Attachments this way, you **must** call `end()` once for each attachment so that the `MessageBuilder` knows to create the `Attachment` object and return itself for further modification.
+
+#### Attachment Builder
+
+If you prefer, you may use the [AttachmentBuilder](src/Crummy/Phlack/Builder/AttachmentBuilder.php) in a standalone fashion:
+
+```php
+<?php
+// ...
+
+// Get the AttachmentBuilder
+$attachmentBuilder = $phlack->getAttachmentBuilder();
+
+// Create the Attachment
+$attachment =
+    $attachmentBuilder
+        ->setTitle('My Attachment Title')
+        ->setTitleLink('http://www.example.com')
+        ->setPretext('Some optional pretext')
+        ->setText('This is the body of my attachment')
+        ->setColor($color)
+        ->addField('Field 1', 'Some Value', true)
+        ->setFallback($title . ' ' . $pretext)
+    ->create()
+;
+
+// Create a Message to contain the Attachment
+$message = new \Crummy\Phlack\Message\Message('This message contains an attachment.');
+
+// Add the Attachment to the Message
+$message->addAttachment($attachment);
+```
+
+#### Message Object
+
+A [Message](src/Crummy/Phlack/Message/Message.php) can be instantiated with just a `text` value:
+
+```php
+<?php
+//...
+use Crummy\Phlack\Message\Message;
+$message = new Message('Hello, from phlack!');
+echo 'The message payload: ' . PHP_EOL:
+echo $message; // Output: {"text": "Hello, from phlack!"}
+```
+
+But you can set optional parameters when constructing the message, too:
+
+```php
+<?php
+//...
+use Crummy\Phlack\Message\Message;
+$message = new Message('Hello, from phlack!', '#random');
+echo 'The message payload: ' . PHP_EOL:
+echo $message; // Output: {"text": "Hello, from phlack!", "channel": "#random"}
 ```
 
 ### Sending Messages
@@ -116,7 +214,7 @@ if (200 != $response['status']) {
 echo 'The message was sent: ' . $message;
 ```
 
-### Custom Message Parameters
+#### Custom Messages
 
 Custom messages can be sent by using an array of [valid parameters](https://api.slack.com/incoming-webhooks):
 
@@ -133,7 +231,7 @@ $phlack->send([
 
 > Note: No input validation is performed on custom message parameters. You are responsible for formatting channels, emojis, and text data yourself.
 
-#### Response
+#### Message Response
 
 The [MessageResponse](src/Crummy/Phlack/Bridge/Guzzle/Response/MessageResponse.php) hash contains the `status`, `reason`, and `text` from the response.
 
@@ -141,6 +239,8 @@ Responses from the Incoming Webhooks Integration are very sparse. Success messag
 
 ### More Examples
 See the [examples directory](examples/) for more use cases.
+
+---
 
 ## Slack API
 
@@ -170,7 +270,7 @@ use Crummy\Phlack\Bridge\Guzzle\ApiClient;
 $slack = new ApiClient([ 'token' => 'my_bearer_token' ]);
 ```
 
-### Methods
+### API Methods
 
 The methods currently implemented are:
 
@@ -207,7 +307,7 @@ foreach ($result['channels'] as $channel) {
 }
 ```
 
-### Iterators
+### Resource Iterators
 
 #### Example: ListFilesIterator
 
@@ -231,14 +331,26 @@ A [complete example](examples/api/files_iterator.php) is available in the exampl
 
 **Note**: The ListFilesIterator is not strictly necessary to page through file results, but it's certainly easier than the alternative.  [An example without the iterator](examples/api/files_list.php) is also available.
 
-#### More Examples
+#### More API Examples
 See the [API examples directory](examples/api) for more use cases.
 
 ---
+
 ## Disclaimer
 
 Any undocumented portion of this library should be considered *EXPERIMENTAL AT BEST*. Proceed with caution, and, as always, pull requests are welcome.
 
-## Acknowledgements
+## Credits
 
-1. The regex in the [LinkFormatter](src/Crummy/Phlack/Common/Formatter/LinkFormatter.php) was pulled directly from [StevenSloan](https://github.com/stevenosloan) and his [slack-notifier](https://github.com/stevenosloan/slack-notifier) project.
+* Michael Crumm <mike@crumm.net>
+* [All contributors](https://github.com/mcrumm/phlack/contributors)
+
+The regex in the [LinkFormatter](src/Crummy/Phlack/Common/Formatter/LinkFormatter.php) was pulled directly from [StevenSloan](https://github.com/stevenosloan) and his [slack-notifier](https://github.com/stevenosloan/slack-notifier) project.
+
+## Contributing
+
+Please see the [CONTRIBUTING](CONTRIBUTING.md) file for details.
+
+## License
+
+Phlack is released under the MIT License. See the bundled LICENSE file for details.

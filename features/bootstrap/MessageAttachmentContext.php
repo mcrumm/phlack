@@ -6,8 +6,6 @@ use Crummy\Phlack\Builder\AttachmentBuilder;
 
 class MessageAttachmentContext extends BehatContext
 {
-    use ParameterTrait;
-
     /** @var \Crummy\Phlack\Builder\AttachmentBuilder */
     private $builder;
 

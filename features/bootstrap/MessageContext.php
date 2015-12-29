@@ -7,8 +7,6 @@ use Crummy\Phlack\Message\Message;
 
 class MessageContext extends BehatContext
 {
-    use ParameterTrait;
-
     private $outputs = [];
     private $messages = [];
     private $attachments;
@@ -87,10 +85,9 @@ class MessageContext extends BehatContext
      */
     private function setMessageParameter(TableNode $table, $parameter)
     {
-        $method = 'set'.$this->toMethodName($parameter);
         $hash = $table->getHash();
         foreach ($hash as $key => $row) {
-            $this->messages[$key]->{$method}($row[$parameter]);
+            $this->messages[$key][$parameter] = $row[$parameter];
         }
     }
 
@@ -102,14 +99,12 @@ class MessageContext extends BehatContext
     {
         $messages = [];
         foreach ($messagesTable->getHash() as $messageHash) {
-            $message = new Message($messageHash['text']);
+            $args = [$messageHash['text']];
             foreach (['channel', 'username', 'icon_emoji'] as $parameter) {
-                $method = 'set'.$this->toMethodName($parameter);
-                if (isset($messageHash[$parameter])) {
-                    $message->{$method}($messageHash[$parameter]);
-                }
+                $args[] = isset($messageHash[$parameter]) ? $messageHash[$parameter] : null;
             }
-            $messages[] = $message;
+            list($text, $channel, $username, $icon) = $args;
+            $messages[] = new Message($text, $channel, $username, $icon);
         }
 
         return $messages;
@@ -134,7 +129,7 @@ class MessageContext extends BehatContext
         $this->attachments->add($attachment);
         /** @var Message $message */
         foreach ($this->messages as $message) {
-            $message->setAttachments($this->attachments);
+            $message['attachments'] = $this->attachments;
         }
     }
 }
