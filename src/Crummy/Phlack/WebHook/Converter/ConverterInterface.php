@@ -2,4 +2,6 @@
 
 namespace Crummy\Phlack\WebHook\Converter;
 
-interface ConverterInterface {}
+interface ConverterInterface
+{
+}

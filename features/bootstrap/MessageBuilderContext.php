@@ -3,8 +3,8 @@
 use Behat\Behat\Context\BehatContext;
 use Behat\Gherkin\Node\TableNode;
 use Crummy\Phlack\Builder\MessageBuilder;
-use Crummy\Phlack\Message\Message;
 use Crummy\Phlack\Message\Collection\AttachmentCollection;
+use Crummy\Phlack\Message\Message;
 
 class MessageBuilderContext extends BehatContext
 {
@@ -26,9 +26,9 @@ class MessageBuilderContext extends BehatContext
         /** @var Message $message */
         foreach ($messages as $message) {
             if ($this->attachments) {
-                $message->setAttachments($this->attachments);
+                $message['attachments'] = $this->attachments;
             }
-            OutputContext::pushOutput((string)$message);
+            OutputContext::pushOutput((string) $message);
         }
     }
 
@@ -40,12 +40,12 @@ class MessageBuilderContext extends BehatContext
      */
     public function castMessageTable(TableNode $messagesTable)
     {
-        $builder  = new MessageBuilder();
+        $builder = new MessageBuilder();
         $messages = [];
         foreach ($messagesTable->getHash() as $messageHash) {
             $builder->setText($messageHash['message']);
             foreach (['channel', 'username', 'icon_emoji'] as $parameter) {
-                $method = 'set' . $this->toMethodName($parameter);
+                $method = 'set'.$this->toMethodName($parameter);
                 if (isset($messageHash[$parameter])) {
                     $builder->{$method}($messageHash[$parameter]);
                 }

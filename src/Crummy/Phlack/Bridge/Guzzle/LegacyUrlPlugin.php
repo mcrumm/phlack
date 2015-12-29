@@ -21,16 +21,16 @@ class LegacyUrlPlugin implements EventSubscriberInterface
     public function __construct($username, $token)
     {
         $this->username = $username;
-        $this->token    = $token;
+        $this->token = $token;
     }
 
     /**
      * @see EventSubscriberInterface
      */
-    static public function getSubscribedEvents()
+    public static function getSubscribedEvents()
     {
         return [
-            'request.before_send' => [ 'onRequestBeforeSend', -1000 ],
+            'request.before_send' => ['onRequestBeforeSend', -1000],
         ];
     }
 

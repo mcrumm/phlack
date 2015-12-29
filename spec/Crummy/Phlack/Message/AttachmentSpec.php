@@ -2,71 +2,61 @@
 
 namespace spec\Crummy\Phlack\Message;
 
-use Crummy\Phlack\Message\Collection\FieldCollection;
 use Crummy\Phlack\Message\FieldInterface;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class AttachmentSpec extends ObjectBehavior
 {
-    function let()
+    public function let()
     {
-        $this->beConstructedWith([ 'fallback' => get_class() ]);
+        $this->beConstructedWith(['fallback' => get_class()]);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Crummy\Phlack\Message\Attachment');
     }
 
-    function it_is_encodable()
+    public function it_is_encodable()
     {
         $this->shouldImplement('\Crummy\Phlack\Common\Encodable');
     }
 
-    function it_provides_a_fluent_interface()
-    {
-        $this->setFallback('fallback')->shouldReturn($this);
-        $this->setText('text')->shouldReturn($this);
-        $this->setPretext('pretext')->shouldReturn($this);
-        $this->setColor('danger')->shouldReturn($this);
-        $this->setAuthorName('author name')->shouldReturn($this);
-        $this->setAuthorLink('author link')->shouldReturn($this);
-        $this->setAuthorIcon('http://domain.com/icon.png')->shouldReturn($this);
-        $this->setTitle('title')->shouldReturn($this);
-        $this->setTitleLink('http://www.title-link.com/')->shouldReturn($this);
-        $this->setImageUrl('http://domain.com/image.png')->shouldReturn($this);
-        $this->setThumbUrl('http://domain.com/thumb.png')->shouldReturn($this);
-        $this->setMrkdwnIn(['text', 'pretext'])->shouldReturn($this);
-    }
-
-    function it_contains_a_field_collection()
+    public function it_contains_a_field_collection()
     {
         $this['fields']->shouldReturnAnInstanceOf('\Crummy\Phlack\Message\Collection\FieldCollection');
     }
 
-    function it_fluently_adds_field_interfaces(FieldInterface $field)
+    public function it_fluently_adds_field_interfaces(FieldInterface $field)
     {
         $this->addField($field)->shouldReturn($this);
     }
 
-    function it_adds_fields_to_the_collection(FieldCollection $fields, FieldInterface $field)
+    public function it_has_no_fields_by_default()
     {
-        $fields->add($field)->shouldBeCalled();
-
-        $this->setFields($fields);
-        $this->addField($field);
+        $this->offsetGet('fields')->shouldHaveCount(0);
     }
 
-    function it_increments_the_field_count_on_add(FieldInterface $field)
+    public function it_increments_the_field_count_on_add(FieldInterface $field)
     {
         $this->addField($field);
-        $this->getFields()->shouldHaveCount(1);
+        $this->offsetGet('fields')->shouldHaveCount(1);
     }
 
-    function it_adds_fields_to_serialized_output(FieldInterface $field)
+    public function it_adds_fields_to_serialized_output(FieldInterface $field)
     {
         $this->addField($field);
         $this->jsonSerialize()['fields']->shouldHaveCount(1);
+    }
+
+    public function it_returns_its_fields_as_a_collection()
+    {
+        $this->getFields()->shouldBeAnInstanceOf('Crummy\Phlack\Message\Collection\FieldCollection');
+    }
+
+    public function it_returns_a_collection_containing_the_added_field(FieldInterface $field)
+    {
+        $this->addField($field);
+        $this->getFields()->toArray()->shouldContain($field);
     }
 }

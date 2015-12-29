@@ -5,7 +5,7 @@ use Behat\Gherkin\Node\TableNode;
 
 class OutputContext extends BehatContext
 {
-    static protected $outputs = [];
+    protected static $outputs = [];
 
     public static function pushOutput($output)
     {
@@ -18,7 +18,7 @@ class OutputContext extends BehatContext
     public function iShouldGetThePayload(TableNode $table)
     {
         foreach ($table->getHash() as $key => $row) {
-            $payload = (string)self::$outputs[$key];
+            $payload = (string) self::$outputs[$key];
             if ($row['payload'] !== $payload) {
                 self::$outputs = [];    // Reset the outputs
                 throw new Exception(sprintf("Expected: %s,\n but got: %s", $row['payload'], $payload));

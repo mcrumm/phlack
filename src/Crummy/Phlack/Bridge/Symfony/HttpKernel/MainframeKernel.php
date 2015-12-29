@@ -17,7 +17,7 @@ class MainframeKernel extends AbstractAdapter implements HttpKernelInterface
     protected $converter;
 
     /**
-     * @param Mainframe $mainframe
+     * @param Mainframe        $mainframe
      * @param RequestConverter $converter
      */
     public function __construct(Mainframe $mainframe = null, RequestConverter $converter = null)
@@ -29,12 +29,12 @@ class MainframeKernel extends AbstractAdapter implements HttpKernelInterface
 
     /**
      * Mediates Request handling between HttpKernelInterface and the Mainframe.
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
     {
         $command = $this->converter->convert($request);
-        $packet  = $this->mainframe->execute($command);
+        $packet = $this->mainframe->execute($command);
         $content = $packet['output'];
 
         if ($command instanceof SlashCommand && $content instanceof Reply) {

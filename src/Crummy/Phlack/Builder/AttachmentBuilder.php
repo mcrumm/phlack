@@ -22,28 +22,31 @@ class AttachmentBuilder implements BuilderInterface
     }
 
     /**
-     * @return Attachment
      * @throws \LogicException When called before setFallback($fallback)
+     *
+     * @return Attachment
      */
     public function create()
     {
-        $attachment = new Attachment( $this->data + [ 'fields' => clone $this->fields ]);
+        $attachment = new Attachment($this->data + ['fields' => clone $this->fields]);
         $this->refresh();
+
         return $attachment;
     }
 
     /**
      * @param $fallback
+     *
      * @return $this
      */
     public function setFallback($fallback)
     {
-        $this->data['fallback'] = (string)$fallback;
-        return $this;
+        return $this->setParameter('fallback', (string) $fallback);
     }
 
     /**
      * @param $text
+     *
      * @return $this
      */
     public function setText($text)
@@ -53,6 +56,7 @@ class AttachmentBuilder implements BuilderInterface
 
     /**
      * @param $pretext
+     *
      * @return $this
      */
     public function setPretext($pretext)
@@ -62,6 +66,7 @@ class AttachmentBuilder implements BuilderInterface
 
     /**
      * @param $color
+     *
      * @return $this
      */
     public function setColor($color)
@@ -71,6 +76,7 @@ class AttachmentBuilder implements BuilderInterface
 
     /**
      * @param $author_name
+     *
      * @return $this
      */
     public function setAuthorName($author_name)
@@ -80,6 +86,7 @@ class AttachmentBuilder implements BuilderInterface
 
     /**
      * @param $author_link
+     *
      * @return $this
      */
     public function setAuthorLink($author_link)
@@ -89,6 +96,7 @@ class AttachmentBuilder implements BuilderInterface
 
     /**
      * @param $author_icon
+     *
      * @return $this
      */
     public function setAuthorIcon($author_icon)
@@ -98,6 +106,7 @@ class AttachmentBuilder implements BuilderInterface
 
     /**
      * @param $title
+     *
      * @return $this
      */
     public function setTitle($title)
@@ -107,6 +116,7 @@ class AttachmentBuilder implements BuilderInterface
 
     /**
      * @param $title_link
+     *
      * @return $this
      */
     public function setTitleLink($title_link)
@@ -116,6 +126,7 @@ class AttachmentBuilder implements BuilderInterface
 
     /**
      * @param $image_url
+     *
      * @return $this
      */
     public function setImageUrl($image_url)
@@ -125,6 +136,7 @@ class AttachmentBuilder implements BuilderInterface
 
     /**
      * @param $thumb_url
+     *
      * @return $this
      */
     public function setThumbUrl($thumb_url)
@@ -134,6 +146,7 @@ class AttachmentBuilder implements BuilderInterface
 
     /**
      * @param $mrkdwn_in
+     *
      * @return $this
      */
     public function setMrkdwnIn($mrkdwn_in)
@@ -144,13 +157,17 @@ class AttachmentBuilder implements BuilderInterface
     /**
      * Sets values on non-empty parameters.
      * Set $value to null to remove the custom value.
+     *
      * @param string $name
      * @param $value
+     *
      * @return $this
      */
     private function setParameter($name, $value)
     {
-        if (null !== $value && empty($value)) { return $this; }
+        if (null !== $value && empty($value)) {
+            return $this;
+        }
 
         $this->data[$name] = $value;
 
@@ -160,7 +177,8 @@ class AttachmentBuilder implements BuilderInterface
     /**
      * @param string $title
      * @param string $value
-     * @param boolean $isShort
+     * @param bool   $isShort
+     *
      * @return $this
      */
     public function addField($title, $value, $isShort)
@@ -186,8 +204,10 @@ class AttachmentBuilder implements BuilderInterface
     {
         if ($this->parent) {
             $this->parent->addAttachment($this->create());
+
             return $this->parent;
         }
+
         return $this;
     }
 }

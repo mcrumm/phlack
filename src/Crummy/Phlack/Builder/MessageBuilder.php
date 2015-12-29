@@ -27,7 +27,7 @@ class MessageBuilder implements BuilderInterface
     public function create()
     {
         if (!isset($this->data['text'])) {
-           throw new LogicException(sprintf('The message text must be set before calling %s', __METHOD__));
+            throw new LogicException(sprintf('The message text must be set before calling %s', __METHOD__));
         }
 
         $message = new Message(
@@ -46,46 +46,54 @@ class MessageBuilder implements BuilderInterface
 
     /**
      * @param string $text
+     *
      * @return $this
      */
     public function setText($text)
     {
         $this->data['text'] = $text;
+
         return $this;
     }
 
     /**
      * @param $channel
+     *
      * @return $this
      */
     public function setChannel($channel)
     {
         $this->data['channel'] = $channel;
+
         return $this;
     }
 
     /**
      * @param $iconEmoji
+     *
      * @return $this
      */
     public function setIconEmoji($iconEmoji)
     {
         $this->data['icon_emoji'] = $iconEmoji;
+
         return $this;
     }
 
     /**
      * @param $username
+     *
      * @return $this
      */
     public function setUsername($username)
     {
         $this->data['username'] = $username;
+
         return $this;
     }
 
     /**
-     * Reset data to an empty message
+     * Reset data to an empty message.
      */
     protected function refresh()
     {
@@ -95,11 +103,13 @@ class MessageBuilder implements BuilderInterface
 
     /**
      * @param AttachmentInterface $attachment
+     *
      * @return $this
      */
     public function addAttachment(AttachmentInterface $attachment)
     {
         $this->attachments->add($attachment);
+
         return $this;
     }
 

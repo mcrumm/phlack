@@ -16,7 +16,7 @@ class PhlackClient extends Client
     ];
 
     /** @var array */
-    protected $legacyRequirements = [ 'username', 'token' ];
+    protected $legacyRequirements = ['username', 'token'];
 
     /**
      * @param string     $baseUrl
@@ -27,9 +27,9 @@ class PhlackClient extends Client
         $legacyMode = $this->isLegacyUrl($baseUrl);
 
         $config = Collection::fromConfig(
-            $config ?: [ ],
+            $config ?: [],
             $this->defaultConfig,
-            $legacyMode ? $this->legacyRequirements : [ ]
+            $legacyMode ? $this->legacyRequirements : []
         );
 
         if ($legacyMode) {
@@ -43,11 +43,11 @@ class PhlackClient extends Client
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public static function factory($config = array())
+    public static function factory($config = [])
     {
-        if (! is_array($config)) {
+        if (!is_array($config)) {
             return new self($config);
         }
 
@@ -56,10 +56,11 @@ class PhlackClient extends Client
 
     /**
      * @param string $baseUrl
+     *
      * @return bool
      */
     private function isLegacyUrl($baseUrl)
     {
-        return (null === $baseUrl || $baseUrl === LegacyUrlPlugin::BASE_URL);
+        return null === $baseUrl || $baseUrl === LegacyUrlPlugin::BASE_URL;
     }
 }

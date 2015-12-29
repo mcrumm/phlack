@@ -6,8 +6,6 @@ use Crummy\Phlack\Builder\AttachmentBuilder;
 
 class MessageAttachmentContext extends BehatContext
 {
-    use ParameterTrait;
-
     /** @var \Crummy\Phlack\Builder\AttachmentBuilder */
     private $builder;
 
@@ -33,7 +31,7 @@ class MessageAttachmentContext extends BehatContext
     public function iAddTheFields(TableNode $table)
     {
         foreach ($table->getHash() as $row) {
-            $this->builder->addField($row['title'], $row['value'], (boolean)$row['short']);
+            $this->builder->addField($row['title'], $row['value'], (boolean) $row['short']);
         }
     }
 
@@ -43,6 +41,6 @@ class MessageAttachmentContext extends BehatContext
     public function iBuildTheAttachment()
     {
         $attachment = $this->builder->create();
-        OutputContext::pushOutput((string)$attachment);
+        OutputContext::pushOutput((string) $attachment);
     }
 }

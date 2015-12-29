@@ -11,6 +11,7 @@ class Sequencer implements FormatterInterface
     /**
      * @param string $text  The text to be sequenced
      * @param string $label An optional label
+     *
      * @return string
      */
     public function format($text, $label = null)
@@ -20,20 +21,23 @@ class Sequencer implements FormatterInterface
 
     /**
      * @param string $text
-     * @param null $label
+     * @param null   $label
+     *
      * @return string
      */
-    static public function sequence($text, $label = null)
+    public static function sequence($text, $label = null)
     {
         $text = $label ? $text.'|'.$label : $text;
+
         return sprintf(static::SEQUENCE, $text);
     }
 
     /**
      * @param CommandInterface $command
+     *
      * @return array
      */
-    static public function command(CommandInterface $command)
+    public static function command(CommandInterface $command)
     {
         return [
             'channel'   => self::sequence('#'.$command['channel_id'], $command['channel_name']),
@@ -43,9 +47,10 @@ class Sequencer implements FormatterInterface
 
     /**
      * @param string $channel
+     *
      * @return string
      */
-    static public function alert($channel)
+    public static function alert($channel)
     {
         return self::sequence('!'.$channel);
     }

@@ -8,6 +8,7 @@ interface Executable
 {
     /**
      * @param CommandInterface $command
+     *
      * @return \Crummy\Phlack\Common\Encodable
      */
     public function execute(CommandInterface $command);

@@ -18,7 +18,7 @@ class MessageResponse extends Collection implements ResponseClassInterface
         return new self([
             'status' => $response->getStatusCode(),
             'reason' => $response->getReasonPhrase(),
-            'text'   => $response->getBody(true)
+            'text'   => $response->getBody(true),
         ]);
     }
 }

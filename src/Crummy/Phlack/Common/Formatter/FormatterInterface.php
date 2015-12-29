@@ -6,6 +6,7 @@ interface FormatterInterface
 {
     /**
      * @param string $text
+     *
      * @return string
      */
     public function format($text);

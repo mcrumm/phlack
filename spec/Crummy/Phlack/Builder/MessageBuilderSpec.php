@@ -5,31 +5,30 @@ namespace spec\Crummy\Phlack\Builder;
 use Crummy\Phlack\Message\AttachmentInterface;
 use Crummy\Phlack\Message\Message;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class MessageBuilderSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Crummy\Phlack\Builder\MessageBuilder');
     }
 
-    function it_is_a_builder()
+    public function it_is_a_builder()
     {
         $this->shouldImplement('\Crummy\Phlack\Builder\BuilderInterface');
     }
 
-    function it_fails_on_empty_text()
+    public function it_fails_on_empty_text()
     {
         $this->shouldThrow('\LogicException')->during('create');
     }
 
-    function it_returns_a_message_on_create()
+    public function it_returns_a_message_on_create()
     {
         $this->setText('Message')->create()->shouldReturnAnInstanceOf('\Crummy\Phlack\Message\Message');
     }
 
-    function it_fluently_sets_vars()
+    public function it_fluently_sets_vars()
     {
         $this->setText('text')->shouldReturn($this);
         $this->setChannel('channel')->shouldReturn($this);
@@ -37,7 +36,7 @@ class MessageBuilderSpec extends ObjectBehavior
         $this->setUsername('user')->shouldReturn($this);
     }
 
-    function it_refreshes_data_on_create()
+    public function it_refreshes_data_on_create()
     {
         $message_1 = $this->setText('Message #1')->setChannel('1')->create();
 
@@ -46,12 +45,12 @@ class MessageBuilderSpec extends ObjectBehavior
         $message_2['channel']->shouldBeNull();
     }
 
-    function it_adds_attachments(AttachmentInterface $attachment)
+    public function it_adds_attachments(AttachmentInterface $attachment)
     {
         $this->addAttachment($attachment)->shouldReturn($this);
     }
 
-    function it_fluently_creates_attachments()
+    public function it_fluently_creates_attachments()
     {
         $this
             ->setText('Text')

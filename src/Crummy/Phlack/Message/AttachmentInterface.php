@@ -8,6 +8,7 @@ interface AttachmentInterface extends Encodable
 {
     /**
      * @param FieldInterface $field
+     *
      * @return self
      */
     public function addField(FieldInterface $field);

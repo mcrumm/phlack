@@ -16,7 +16,7 @@ class BotCommand extends Command implements AdapterInterface
 
     /**
      * @param ConsoleAdapter $adapter
-     * @param string $name
+     * @param string         $name
      */
     public function __construct(ConsoleAdapter $adapter, $name = 'bot_command')
     {
@@ -27,11 +27,13 @@ class BotCommand extends Command implements AdapterInterface
 
     /**
      * @param Mainframe $mainframe
+     *
      * @return self
      */
     public function setMainframe(Mainframe $mainframe)
     {
         $this->adapter->setMainframe($mainframe);
+
         return $this;
     }
 
@@ -44,19 +46,21 @@ class BotCommand extends Command implements AdapterInterface
     }
 
     /**
-     * @param BotInterface $bot
+     * @param BotInterface              $bot
      * @param MatcherInterface|callable $matcher
-     * @param int $priority
+     * @param int                       $priority
+     *
      * @return self
      */
     public function attach(BotInterface $bot, $matcher = null, $priority = 0)
     {
         $this->adapter->attach($bot, $matcher, $priority);
+
         return $this;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

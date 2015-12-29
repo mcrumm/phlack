@@ -17,9 +17,9 @@ class ListFilesIterator extends ResourceIterator
             $this->command->set('page', $this->nextToken);
         }
 
-        $result             = $this->command->execute();
-        $currentToken       = $result['paging']['page'];
-        $this->nextToken    = $result['paging']['pages'] > $currentToken ? ++$currentToken : false;
+        $result = $this->command->execute();
+        $currentToken = $result['paging']['page'];
+        $this->nextToken = $result['paging']['pages'] > $currentToken ? ++$currentToken : false;
 
         return $result['files'];
     }

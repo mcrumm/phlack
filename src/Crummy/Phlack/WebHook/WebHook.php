@@ -2,7 +2,6 @@
 
 namespace Crummy\Phlack\WebHook;
 
-use Crummy\Phlack\Common\Exception\RuntimeException;
 use Crummy\Phlack\Common\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
 
@@ -20,7 +19,7 @@ class WebHook extends AbstractCommand implements WebHookInterface
         'timestamp',
         'user_id',
         'user_name',
-        'text'
+        'text',
     ];
 
     /**
@@ -31,13 +30,13 @@ class WebHook extends AbstractCommand implements WebHookInterface
         parent::setDefaultOptions($resolver);
 
         $resolver->setDefaults([
-            'command' => function(Options $options) {
-                $text         = $options['text'];
+            'command' => function (Options $options) {
+                $text = $options['text'];
                 $delimiterPos = strpos($text, self::COMMAND_DELIMITER);
                 $delimiterPos = false === $delimiterPos ? strpos($text, ' ') : $delimiterPos;
 
                 return false === $delimiterPos ? $text : substr($text, 0, $delimiterPos);
-            }
+            },
         ]);
 
         $resolver->setNormalizers([
@@ -48,25 +47,9 @@ class WebHook extends AbstractCommand implements WebHookInterface
                         $value .= self::COMMAND_DELIMITER;
                     }
                 }
+
                 return $value;
-            }
+            },
         ]);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getTimestamp()
-    {
-        return $this->data['timestamp'];
-    }
-
-    /**
-     * @return void
-     * @throws \Crummy\Phlack\Common\Exception\RuntimeException
-     */
-    static public function fromGet()
-    {
-        throw new RuntimeException('GET requests from WebHooks are not allowed.');
     }
 }

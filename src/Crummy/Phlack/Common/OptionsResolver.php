@@ -12,7 +12,9 @@ class OptionsResolver extends BaseOptionsResolver
      * Set a list of allowed types for the given option.
      *
      * @see Symfony\Component\OptionsResolver\OptionsResolver::setAllowedTypes()
+     *
      * @param array $allowedTypes
+     *
      * @return $this
      */
     public function setTypesAllowed($allowedTypes = null)
@@ -29,7 +31,7 @@ class OptionsResolver extends BaseOptionsResolver
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setDefined($optionNames)
     {

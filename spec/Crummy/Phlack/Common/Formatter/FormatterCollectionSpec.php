@@ -5,23 +5,22 @@ namespace spec\Crummy\Phlack\Common\Formatter;
 use Crummy\Phlack\Common\Formatter\EncodeFormatter;
 use Crummy\Phlack\Common\Formatter\LinkFormatter;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class FormatterCollectionSpec extends ObjectBehavior
 {
-    function let(LinkFormatter $linker, EncodeFormatter $encoder)
+    public function let(LinkFormatter $linker, EncodeFormatter $encoder)
     {
-        $this->beConstructedWith([ $linker, $encoder ]);
+        $this->beConstructedWith([$linker, $encoder]);
     }
 
-    function it_is_a_formatter()
+    public function it_is_a_formatter()
     {
         $this->shouldHaveType('Crummy\Phlack\Common\Formatter\FormatterCollection');
         $this->shouldBeAnInstanceOf('\Crummy\Phlack\Common\Collection\TypeCollection');
         $this->shouldImplement('\Crummy\Phlack\Common\Formatter\FormatterInterface');
     }
 
-    function its_format_is_a_composite_of_all_internal_formatters($linker, $encoder)
+    public function its_format_is_a_composite_of_all_internal_formatters($linker, $encoder)
     {
         $text = 'Hello, <@U1|user>. Do you like fun & [games](http://example.com)?';
 

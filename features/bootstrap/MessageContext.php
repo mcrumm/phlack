@@ -1,20 +1,14 @@
 <?php
 
-use Behat\Behat\Context\ClosuredContextInterface,
-    Behat\Behat\Context\TranslatedContextInterface,
-    Behat\Behat\Context\BehatContext,
-    Behat\Behat\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode,
-    Behat\Gherkin\Node\TableNode;
+use Behat\Behat\Context\BehatContext;
+use Behat\Gherkin\Node\TableNode;
 use Crummy\Phlack\Message\Collection\AttachmentCollection;
 use Crummy\Phlack\Message\Message;
 
 class MessageContext extends BehatContext
 {
-    use ParameterTrait;
-
-    private $outputs     = [ ];
-    private $messages    = [ ];
+    private $outputs = [];
+    private $messages = [];
     private $attachments;
 
     /**
@@ -54,7 +48,7 @@ class MessageContext extends BehatContext
         $hash = $table->getHash();
         foreach ($hash as $key => $row) {
             if ($row['output'] !== $this->outputs[$key]) {
-                throw new Exception(sprintf("Expected: %s, Got:%s", $row['output'], $this->outputs[$key]));
+                throw new Exception(sprintf('Expected: %s, Got:%s', $row['output'], $this->outputs[$key]));
             }
         }
     }
@@ -84,16 +78,16 @@ class MessageContext extends BehatContext
     }
 
     /**
-     * Calls set{parameter} on each message
+     * Calls set{parameter} on each message.
+     *
      * @param TableNode $table
      * @param $parameter
      */
     private function setMessageParameter(TableNode $table, $parameter)
     {
-        $method = 'set' . $this->toMethodName($parameter);
         $hash = $table->getHash();
         foreach ($hash as $key => $row) {
-            $this->messages[$key]->{$method}($row[$parameter]);
+            $this->messages[$key][$parameter] = $row[$parameter];
         }
     }
 
@@ -103,16 +97,14 @@ class MessageContext extends BehatContext
      */
     public function castMessageTable(TableNode $messagesTable)
     {
-        $messages = array();
+        $messages = [];
         foreach ($messagesTable->getHash() as $messageHash) {
-            $message    = new Message($messageHash['text']);
-            foreach(array('channel','username','icon_emoji',) as $parameter) {
-                $method = 'set' . $this->toMethodName($parameter);
-                if (isset($messageHash[$parameter])) {
-                    $message->{$method}($messageHash[$parameter]);
-                }
+            $args = [$messageHash['text']];
+            foreach (['channel', 'username', 'icon_emoji'] as $parameter) {
+                $args[] = isset($messageHash[$parameter]) ? $messageHash[$parameter] : null;
             }
-            $messages[] = $message;
+            list($text, $channel, $username, $icon) = $args;
+            $messages[] = new Message($text, $channel, $username, $icon);
         }
 
         return $messages;
@@ -131,13 +123,13 @@ class MessageContext extends BehatContext
      */
     public function iAddAnAttachmentWith($fallback, $title, $value, $isShort)
     {
-        $isShort     = (boolean)$isShort;
-        $aBuilder    = new \Crummy\Phlack\Builder\AttachmentBuilder();
-        $attachment  = $aBuilder->setFallback($fallback)->addField($title, $value, $isShort)->create();
+        $isShort = (boolean) $isShort;
+        $aBuilder = new \Crummy\Phlack\Builder\AttachmentBuilder();
+        $attachment = $aBuilder->setFallback($fallback)->addField($title, $value, $isShort)->create();
         $this->attachments->add($attachment);
         /** @var Message $message */
         foreach ($this->messages as $message) {
-            $message->setAttachments($this->attachments);
+            $message['attachments'] = $this->attachments;
         }
     }
 }

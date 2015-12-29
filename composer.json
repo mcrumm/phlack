@@ -26,9 +26,10 @@
         "symfony/console": "~2.4",
         "symfony/http-foundation": "~2.4",
         "behat/behat": "2.5.*",
-        "phpspec/phpspec": "~2.3@dev",
+        "phpspec/phpspec": "^2.4.0",
         "phpspec/nyan-formatters": "1.*",
-        "henrikbjorn/phpspec-code-coverage": "~0.2"
+        "henrikbjorn/phpspec-code-coverage": "~0.2",
+        "coduo/phpspec-data-provider-extension": "^1.0"
     },
     "config": {
         "bin-dir":"bin/"
@@ -43,8 +44,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master":   "0.5.x-dev",
-            "dev-develop":  "0.6.x-dev"
+            "dev-master":   "0.6.x-dev",
+            "dev-develop":  "0.7.x-dev"
         }
     }
 }

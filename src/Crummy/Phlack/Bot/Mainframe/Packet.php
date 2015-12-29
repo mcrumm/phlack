@@ -11,7 +11,7 @@ class Packet extends Event implements Encodable
     /**
      * @param array $options
      */
-    public function __construct(array $options = [ ])
+    public function __construct(array $options = [])
     {
         $resolver = new OptionsResolver();
         $this->setDefaultOptions($resolver);
@@ -24,17 +24,17 @@ class Packet extends Event implements Encodable
      */
     protected function setDefaultOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired([ 'command' ]);
-        $resolver->setDefaults([ 'output' => null ]);
+        $resolver->setRequired(['command']);
+        $resolver->setDefaults(['output' => null]);
 
         $resolver->setTypesAllowed([
             'command' => '\Crummy\Phlack\WebHook\CommandInterface',
-            'output' => [ '\Crummy\Phlack\WebHook\Reply\Reply', 'null' ]
+            'output'  => ['\Crummy\Phlack\WebHook\Reply\Reply', 'null'],
         ]);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function jsonSerialize()
     {

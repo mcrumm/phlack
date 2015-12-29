@@ -3,12 +3,11 @@
 namespace spec\Crummy\Phlack\WebHook;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class WebHookSpec extends ObjectBehavior
 {
     protected $defaultFields = [
-        'token'        => '',
+        'token'        => 'phlack_spec_token',
         'team_id'      => '',
         'team_domain'  => '',
         'service_id'   => '',
@@ -17,72 +16,72 @@ class WebHookSpec extends ObjectBehavior
         'timestamp'    => 1391368865.000002,
         'user_id'      => '',
         'user_name'    => '',
-        'text'         => ''
+        'text'         => '',
     ];
 
-    protected $postBackup;
-
-    function let()
+    public function let()
     {
-        $this->postBackup = $_POST;
-        $_POST            = $this->defaultFields;
-        $_POST['token']   = 'POST';
-
         $this->beConstructedWith($this->defaultFields);
     }
 
-    function it_is_a_webhook_command()
+    public function it_is_a_webhook_command()
     {
         $this->shouldHaveType('Crummy\Phlack\WebHook\WebHook');
         $this->shouldBeAnInstanceOf('\Crummy\Phlack\WebHook\AbstractCommand');
         $this->shouldImplement('\Crummy\Phlack\WebHook\WebHookInterface');
     }
 
-    function it_will_fail_on_fromGet()
+    public function it_can_be_created_fromConfig()
     {
-        $this
-            ->shouldThrow('\Crummy\Phlack\Common\Exception\RuntimeException')
-                ->during('fromGet');
+        $config = ['team_domain' => 'http://phlack.slack.com'] + $this->defaultFields;
+        $this->beConstructedThrough('fromConfig', [$config]);
+
+        $this->toArray()->shouldHaveKeyWithValue('team_domain', 'http://phlack.slack.com');
     }
 
-    function its_command_is_delimited_with_a_colon()
+    /**
+     *  @dataProvider commandExamples
+     */
+    public function its_command_is_delimited_with_a_colon($input, $expected)
     {
-        $commands = [
-            'hello:' => 'hello: world',
-            'echo:'  => 'echo: foo',
-            'foo:'   => 'foo: bar',
+        $config = ['text' => $input] + $this->defaultFields;
+
+        $this->beConstructedWith($config);
+
+        $this['command']->shouldBe($expected);
+    }
+
+    /**
+     *  @dataProvider textExamples
+     */
+    public function it_normalizes_commands_without_a_delimiter($input, $expected)
+    {
+        $config = ['text' => $input] + $this->defaultFields;
+
+        $this->beConstructedWith($config);
+
+        $this['command']->shouldBe($expected);
+    }
+
+    public function commandExamples()
+    {
+        return [
+            ['hello: world', 'hello:'],
+            ['echo: foo', 'echo:'],
+            ['foo: bar', 'foo:'],
         ];
-
-        $postBackup = $_POST;
-        foreach ($commands as $command => $text) {
-            $_POST = [ 'text' => $text ] + $postBackup;
-            $this::fromPost()->getCommand()->shouldReturn($command);
-        }
-        $_POST = $postBackup;
     }
 
-    function it_normalizes_commands_without_a_delimiter()
+    public function textExamples()
     {
-        $commands = [
-            'hello:' => 'hello world',
-            'echo:'  => 'echo foo',
-            'foo:'   => 'foo bar',
-            'where:' => 'Where in the world is Carmen San Diego?',
-            'where:' => 'WhErE cAn I gEt A dRiNk?',
-            'wtf:'   => 'WTF',
-            'wtf:'   => 'WTF?!?!?!?!'
+        return [
+            ['hello world', 'hello:'],
+            ['echo foo', 'echo:'],
+            ['foo bar', 'foo:'],
+            ['Where in the world is Carmen San Diego?', 'where:'],
+            ['WhErE cAn I gEt A dRiNk?', 'where:'],
+            ['WTF', 'wtf:'],
+            ['WTF?!?!?!?!', 'wtf:'],
         ];
-
-        $postBackup = $_POST;
-        foreach ($commands as $command => $text) {
-            $_POST = [ 'text' => $text ] + $postBackup;
-            $this::fromPost()->getCommand()->shouldReturn($command);
-        }
-        $_POST = $postBackup;
-    }
-
-    public function letgo()
-    {
-        $_POST = $this->postBackup;
     }
 }

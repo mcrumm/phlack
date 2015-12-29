@@ -13,7 +13,7 @@ class ExpressionBot extends AbstractBot
     protected $language;
 
     /**
-     * @param string $commandName
+     * @param string             $commandName
      * @param ExpressionLanguage $language
      */
     public function __construct($commandName = '/expr', ExpressionLanguage $language = null)
@@ -25,12 +25,13 @@ class ExpressionBot extends AbstractBot
 
     /**
      * @param CommandInterface $command
+     *
      * @return \Crummy\Phlack\WebHook\Reply\Reply
      */
     public function execute(CommandInterface $command)
     {
         try {
-            $response = (string)$this->evaluate($command, $this->getValues($command));
+            $response = (string) $this->evaluate($command, $this->getValues($command));
         } catch (SyntaxError $badSyntax) {
             $response = $badSyntax->getMessage();
         }
@@ -40,20 +41,22 @@ class ExpressionBot extends AbstractBot
 
     /**
      * @param CommandInterface $command
-     * @param array $values
+     * @param array            $values
+     *
      * @return string
      */
-    protected function evaluate(CommandInterface $command, $values = [ ])
+    protected function evaluate(CommandInterface $command, $values = [])
     {
-        return $this->language->evaluate($command->getText(), $values);
+        return $this->language->evaluate($command['text'], $values);
     }
 
     /**
      * @param CommandInterface $command
+     *
      * @return array
      */
     protected function getValues(CommandInterface $command)
     {
-        return [ ];
+        return [];
     }
 }

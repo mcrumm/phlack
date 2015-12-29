@@ -8,7 +8,7 @@ use Crummy\Phlack\WebHook\SlashCommand;
 class CommandMatcher extends CommandNameMatcher
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function matches(CommandInterface $command)
     {

@@ -10,10 +10,10 @@ class ConsoleAdapter extends AbstractAdapter
 {
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $in         = $input->getArgument('command');
-        $text       = is_array($in) ? implode(' ', $in) : $in;
-        $command    = $this->converter->convert($text);
-        $result     = (string)$this->mainframe->execute($command)['output']->get('text');
+        $in = $input->getArgument('command');
+        $text = is_array($in) ? implode(' ', $in) : $in;
+        $command = $this->converter->convert($text);
+        $result = (string) $this->mainframe->execute($command)['output']->get('text');
         $output->writeln($result);
     }
 }
