@@ -4,6 +4,7 @@ php:
   - 5.4
   - 5.5
   - 5.6
+  - 7.0
   - nightly
   - hhvm
 
@@ -29,7 +30,13 @@ matrix:
       - php: 5.5
         env: SYMFONY_VERSION=2.7.*
       - php: 5.5
-        env: SYMFONY_VERSION='2.8.*@dev'
+        env: SYMFONY_VERSION=2.8.*
+      - php: 5.5
+        env: SYMFONY_VERSION=3.0.*
+      - php: 7.0
+        env: SYMFONY_VERSION=2.7.*
+      - php: 7.0
+        env: SYMFONY_VERSION=3.0.*
     allow_failures:
       - php: nightly
       - php: hhvm
@@ -43,8 +50,7 @@ before_install:
 install: composer update --prefer-dist
 
 script:
-  - ./bin/behat
-  - ./bin/phpspec run -fpretty
+  - ./bin/phpspec run
 
 after_script:
   - if [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi

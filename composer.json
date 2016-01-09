@@ -13,7 +13,7 @@
         "php": ">=5.4",
         "guzzle/guzzle": "~3.8",
         "doctrine/collections": ">=1.0",
-        "symfony/options-resolver": "~2.4"
+        "symfony/options-resolver": "~2.4|3.0.*"
     },
     "suggest": {
         "symfony/expression-language": "Required to use ExpressionBots",
@@ -21,13 +21,11 @@
         "symfony/console": "Required to use the ConsoleAdapter"
     },
     "require-dev": {
-        "silex/silex": "~1.1",
-        "symfony/expression-language": "~2.4",
-        "symfony/console": "~2.4",
-        "symfony/http-foundation": "~2.4",
-        "behat/behat": "2.5.*",
+        "symfony/http-kernel": "~2.4|3.0.*",
+        "symfony/expression-language": "~2.4|3.0.*",
+        "symfony/console": "~2.4|3.0.*",
+        "symfony/http-foundation": "~2.4|3.0.*",
         "phpspec/phpspec": "^2.4.0",
-        "phpspec/nyan-formatters": "1.*",
         "henrikbjorn/phpspec-code-coverage": "~0.2",
         "coduo/phpspec-data-provider-extension": "^1.0"
     },
@@ -38,8 +36,7 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-0": {
-            "": "src",
-            "Context": "features"
+            "": "src"
         }
     },
     "extra": {
