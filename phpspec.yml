@@ -1,4 +1,4 @@
-formatter.name: nyan.crab
+formatter.name: pretty
 code_coverage:
   format:
     - html
@@ -8,5 +8,4 @@ code_coverage:
     clover: spec/coverage/clover.xml
 extensions:
     - Coduo\PhpSpec\DataProvider\DataProviderExtension
-    - PhpSpec\NyanFormattersExtension\Extension
     - PhpSpec\Extension\CodeCoverageExtension
