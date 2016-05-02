@@ -8,8 +8,7 @@ use Symfony\Component\OptionsResolver\Options;
 
 class Message extends Partial implements MessageInterface
 {
-    protected $required = ['text'];
-    protected $optional = ['channel', 'username', 'icon_emoji', 'attachments'];
+    protected $optional = ['text', 'channel', 'username', 'icon_emoji', 'attachments'];
 
     /**
      * @param $text
