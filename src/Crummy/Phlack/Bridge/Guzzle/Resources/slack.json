@@ -11,7 +11,7 @@
                 "text": {
                     "location": "json",
                     "type":     "string",
-                    "required": true
+                    "required": false
                 },
                 "channel": {
                     "location": "json",

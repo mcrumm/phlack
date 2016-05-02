@@ -1,6 +1,12 @@
 Changelog
 =========
 
+### `v0.7.0` (2016-05-02)
+
+* [#31](https://github.com/mcrumm/phlack/pull/31): Remove validation on payload (Courtesy @rdohms)
+* Drop Behat tests
+* Add Symfony v3.0 support
+
 ### `v0.6.0` (2015-12-29)
 
 **BC BREAK**: The `channel` message parameter is no longer normalized to ensure a `#` prefix. This allows you to use `@username` as the channel to send a DM, or to use the channel id (`C_____`) directly.

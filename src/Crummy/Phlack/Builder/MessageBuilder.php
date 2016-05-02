@@ -2,7 +2,6 @@
 
 namespace Crummy\Phlack\Builder;
 
-use Crummy\Phlack\Common\Exception\LogicException;
 use Crummy\Phlack\Message\AttachmentInterface;
 use Crummy\Phlack\Message\Collection\AttachmentCollection;
 use Crummy\Phlack\Message\Message;
@@ -26,12 +25,8 @@ class MessageBuilder implements BuilderInterface
      */
     public function create()
     {
-        if (!isset($this->data['text'])) {
-            throw new LogicException(sprintf('The message text must be set before calling %s', __METHOD__));
-        }
-
         $message = new Message(
-            $this->data['text'],
+            isset($this->data['text']) ? $this->data['text'] : null,
             isset($this->data['channel']) ? $this->data['channel'] : null,
             isset($this->data['username']) ? $this->data['username'] : null,
             isset($this->data['icon_emoji']) ? $this->data['icon_emoji'] : null

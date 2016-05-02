@@ -18,11 +18,6 @@ class MessageBuilderSpec extends ObjectBehavior
         $this->shouldImplement('\Crummy\Phlack\Builder\BuilderInterface');
     }
 
-    public function it_fails_on_empty_text()
-    {
-        $this->shouldThrow('\LogicException')->during('create');
-    }
-
     public function it_returns_a_message_on_create()
     {
         $this->setText('Message')->create()->shouldReturnAnInstanceOf('\Crummy\Phlack\Message\Message');
