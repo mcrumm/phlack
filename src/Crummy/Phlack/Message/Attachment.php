@@ -7,8 +7,8 @@ use Crummy\Phlack\Message\Collection\FieldCollection;
 
 class Attachment extends Partial implements AttachmentInterface
 {
-    protected $required = ['fallback'];
     protected $optional = [
+        'fallback',
         'text',
         'pretext',
         'color',

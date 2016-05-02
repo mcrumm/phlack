@@ -34,11 +34,6 @@ class AttachmentBuilderSpec extends ObjectBehavior
         $this->setMrkdwnIn(['text', 'pretext'])->shouldReturn($this);
     }
 
-    public function it_fails_on_empty_fallback()
-    {
-        $this->shouldThrow('\LogicException')->during('create');
-    }
-
     public function it_creates_an_attachment()
     {
         $this

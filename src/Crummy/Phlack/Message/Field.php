@@ -4,7 +4,7 @@ namespace Crummy\Phlack\Message;
 
 class Field extends Partial implements FieldInterface
 {
-    protected $required = ['title', 'value', 'short'];
+    protected $optional = ['title', 'value', 'short'];
 
     /**
      * Constructor.
