@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MainframeKernelSpec extends ObjectBehavior
 {
-    function let(Mainframe $mainframe, RequestConverter $converter)
+    function let(Mainframe $mainframe)
     {
-        $this->beConstructedWith($mainframe, $converter);
+        $this->beConstructedWith($mainframe);
     }
 
     function it_an_HttpKernelInterface_adapter()
@@ -22,9 +22,12 @@ class MainframeKernelSpec extends ObjectBehavior
         $this->shouldBeAnInstanceOf('\Symfony\Component\HttpKernel\HttpKernelInterface');
     }
 
-    function it_handles_a_request_and_emits_a_response($mainframe, $converter, Request $request, SlashCommand $cmd)
+    function it_turns_a_request_into_a_response($mainframe, Request $request, SlashCommand $cmd)
     {
-        $converter->convert($request)->willReturn($cmd);
+        $this->beConstructedWith($mainframe, function () use ($cmd) {
+            return $cmd->getWrappedObject();
+        });
+
         $mainframe->execute($cmd)->shouldBeCalled();
         $this->handle($request)->shouldReturnAnInstanceOf('\Symfony\Component\HttpFoundation\Response');
     }

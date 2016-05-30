@@ -13,14 +13,14 @@ class AbstractAdapter implements AdapterInterface
     /** @var Mainframe */
     protected $mainframe;
 
-    /** @var StringConverter|ConverterInterface */
+    /** @var callable|ConverterInterface */
     protected $converter;
 
     /**
-     * @param Mainframe          $mainframe
-     * @param ConverterInterface $converter
+     * @param Mainframe                        $mainframe
+     * @param callable|ConverterInterface|null $converter
      */
-    public function __construct(Mainframe $mainframe, ConverterInterface $converter = null)
+    public function __construct(Mainframe $mainframe, callable $converter = null)
     {
         $this->setMainframe($mainframe);
         $this->converter = $converter ?: new StringConverter();
@@ -39,7 +39,7 @@ class AbstractAdapter implements AdapterInterface
     }
 
     /**
-     * @return \Crummy\Phlack\WebHook\Converter\ConverterInterface
+     * @return callable|ConverterInterface
      */
     public function getConverter()
     {

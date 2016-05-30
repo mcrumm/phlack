@@ -5,6 +5,7 @@ namespace Crummy\Phlack\Bot\Mainframe;
 use Crummy\Phlack\Common\Encodable;
 use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\Common\OptionsResolver;
+use Crummy\Phlack\WebHook\SlashCommand;
 
 class Packet extends Event implements Encodable
 {

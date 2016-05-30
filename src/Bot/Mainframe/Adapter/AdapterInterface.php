@@ -5,6 +5,7 @@ namespace Crummy\Phlack\Bot\Mainframe\Adapter;
 use Crummy\Phlack\Bot\BotInterface;
 use Crummy\Phlack\Bot\Mainframe\Mainframe;
 use Crummy\Phlack\Common\Matcher\MatcherInterface;
+use Crummy\Phlack\WebHook\Converter\ConverterInterface;
 
 interface AdapterInterface
 {
@@ -16,7 +17,7 @@ interface AdapterInterface
     public function setMainframe(Mainframe $mainframe);
 
     /**
-     * @return \Crummy\Phlack\WebHook\Converter\ConverterInterface
+     * @return callable|ConverterInterface
      */
     public function getConverter();
 

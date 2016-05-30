@@ -13,18 +13,16 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class MainframeKernel extends AbstractAdapter implements HttpKernelInterface
 {
-    /** @var \Crummy\Phlack\Bridge\Symfony\HttpFoundation\RequestConverter */
-    protected $converter;
-
     /**
-     * @param Mainframe        $mainframe
-     * @param RequestConverter $converter
+     * @param Mainframe                 $mainframe
+     * @param callable|RequestConverter $converter
      */
-    public function __construct(Mainframe $mainframe = null, RequestConverter $converter = null)
+    public function __construct(Mainframe $mainframe = null, callable $converter = null)
     {
-        $mainframe = $mainframe ?: new Mainframe();
-        $converter = $converter ?: new RequestConverter();
-        parent::__construct($mainframe, $converter);
+        parent::__construct(
+            $mainframe ?: new Mainframe(),
+            $converter ?: new RequestConverter()
+        );
     }
 
     /**
@@ -33,7 +31,8 @@ class MainframeKernel extends AbstractAdapter implements HttpKernelInterface
      */
     public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
     {
-        $command = $this->converter->convert($request);
+        $converter = $this->converter;
+        $command = $converter($request);
         $packet = $this->mainframe->execute($command);
         $content = $packet['output'];
 

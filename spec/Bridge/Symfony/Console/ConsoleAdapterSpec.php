@@ -23,14 +23,17 @@ class ConsoleAdapterSpec extends ObjectBehavior
         $this->shouldHaveType('Crummy\Phlack\Bridge\Symfony\Console\ConsoleAdapter');
     }
 
-    function it_executes_the_command_argument($mainframe, $converter, InputInterface $input, SlashCommand $cmd, OutputInterface $output, Packet $p)
+    function it_executes_the_command_argument($mainframe, InputInterface $input, SlashCommand $cmd, OutputInterface $output, Packet $p)
     {
-        $input->getArgument('command')->willReturn('/expr 2 + 2');
-        $converter->convert('/expr 2 + 2')->willReturn($cmd);
-        $mainframe->execute($cmd)->willReturn($p);
+        $this->beConstructedWith($mainframe, function () use ($cmd) {
+            return $cmd->getWrappedObject();
+        });
+
+        $input->getArgument('command')->shouldBeCalled();
+        $mainframe->execute($cmd)->shouldBeCalled()->willReturn($p);
         $reply = new Reply('4');
         $p->offsetGet('output')->willReturn($reply);
-        $output->writeln($reply->get('text'))->shouldBeCalled();
+        $output->writeln($reply['text'])->shouldBeCalled();
         $this->execute($input, $output);
     }
 }

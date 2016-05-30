@@ -35,12 +35,22 @@ class StringConverter implements ConverterInterface
      */
     public function convert($command)
     {
-        if (0 !== strpos($command, '/')) {
-            return new WebHook(['text' => $command] + $this->webHook);
-        } else {
-            list($command, $text) = explode(' ', $command, 2);
+        return $this($command);
+    }
 
-            return new SlashCommand(['command' => $command, 'text' => $text] + $this->slashCommand);
+    /**
+     * @param mixed $payload
+     *
+     * @return \Crummy\Phlack\WebHook\CommandInterface
+     */
+    public function __invoke($payload)
+    {
+        if (0 !== strpos($payload, '/')) {
+            return new WebHook(['text' => $payload] + $this->webHook);
+        } else {
+            list($payload, $text) = explode(' ', $payload, 2);
+
+            return new SlashCommand(['command' => $payload, 'text' => $text] + $this->slashCommand);
         }
     }
 }

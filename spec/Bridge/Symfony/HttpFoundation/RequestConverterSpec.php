@@ -43,7 +43,7 @@ class RequestConverterSpec extends ObjectBehavior
         $request->request = $post;
         $request->query = $get;
         $post->all()->willReturn($this->slashCommand);
-        $this->convert($request)->shouldReturnAnInstanceOf('\Crummy\Phlack\WebHook\SlashCommand');
+        $this->__invoke($request)->shouldReturnAnInstanceOf('\Crummy\Phlack\WebHook\SlashCommand');
     }
 
     function it_converts_requests_into_webhooks(Request $request, ParameterBag $post, ParameterBag $get)
@@ -52,7 +52,7 @@ class RequestConverterSpec extends ObjectBehavior
         $request->query = $get;
         $post->all()->willReturn([]);
         $get->all()->willReturn($this->webhook);
-        $this->convert($request)->shouldReturnAnInstanceOf('\Crummy\Phlack\WebHook\WebHook');
+        $this->__invoke($request)->shouldReturnAnInstanceOf('\Crummy\Phlack\WebHook\WebHook');
     }
 
     function it_throws_an_exception_for_an_invalid_request(Request $request, ParameterBag $post, ParameterBag $get)
