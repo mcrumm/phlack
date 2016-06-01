@@ -1,3 +1,7 @@
+suites:
+  phlack_suite:
+    namespace: Crummy\Phlack
+    psr4_prefix: Crummy\Phlack
 formatter.name: pretty
 code_coverage:
   format:
