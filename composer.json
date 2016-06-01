@@ -35,8 +35,8 @@
     "bin": ["bin/phlackbot"],
     "minimum-stability": "stable",
     "autoload": {
-        "psr-0": {
-            "": "src"
+        "psr-4": {
+            "Crummy\\Phlack\\": "src/"
         }
     },
     "extra": {
