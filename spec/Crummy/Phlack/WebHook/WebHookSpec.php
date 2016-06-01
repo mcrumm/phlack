@@ -19,19 +19,19 @@ class WebHookSpec extends ObjectBehavior
         'text'         => '',
     ];
 
-    public function let()
+    function let()
     {
         $this->beConstructedWith($this->defaultFields);
     }
 
-    public function it_is_a_webhook_command()
+    function it_is_a_webhook_command()
     {
         $this->shouldHaveType('Crummy\Phlack\WebHook\WebHook');
         $this->shouldBeAnInstanceOf('\Crummy\Phlack\WebHook\AbstractCommand');
         $this->shouldImplement('\Crummy\Phlack\WebHook\WebHookInterface');
     }
 
-    public function it_can_be_created_fromConfig()
+    function it_can_be_created_fromConfig()
     {
         $config = ['team_domain' => 'http://phlack.slack.com'] + $this->defaultFields;
         $this->beConstructedThrough('fromConfig', [$config]);
@@ -42,7 +42,7 @@ class WebHookSpec extends ObjectBehavior
     /**
      *  @dataProvider commandExamples
      */
-    public function its_command_is_delimited_with_a_colon($input, $expected)
+    function its_command_is_delimited_with_a_colon($input, $expected)
     {
         $config = ['text' => $input] + $this->defaultFields;
 
@@ -54,7 +54,7 @@ class WebHookSpec extends ObjectBehavior
     /**
      *  @dataProvider textExamples
      */
-    public function it_normalizes_commands_without_a_delimiter($input, $expected)
+    function it_normalizes_commands_without_a_delimiter($input, $expected)
     {
         $config = ['text' => $input] + $this->defaultFields;
 
@@ -63,7 +63,7 @@ class WebHookSpec extends ObjectBehavior
         $this['command']->shouldBe($expected);
     }
 
-    public function commandExamples()
+    function commandExamples()
     {
         return [
             ['hello: world', 'hello:'],
@@ -72,7 +72,7 @@ class WebHookSpec extends ObjectBehavior
         ];
     }
 
-    public function textExamples()
+    function textExamples()
     {
         return [
             ['hello world', 'hello:'],

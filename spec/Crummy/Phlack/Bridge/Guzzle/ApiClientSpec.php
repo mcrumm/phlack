@@ -11,22 +11,22 @@ class ApiClientSpec extends ObjectBehavior
 {
     protected $config = ['token' => 'foo'];
 
-    public function let()
+    function let()
     {
         $this->beConstructedWith($this->config);
     }
 
-    public function it_is_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Crummy\Phlack\Bridge\Guzzle\ApiClient');
     }
 
-    public function it_has_a_factory_method()
+    function it_has_a_factory_method()
     {
         $this::factory($this->config)->shouldReturnAnInstanceOf($this);
     }
 
-    public function it_adds_the_token_to_the_command_before_prepare(Event $event, CommandInterface $command)
+    function it_adds_the_token_to_the_command_before_prepare(Event $event, CommandInterface $command)
     {
         /** @var EventDispatcher $dispatcher */
         $dispatcher = $this->getEventDispatcher();

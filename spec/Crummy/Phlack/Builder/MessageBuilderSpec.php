@@ -8,22 +8,22 @@ use PhpSpec\ObjectBehavior;
 
 class MessageBuilderSpec extends ObjectBehavior
 {
-    public function it_is_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Crummy\Phlack\Builder\MessageBuilder');
     }
 
-    public function it_is_a_builder()
+    function it_is_a_builder()
     {
         $this->shouldImplement('\Crummy\Phlack\Builder\BuilderInterface');
     }
 
-    public function it_returns_a_message_on_create()
+    function it_returns_a_message_on_create()
     {
         $this->setText('Message')->create()->shouldReturnAnInstanceOf('\Crummy\Phlack\Message\Message');
     }
 
-    public function it_fluently_sets_vars()
+    function it_fluently_sets_vars()
     {
         $this->setText('text')->shouldReturn($this);
         $this->setChannel('channel')->shouldReturn($this);
@@ -31,7 +31,7 @@ class MessageBuilderSpec extends ObjectBehavior
         $this->setUsername('user')->shouldReturn($this);
     }
 
-    public function it_refreshes_data_on_create()
+    function it_refreshes_data_on_create()
     {
         $message_1 = $this->setText('Message #1')->setChannel('1')->create();
 
@@ -40,12 +40,12 @@ class MessageBuilderSpec extends ObjectBehavior
         $message_2['channel']->shouldBeNull();
     }
 
-    public function it_adds_attachments(AttachmentInterface $attachment)
+    function it_adds_attachments(AttachmentInterface $attachment)
     {
         $this->addAttachment($attachment)->shouldReturn($this);
     }
 
-    public function it_fluently_creates_attachments()
+    function it_fluently_creates_attachments()
     {
         $this
             ->setText('Text')

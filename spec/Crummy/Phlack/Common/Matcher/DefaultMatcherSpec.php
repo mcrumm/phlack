@@ -7,12 +7,12 @@ use PhpSpec\ObjectBehavior;
 
 class DefaultMatcherSpec extends ObjectBehavior
 {
-    public function it_is_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Crummy\Phlack\Common\Matcher\DefaultMatcher');
     }
 
-    public function it_matches_all_commands(CommandInterface $command)
+    function it_matches_all_commands(CommandInterface $command)
     {
         $this->matches($command)->shouldReturn(true);
     }

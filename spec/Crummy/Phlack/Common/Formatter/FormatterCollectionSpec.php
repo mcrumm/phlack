@@ -8,19 +8,19 @@ use PhpSpec\ObjectBehavior;
 
 class FormatterCollectionSpec extends ObjectBehavior
 {
-    public function let(LinkFormatter $linker, EncodeFormatter $encoder)
+    function let(LinkFormatter $linker, EncodeFormatter $encoder)
     {
         $this->beConstructedWith([$linker, $encoder]);
     }
 
-    public function it_is_a_formatter()
+    function it_is_a_formatter()
     {
         $this->shouldHaveType('Crummy\Phlack\Common\Formatter\FormatterCollection');
         $this->shouldBeAnInstanceOf('\Crummy\Phlack\Common\Collection\TypeCollection');
         $this->shouldImplement('\Crummy\Phlack\Common\Formatter\FormatterInterface');
     }
 
-    public function its_format_is_a_composite_of_all_internal_formatters($linker, $encoder)
+    function its_format_is_a_composite_of_all_internal_formatters($linker, $encoder)
     {
         $text = 'Hello, <@U1|user>. Do you like fun & [games](http://example.com)?';
 

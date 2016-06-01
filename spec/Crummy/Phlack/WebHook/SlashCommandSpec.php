@@ -19,12 +19,12 @@ class SlashCommandSpec extends ObjectBehavior
         'text'         => '',
     ];
 
-    public function let()
+    function let()
     {
         $this->beConstructedWith($this->defaultFields);
     }
 
-    public function it_is_a_webhook_command()
+    function it_is_a_webhook_command()
     {
         $this->shouldHaveType('Crummy\Phlack\WebHook\SlashCommand');
         $this->shouldBeAnInstanceOf('\Crummy\Phlack\WebHook\AbstractCommand');
@@ -32,7 +32,7 @@ class SlashCommandSpec extends ObjectBehavior
         $this->shouldImplement('\Crummy\Phlack\Common\Encodable');
     }
 
-    public function it_can_be_created_fromConfig()
+    function it_can_be_created_fromConfig()
     {
         $config = ['team_domain' => 'http://phlack.slack.com'] + $this->defaultFields;
         $this->beConstructedThrough('fromConfig', [$config]);

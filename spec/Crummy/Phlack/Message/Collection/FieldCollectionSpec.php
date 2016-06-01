@@ -8,18 +8,18 @@ use PhpSpec\ObjectBehavior;
 
 class FieldCollectionSpec extends ObjectBehavior
 {
-    public function it_is_an_encodable_collection()
+    function it_is_an_encodable_collection()
     {
         $this->shouldHaveType('Crummy\Phlack\Message\Collection\FieldCollection');
         $this->shouldImplement('\Crummy\Phlack\Message\Collection\EncodableCollection');
     }
 
-    public function it_accepts_field_interface_elements(Field $field)
+    function it_accepts_field_interface_elements(Field $field)
     {
         $this->acceptsType($field)->shouldReturn(true);
     }
 
-    public function it_does_not_allow_other_elements(Attachment $attachment)
+    function it_does_not_allow_other_elements(Attachment $attachment)
     {
         $this
             ->shouldThrow('\Crummy\Phlack\Common\Exception\RuntimeException')
@@ -29,7 +29,7 @@ class FieldCollectionSpec extends ObjectBehavior
     /**
      *  @dataProvider fieldExamples
      */
-    public function it_can_be_passed_to_json_encode($field, $expected)
+    function it_can_be_passed_to_json_encode($field, $expected)
     {
         $this->add($field);
 
@@ -39,14 +39,14 @@ class FieldCollectionSpec extends ObjectBehavior
     /**
      *  @dataProvider jsonExamples
      */
-    public function it_can_be_cast_as_a_json_string($field, $expected)
+    function it_can_be_cast_as_a_json_string($field, $expected)
     {
         $this->add($field);
 
         $this->__toString()->shouldBe($expected);
     }
 
-    public function fieldExamples()
+    function fieldExamples()
     {
         return $this->getExamples(function ($example) {
             $field = Field::fromConfig($example);
@@ -55,7 +55,7 @@ class FieldCollectionSpec extends ObjectBehavior
         });
     }
 
-    public function jsonExamples()
+    function jsonExamples()
     {
         return $this->getExamples(function ($example) {
             $field = Field::fromConfig($example);
@@ -64,7 +64,7 @@ class FieldCollectionSpec extends ObjectBehavior
         });
     }
 
-    public function getExamples(callable $callback)
+    function getExamples(callable $callback)
     {
         $data = [
             [

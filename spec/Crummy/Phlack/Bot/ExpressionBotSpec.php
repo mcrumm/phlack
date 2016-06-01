@@ -9,18 +9,18 @@ use Symfony\Component\ExpressionLanguage\SyntaxError;
 
 class ExpressionBotSpec extends ObjectBehavior
 {
-    public function let($name, ExpressionLanguage $language)
+    function let($name, ExpressionLanguage $language)
     {
         $this->beConstructedWith($name, $language);
     }
 
-    public function it_extends_abstract_bot()
+    function it_extends_abstract_bot()
     {
         $this->shouldHaveType('Crummy\Phlack\Bot\ExpressionBot');
         $this->shouldBeAnInstanceOf('\Crummy\Phlack\Bot\AbstractBot');
     }
 
-    public function it_evaluates_expressions($language, SlashCommand $command)
+    function it_evaluates_expressions($language, SlashCommand $command)
     {
         $command->offsetGet('text')->willReturn('2 + 2');
         $language->evaluate('2 + 2', [])->willReturn('4');
@@ -31,7 +31,7 @@ class ExpressionBotSpec extends ObjectBehavior
                     ->shouldReturn('4');
     }
 
-    public function it_returns_the_syntax_error_as_the_response_in_bad_commands($language, SlashCommand $command)
+    function it_returns_the_syntax_error_as_the_response_in_bad_commands($language, SlashCommand $command)
     {
         $command->offsetGet('text')->willReturn('foo + 2');
 
