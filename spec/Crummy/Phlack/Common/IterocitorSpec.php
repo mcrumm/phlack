@@ -9,39 +9,39 @@ use PhpSpec\ObjectBehavior;
 
 class IterocitorSpec extends ObjectBehavior
 {
-    public function let(PhlackClient $client)
+    function let(PhlackClient $client)
     {
         $this->beConstructedWith($client);
     }
 
-    public function it_is_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Crummy\Phlack\Common\Iterocitor');
         $this->shouldImplement('\Crummy\Phlack\Common\Responder\ResponderInterface');
     }
 
-    public function it_says_hello()
+    function it_says_hello()
     {
         $this
             ->say('Hello!')['text']
                 ->shouldReturn('Hello!');
     }
 
-    public function it_emotes_a_welcome()
+    function it_emotes_a_welcome()
     {
         $this
             ->emote('Welcome!')['text']
                 ->shouldReturn('<!channel> Welcome!');
     }
 
-    public function it_shouts_at_everyone()
+    function it_shouts_at_everyone()
     {
         $this
             ->shout('Fire!!')['text']
                 ->shouldReturn('<!everyone> Fire!!');
     }
 
-    public function it_tells_U12345_he_is_great()
+    function it_tells_U12345_he_is_great()
     {
         $this
             ->tell('U12345', 'You rock, sir!')
@@ -49,7 +49,7 @@ class IterocitorSpec extends ObjectBehavior
             ->shouldReturn('<@U12345> You rock, sir!');
     }
 
-    public function it_replies_to_carol(CommandInterface $command)
+    function it_replies_to_carol(CommandInterface $command)
     {
         $command->offsetGet('channel_id')->willReturn('C98765');
         $command->offsetGet('channel_name')->willReturn('group');
@@ -60,14 +60,14 @@ class IterocitorSpec extends ObjectBehavior
                     ->shouldReturn('<@U12346|carol> I got your message.');
     }
 
-    public function it_proxies_reply_to_tell_for_string_input()
+    function it_proxies_reply_to_tell_for_string_input()
     {
         $this
             ->reply('U12A34C6', 'I got your message.')['text']
                 ->shouldReturn('<@U12A34C6> I got your message.');
     }
 
-    public function it_returns_an_empty_reply_on_send(MessageInterface $message)
+    function it_returns_an_empty_reply_on_send(MessageInterface $message)
     {
         $message->jsonSerialize()->willReturn(['text' => 'ok']);
 

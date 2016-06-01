@@ -32,13 +32,13 @@ class RequestConverterSpec extends ObjectBehavior
         'text'         => 'world',
     ];
 
-    public function it_is_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Crummy\Phlack\Bridge\Symfony\HttpFoundation\RequestConverter');
         $this->shouldImplement('\Crummy\Phlack\WebHook\Converter\ConverterInterface');
     }
 
-    public function it_converts_requests_into_slash_commands(Request $request, ParameterBag $post, ParameterBag $get)
+    function it_converts_requests_into_slash_commands(Request $request, ParameterBag $post, ParameterBag $get)
     {
         $request->request = $post;
         $request->query = $get;
@@ -46,7 +46,7 @@ class RequestConverterSpec extends ObjectBehavior
         $this->convert($request)->shouldReturnAnInstanceOf('\Crummy\Phlack\WebHook\SlashCommand');
     }
 
-    public function it_converts_requests_into_webhooks(Request $request, ParameterBag $post, ParameterBag $get)
+    function it_converts_requests_into_webhooks(Request $request, ParameterBag $post, ParameterBag $get)
     {
         $request->request = $post;
         $request->query = $get;
@@ -55,7 +55,7 @@ class RequestConverterSpec extends ObjectBehavior
         $this->convert($request)->shouldReturnAnInstanceOf('\Crummy\Phlack\WebHook\WebHook');
     }
 
-    public function it_throws_an_exception_for_an_invalid_request(Request $request, ParameterBag $post, ParameterBag $get)
+    function it_throws_an_exception_for_an_invalid_request(Request $request, ParameterBag $post, ParameterBag $get)
     {
         $request->request = $post;
         $request->query = $get;

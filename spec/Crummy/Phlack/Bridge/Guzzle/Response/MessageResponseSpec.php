@@ -8,7 +8,7 @@ use PhpSpec\ObjectBehavior;
 
 class MessageResponseSpec extends ObjectBehavior
 {
-    public function let()
+    function let()
     {
         $this->beConstructedWith([
             'status' => '200',
@@ -17,12 +17,12 @@ class MessageResponseSpec extends ObjectBehavior
         ]);
     }
 
-    public function it_is_a_response_class()
+    function it_is_a_response_class()
     {
         $this->shouldImplement('\Guzzle\Service\Command\ResponseClassInterface');
     }
 
-    public function it_is_create_from_command(OperationCommand $command)
+    function it_is_create_from_command(OperationCommand $command)
     {
         $command->getResponse()->willReturn(new Response('404', '', ''));
 

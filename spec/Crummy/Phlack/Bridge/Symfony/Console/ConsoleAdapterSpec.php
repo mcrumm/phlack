@@ -13,17 +13,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleAdapterSpec extends ObjectBehavior
 {
-    public function let(Mainframe $mainframe, StringConverter $converter)
+    function let(Mainframe $mainframe, StringConverter $converter)
     {
         $this->beConstructedWith($mainframe, $converter);
     }
 
-    public function it_is_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Crummy\Phlack\Bridge\Symfony\Console\ConsoleAdapter');
     }
 
-    public function it_executes_the_command_argument($mainframe, $converter, InputInterface $input, SlashCommand $cmd, OutputInterface $output, Packet $p)
+    function it_executes_the_command_argument($mainframe, $converter, InputInterface $input, SlashCommand $cmd, OutputInterface $output, Packet $p)
     {
         $input->getArgument('command')->willReturn('/expr 2 + 2');
         $converter->convert('/expr 2 + 2')->willReturn($cmd);

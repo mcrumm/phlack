@@ -8,13 +8,13 @@ use PhpSpec\ObjectBehavior;
 
 class CommandNameMatcherSpec extends ObjectBehavior
 {
-    public function it_is_a_matcher()
+    function it_is_a_matcher()
     {
         $this->shouldHaveType('Crummy\Phlack\Common\Matcher\CommandNameMatcher');
         $this->shouldImplement('\Crummy\Phlack\Common\Matcher\MatcherInterface');
     }
 
-    public function it_sets_command_name()
+    function it_sets_command_name()
     {
         $this->setCommandName('foo:')->shouldReturn($this);
 
@@ -23,7 +23,7 @@ class CommandNameMatcherSpec extends ObjectBehavior
                 ->shouldReturn('foo:');
     }
 
-    public function it_matches_a_SlashCommand_by_name(SlashCommand $command)
+    function it_matches_a_SlashCommand_by_name(SlashCommand $command)
     {
         $command->get('command')->willReturn('/foo');
 
@@ -33,7 +33,7 @@ class CommandNameMatcherSpec extends ObjectBehavior
                     ->shouldReturn(true);
     }
 
-    public function it_matches_a_WebHook_by_name(WebHook $command)
+    function it_matches_a_WebHook_by_name(WebHook $command)
     {
         $command->get('command')->willReturn('foo:');
 
@@ -43,7 +43,7 @@ class CommandNameMatcherSpec extends ObjectBehavior
                     ->shouldReturn(true);
     }
 
-    public function it_does_not_match_unmatched_names(SlashCommand $command)
+    function it_does_not_match_unmatched_names(SlashCommand $command)
     {
         $command->get('command')->willReturn('/bar');
 
