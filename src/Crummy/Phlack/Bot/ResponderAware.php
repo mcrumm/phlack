@@ -8,6 +8,7 @@ interface ResponderAware extends BotInterface
 {
     /**
      * @param ResponderInterface $responder
+     *
      * @return self
      */
     public function setResponder(ResponderInterface $responder);

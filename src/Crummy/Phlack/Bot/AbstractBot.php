@@ -3,7 +3,6 @@
 namespace Crummy\Phlack\Bot;
 
 use Crummy\Phlack\Common\Exception\InvalidArgumentException;
-use Crummy\Phlack\Common\Iterocitor;
 use Crummy\Phlack\Common\Matcher;
 use Crummy\Phlack\Common\Responder\ResponderInterface;
 use Crummy\Phlack\Message\MessageInterface;
@@ -19,7 +18,7 @@ abstract class AbstractBot implements ResponderAware, Matcher\MatcherAggregate
 
     /**
      * @param Matcher\MatcherInterface|\Closure $matcher
-     * @param ResponderInterface $responder
+     * @param ResponderInterface                $responder
      */
     public function __construct($matcher = null, ResponderInterface $responder = null)
     {
@@ -63,11 +62,13 @@ abstract class AbstractBot implements ResponderAware, Matcher\MatcherAggregate
 
     /**
      * @param ResponderInterface $responder
+     *
      * @return self
      */
     public function setResponder(ResponderInterface $responder)
     {
         $this->responder = $responder;
+
         return $this;
     }
 
