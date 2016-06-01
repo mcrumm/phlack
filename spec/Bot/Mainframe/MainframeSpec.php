@@ -14,7 +14,7 @@ class MainframeSpec extends ObjectBehavior
     function it_is_an_executable()
     {
         $this->shouldHaveType('Crummy\Phlack\Bot\Mainframe\Mainframe');
-        $this->shouldImplement('\Crummy\Phlack\Common\Executable');
+        $this->shouldImplement('\Crummy\Phlack\WebHook\Executable');
     }
 
     function it_creates_a_listener_for_a_bot_and_matcher(BotInterface $bot, MatcherInterface $matcher)

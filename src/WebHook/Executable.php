@@ -1,15 +1,15 @@
 <?php
 
-namespace Crummy\Phlack\Common;
+namespace Crummy\Phlack\WebHook;
 
-use Crummy\Phlack\WebHook\CommandInterface;
+use Crummy\Phlack\Common\Encodable;
 
 interface Executable
 {
     /**
      * @param CommandInterface $command
      *
-     * @return \Crummy\Phlack\Common\Encodable
+     * @return Encodable
      */
     public function execute(CommandInterface $command);
 }
