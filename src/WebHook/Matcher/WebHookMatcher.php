@@ -1,6 +1,6 @@
 <?php
 
-namespace Crummy\Phlack\Common\Matcher;
+namespace Crummy\Phlack\WebHook\Matcher;
 
 use Crummy\Phlack\WebHook\CommandInterface;
 use Crummy\Phlack\WebHook\WebHookInterface;

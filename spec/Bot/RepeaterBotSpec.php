@@ -2,7 +2,7 @@
 
 namespace spec\Crummy\Phlack\Bot;
 
-use Crummy\Phlack\Common\Matcher\NonMatcher;
+use Crummy\Phlack\WebHook\Matcher\NonMatcher;
 use Crummy\Phlack\WebHook\CommandInterface;
 use Crummy\Phlack\WebHook\WebHook;
 use PhpSpec\ObjectBehavior;

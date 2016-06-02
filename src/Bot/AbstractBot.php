@@ -4,7 +4,7 @@ namespace Crummy\Phlack\Bot;
 
 use Crummy\Phlack\Common\Exception\InvalidArgumentException;
 use Crummy\Phlack\Common\Iterocitor;
-use Crummy\Phlack\Common\Matcher;
+use Crummy\Phlack\WebHook\Matcher;
 use Crummy\Phlack\Common\Responder\ResponderInterface;
 use Crummy\Phlack\Message\MessageInterface;
 
@@ -38,7 +38,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
     {
         if (!$matcher instanceof Matcher\MatcherInterface && !is_callable($matcher)) {
             throw new InvalidArgumentException(sprintf(
-                'The matcher must be callable, or implement \Crummy\Phlack\Common\Matcher\MatcherInterface. "%" given.',
+                'The matcher must be callable, or implement \Crummy\Phlack\WebHook\Matcher\MatcherInterface. "%" given.',
                 is_object($matcher) ? get_class($matcher) : gettype($matcher)
             ));
         }

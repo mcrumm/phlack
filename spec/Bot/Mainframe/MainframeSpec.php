@@ -4,8 +4,8 @@ namespace spec\Crummy\Phlack\Bot\Mainframe;
 
 use Crummy\Phlack\Bot\BotInterface;
 use Crummy\Phlack\Bot\Mainframe\Packet;
-use Crummy\Phlack\Common\Matcher\DefaultMatcher;
-use Crummy\Phlack\Common\Matcher\MatcherInterface;
+use Crummy\Phlack\WebHook\Matcher\DefaultMatcher;
+use Crummy\Phlack\WebHook\Matcher\MatcherInterface;
 use Crummy\Phlack\WebHook\CommandInterface;
 use PhpSpec\ObjectBehavior;
 

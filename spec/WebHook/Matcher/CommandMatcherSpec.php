@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Crummy\Phlack\Common\Matcher;
+namespace spec\Crummy\Phlack\WebHook\Matcher;
 
 use Crummy\Phlack\WebHook\SlashCommand;
 use Crummy\Phlack\WebHook\WebHookInterface;
@@ -15,7 +15,7 @@ class CommandMatcherSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Crummy\Phlack\Common\Matcher\CommandMatcher');
+        $this->shouldHaveType('Crummy\Phlack\WebHook\Matcher\CommandMatcher');
     }
 
     function it_matches_slash_commands(SlashCommand $command)

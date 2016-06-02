@@ -2,7 +2,7 @@
 
 namespace Crummy\Phlack\Bot;
 
-use Crummy\Phlack\Common\Matcher\CommandMatcher;
+use Crummy\Phlack\WebHook\Matcher\CommandMatcher;
 use Crummy\Phlack\WebHook\CommandInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\ExpressionLanguage\SyntaxError;

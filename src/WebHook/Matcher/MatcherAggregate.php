@@ -1,6 +1,6 @@
 <?php
 
-namespace Crummy\Phlack\Common\Matcher;
+namespace Crummy\Phlack\WebHook\Matcher;
 
 interface MatcherAggregate
 {

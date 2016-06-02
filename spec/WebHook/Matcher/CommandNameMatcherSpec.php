@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Crummy\Phlack\Common\Matcher;
+namespace spec\Crummy\Phlack\WebHook\Matcher;
 
 use Crummy\Phlack\WebHook\SlashCommand;
 use Crummy\Phlack\WebHook\WebHook;
@@ -10,8 +10,8 @@ class CommandNameMatcherSpec extends ObjectBehavior
 {
     function it_is_a_matcher()
     {
-        $this->shouldHaveType('Crummy\Phlack\Common\Matcher\CommandNameMatcher');
-        $this->shouldImplement('\Crummy\Phlack\Common\Matcher\MatcherInterface');
+        $this->shouldHaveType('Crummy\Phlack\WebHook\Matcher\CommandNameMatcher');
+        $this->shouldImplement('\Crummy\Phlack\WebHook\Matcher\MatcherInterface');
     }
 
     function it_sets_command_name()

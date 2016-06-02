@@ -1,10 +1,10 @@
 <?php
 
-namespace Crummy\Phlack\Common\Matcher;
+namespace Crummy\Phlack\WebHook\Matcher;
 
 use Crummy\Phlack\WebHook\CommandInterface;
 
-class NonMatcher implements MatcherInterface
+class DefaultMatcher implements MatcherInterface
 {
     /**
      * @param CommandInterface $command
@@ -13,6 +13,6 @@ class NonMatcher implements MatcherInterface
      */
     public function matches(CommandInterface $command)
     {
-        return false;
+        return true;
     }
 }
