@@ -3,34 +3,40 @@
 namespace Crummy\Phlack\Bot;
 
 use Crummy\Phlack\Common\Exception\InvalidArgumentException;
-use Crummy\Phlack\Common\Iterocitor;
+use Crummy\Phlack\Common\Formatter\Sequencer;
+use Crummy\Phlack\WebHook\CommandInterface;
 use Crummy\Phlack\WebHook\Matcher;
-use Crummy\Phlack\Common\Responder\ResponderInterface;
-use Crummy\Phlack\Message\MessageInterface;
+use Crummy\Phlack\WebHook\Reply\Reply;
 
 abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
 {
-    private $matcher;
-    private $responder;
+    /**
+     * @var Sequencer
+     */
+    protected $sequencer;
 
     /**
-     * @param Matcher\MatcherInterface $matcher
-     * @param array|ResponderInterface $options
+     * @var Matcher\MatcherInterface|callable
      */
-    public function __construct($matcher = null, $options = [])
+    private $matcher;
+
+    /**
+     * @param Matcher\MatcherInterface|callable $matcher
+     */
+    public function __construct($matcher = null)
     {
+        $this->sequencer = new Sequencer();
+
         if (!$matcher) {
             $matcher = new Matcher\DefaultMatcher();
         }
-
         $this->setMatcher($matcher);
-        $this->responder = $options instanceof ResponderInterface ? $options : new Iterocitor($options);
     }
 
     /**
-     * @param Matcher\MatcherInterface $matcher
+     * @param Matcher\MatcherInterface|callable $matcher
      *
-     * @throws \Crummy\Phlack\Common\Exception\InvalidArgumentException When given an invalid matcher.
+     * @throws InvalidArgumentException When given an invalid matcher.
      *
      * @return $this
      */
@@ -59,62 +65,69 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
     /**
      * @param string $text
      *
-     * @return \Crummy\Phlack\WebHook\Reply\Reply
+     * @return Reply
      */
     protected function say($text)
     {
-        return $this->responder->say($text);
+        return new Reply(['text' => $text]);
     }
 
     /**
      * @param string $text
      *
-     * @return \Crummy\Phlack\WebHook\Reply\Reply
+     * @return Reply
      */
     protected function emote($text)
     {
-        return $this->responder->emote($text);
+        return $this->important('channel', $text);
     }
 
     /**
      * @param string $user The user_id to tell
      * @param string $text
      *
-     * @return \Crummy\Phlack\WebHook\Reply\Reply
+     * @return Reply
      */
     protected function tell($user, $text)
     {
-        return $this->responder->tell($user, $text);
+        return $this->say($this->sequencer->format('@'.$user).' '.$text);
     }
 
     /**
-     * @param \Crummy\Phlack\WebHook\CommandInterface $user The user_id, or a CommandInterface to inspect.
-     * @param string                                  $text
+     * @param CommandInterface $user The user_id, or a CommandInterface to inspect.
+     * @param string           $text
      *
-     * @return \Crummy\Phlack\WebHook\Reply\Reply
+     * @return Reply
      */
     protected function reply($user, $text)
     {
-        return $this->responder->reply($user, $text);
+        if ($user instanceof CommandInterface) {
+            $sequence = $this->sequencer->command($user);
+
+            return $this->say($sequence['user'].' '.$text);
+        }
+
+        return $this->tell($user, $text);
     }
 
     /**
      * @param string $text
      *
-     * @return \Crummy\Phlack\WebHook\Reply\Reply
+     * @return Reply
      */
     protected function shout($text)
     {
-        return $this->responder->shout($text);
+        return $this->important('everyone', $text);
     }
 
     /**
-     * @param MessageInterface $message
+     * @param string $where
+     * @param string $text
      *
-     * @return \Crummy\Phlack\WebHook\Reply\EmptyReply
+     * @return Reply
      */
-    protected function send(MessageInterface $message)
+    protected function important($where, $text)
     {
-        return $this->responder->send($message);
+        return $this->say($this->sequencer->alert($where).' '.$text);
     }
 }
