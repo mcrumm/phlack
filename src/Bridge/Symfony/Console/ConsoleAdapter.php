@@ -14,7 +14,8 @@ class ConsoleAdapter extends AbstractAdapter
         $text = is_array($in) ? implode(' ', $in) : $in;
         $command = call_user_func($this->converter, $text);
         $result = $this->mainframe->execute($command);
-        var_dump($result);
-        $output->writeln($result);
+        if ($result['message']) {
+            $output->writeln($result['message']['text']);
+        }
     }
 }

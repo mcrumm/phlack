@@ -26,7 +26,9 @@ $botCommand = new \Crummy\Phlack\Bridge\Symfony\Console\BotCommand($adapter);
 
 $botCommand
     ->attach(new \Crummy\Phlack\Bot\ExpressionBot('/math')) # Attach the ExpressionBot at /math (e.g /math 2 + 2)
-    ->attach(new \Crummy\Phlack\Bot\RepeaterBot());           # Attach the ParrotBot to respond to all other commands.
+    ->attach(new \Crummy\Phlack\Bot\RepeaterBot()) # Attach the RepeaterBot to respond to all other commands.
+;
 
-$app    = new \Crummy\Phlack\Bridge\Symfony\Console\ShellBot(PHLACKBOT_NAME, PHLACKBOT_VERSION, $botCommand);
-(new \Symfony\Component\Console\Shell($app))->run();
+$app = new \Crummy\Phlack\Bridge\Symfony\Console\ShellBot(PHLACKBOT_NAME, PHLACKBOT_VERSION, $botCommand);
+
+$app->run();
