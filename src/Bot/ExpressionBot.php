@@ -2,6 +2,7 @@
 
 namespace Crummy\Phlack\Bot;
 
+use Crummy\Phlack\Message\Message;
 use Crummy\Phlack\WebHook\Matcher\CommandMatcher;
 use Crummy\Phlack\WebHook\CommandInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
@@ -26,7 +27,7 @@ class ExpressionBot extends AbstractBot
     /**
      * @param CommandInterface $command
      *
-     * @return \Crummy\Phlack\WebHook\Reply\Reply
+     * @return Message
      */
     public function execute(CommandInterface $command)
     {

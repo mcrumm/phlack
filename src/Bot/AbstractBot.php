@@ -4,9 +4,9 @@ namespace Crummy\Phlack\Bot;
 
 use Crummy\Phlack\Common\Exception\InvalidArgumentException;
 use Crummy\Phlack\Common\Formatter\Sequencer;
+use Crummy\Phlack\Message\Message;
 use Crummy\Phlack\WebHook\CommandInterface;
 use Crummy\Phlack\WebHook\Matcher;
-use Crummy\Phlack\WebHook\Reply\Reply;
 
 abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
 {
@@ -65,17 +65,17 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
     /**
      * @param string $text
      *
-     * @return Reply
+     * @return Message
      */
     protected function say($text)
     {
-        return new Reply(['text' => $text]);
+        return new Message($text);
     }
 
     /**
      * @param string $text
      *
-     * @return Reply
+     * @return Message
      */
     protected function emote($text)
     {
@@ -86,7 +86,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
      * @param string $user The user_id to tell
      * @param string $text
      *
-     * @return Reply
+     * @return Message
      */
     protected function tell($user, $text)
     {
@@ -97,7 +97,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
      * @param CommandInterface $user The user_id, or a CommandInterface to inspect.
      * @param string           $text
      *
-     * @return Reply
+     * @return Message
      */
     protected function reply($user, $text)
     {
@@ -113,7 +113,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
     /**
      * @param string $text
      *
-     * @return Reply
+     * @return Message
      */
     protected function shout($text)
     {
@@ -124,7 +124,7 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
      * @param string $where
      * @param string $text
      *
-     * @return Reply
+     * @return Message
      */
     protected function important($where, $text)
     {

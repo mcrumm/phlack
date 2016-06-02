@@ -4,8 +4,8 @@ namespace spec\Crummy\Phlack\Bridge\Symfony\Console;
 
 use Crummy\Phlack\Bot\Mainframe\Mainframe;
 use Crummy\Phlack\Common\Event;
+use Crummy\Phlack\Message\Message;
 use Crummy\Phlack\WebHook\Converter\StringConverter;
-use Crummy\Phlack\WebHook\Reply\Reply;
 use Crummy\Phlack\WebHook\SlashCommand;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\Console\Input\InputInterface;
@@ -31,7 +31,7 @@ class ConsoleAdapterSpec extends ObjectBehavior
 
         $input->getArgument('command')->shouldBeCalled();
         $mainframe->execute($cmd)->shouldBeCalled()->willReturn($e);
-        $reply = new Reply('4');
+        $reply = new Message('4');
         $e->offsetGet('message')->willReturn($reply);
         $output->writeln($reply['text'])->shouldBeCalled();
         $this->execute($input, $output);

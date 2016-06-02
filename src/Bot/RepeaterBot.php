@@ -2,6 +2,7 @@
 
 namespace Crummy\Phlack\Bot;
 
+use Crummy\Phlack\Message\Message;
 use Crummy\Phlack\WebHook\CommandInterface;
 
 class RepeaterBot extends AbstractBot
@@ -9,7 +10,7 @@ class RepeaterBot extends AbstractBot
     /**
      * @param CommandInterface $command
      *
-     * @return \Crummy\Phlack\WebHook\Reply\Reply
+     * @return Message
      */
     public function execute(CommandInterface $command)
     {
