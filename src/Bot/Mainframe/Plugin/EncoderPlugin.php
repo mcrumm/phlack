@@ -2,7 +2,7 @@
 
 namespace Crummy\Phlack\Bot\Mainframe\Plugin;
 
-use Crummy\Phlack\Bot\Mainframe\Packet;
+use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\Common\Events;
 use Crummy\Phlack\Common\Formatter\EncodeFormatter;
 use Crummy\Phlack\Common\Formatter\FormatterCollection;
@@ -35,16 +35,16 @@ class EncoderPlugin implements PluginInterface
     }
 
     /**
-     * @param Packet $packet
+     * @param Event $event
      *
-     * @return Packet
+     * @return Event
      */
-    public function onAfterExecute(Packet $packet)
+    public function onAfterExecute(Event $event)
     {
-        if (isset($packet['output'])) {
-            $packet['output']['text'] = $this->formatter->format($packet['output']['text']);
+        if (isset($event['message'])) {
+            $event['message']['text'] = $this->formatter->format($event['message']['text']);
         }
 
-        return $packet;
+        return $event;
     }
 }

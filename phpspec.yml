@@ -12,4 +12,4 @@ code_coverage:
     clover: spec/coverage/clover.xml
 extensions:
     - Coduo\PhpSpec\DataProvider\DataProviderExtension
-    - PhpSpec\Extension\CodeCoverageExtension
+    #- PhpSpec\Extension\CodeCoverageExtension

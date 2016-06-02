@@ -13,7 +13,8 @@ class ConsoleAdapter extends AbstractAdapter
         $in = $input->getArgument('command');
         $text = is_array($in) ? implode(' ', $in) : $in;
         $command = call_user_func($this->converter, $text);
-        $result = (string) $this->mainframe->execute($command)['output']->get('text');
+        $result = $this->mainframe->execute($command);
+        var_dump($result);
         $output->writeln($result);
     }
 }

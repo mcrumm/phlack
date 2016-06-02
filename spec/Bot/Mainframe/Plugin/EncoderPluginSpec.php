@@ -2,7 +2,7 @@
 
 namespace spec\Crummy\Phlack\Bot\Mainframe\Plugin;
 
-use Crummy\Phlack\Bot\Mainframe\Packet;
+use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\Common\Formatter\FormatterInterface;
 use Crummy\Phlack\WebHook\Reply\Reply;
 use PhpSpec\ObjectBehavior;
@@ -20,18 +20,18 @@ class EncoderPluginSpec extends ObjectBehavior
         $this->shouldImplement('\Crummy\Phlack\Bot\Mainframe\Plugin\PluginInterface');
     }
 
-    function it_fires_after_the_command_is_executed(Packet $packet)
+    function it_fires_after_the_command_is_executed(Event $event)
     {
-        $this->onAfterExecute($packet)->shouldReturn($packet);
+        $this->onAfterExecute($event)->shouldReturn($event);
     }
 
-    function it_encodes_the_output(FormatterInterface $formatter, Packet $packet, Reply $reply)
+    function it_encodes_the_output(FormatterInterface $formatter, Event $event, Reply $reply)
     {
         $unencoded = '<foo!> <#C01010|botgarage>';
         $encoded = '&lt;foo!&gt; <#C01010|botgarage>';
 
-        $packet->offsetExists('output')->willReturn(true);
-        $packet->offsetGet('output')->willReturn($reply);
+        $event->offsetExists('message')->willReturn(true);
+        $event->offsetGet('message')->willReturn($reply);
 
         $reply->offsetExists('text')->willReturn(true);
         $reply->offsetGet('text')->willReturn($unencoded);
@@ -39,6 +39,6 @@ class EncoderPluginSpec extends ObjectBehavior
         $formatter->format($unencoded)->willReturn($encoded);
         $reply->offsetSet('text', $encoded)->shouldBeCalled();
 
-        $this->onAfterExecute($packet);
+        $this->onAfterExecute($event);
     }
 }

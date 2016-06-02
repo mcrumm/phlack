@@ -3,25 +3,26 @@
 namespace Crummy\Phlack\Common;
 
 use Guzzle\Common\Event as GuzzleEvent;
+use JsonSerializable;
 
-class Event extends GuzzleEvent
+class Event extends GuzzleEvent implements Encodable
 {
     /**
      * {@inheritdoc}
      */
-    public function __construct(array $context = [])
+    public function jsonSerialize()
     {
-        $resolver = new OptionsResolver();
-        $this->setDefaultOptions($resolver);
-
-        parent::__construct($resolver->resolve($context));
+        return $this['message'] && $this['message'] instanceof JsonSerializable
+            ? $this['message']->jsonSerialize()
+            : $this['message']
+        ;
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * @return string
      */
-    protected function setDefaultOptions(OptionsResolver $resolver)
+    public function __toString()
     {
-        // noop
+        return json_encode($this->jsonSerialize());
     }
 }

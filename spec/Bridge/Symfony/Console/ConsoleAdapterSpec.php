@@ -3,7 +3,7 @@
 namespace spec\Crummy\Phlack\Bridge\Symfony\Console;
 
 use Crummy\Phlack\Bot\Mainframe\Mainframe;
-use Crummy\Phlack\Bot\Mainframe\Packet;
+use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\WebHook\Converter\StringConverter;
 use Crummy\Phlack\WebHook\Reply\Reply;
 use Crummy\Phlack\WebHook\SlashCommand;
@@ -23,16 +23,16 @@ class ConsoleAdapterSpec extends ObjectBehavior
         $this->shouldHaveType('Crummy\Phlack\Bridge\Symfony\Console\ConsoleAdapter');
     }
 
-    function it_executes_the_command_argument($mainframe, InputInterface $input, SlashCommand $cmd, OutputInterface $output, Packet $p)
+    function it_executes_the_command_argument($mainframe, InputInterface $input, SlashCommand $cmd, OutputInterface $output, Event $e)
     {
         $this->beConstructedWith($mainframe, function () use ($cmd) {
             return $cmd->getWrappedObject();
         });
 
         $input->getArgument('command')->shouldBeCalled();
-        $mainframe->execute($cmd)->shouldBeCalled()->willReturn($p);
+        $mainframe->execute($cmd)->shouldBeCalled()->willReturn($e);
         $reply = new Reply('4');
-        $p->offsetGet('output')->willReturn($reply);
+        $e->offsetGet('message')->willReturn($reply);
         $output->writeln($reply['text'])->shouldBeCalled();
         $this->execute($input, $output);
     }

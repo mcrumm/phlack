@@ -3,6 +3,7 @@
 namespace Crummy\Phlack\Bot\Mainframe;
 
 use Crummy\Phlack\Bot\BotInterface;
+use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\Common\Events;
 use Crummy\Phlack\Common\Exception\InvalidArgumentException;
 use Crummy\Phlack\WebHook\CommandInterface;
@@ -28,13 +29,13 @@ class Mainframe implements Executable
     /**
      * @param CommandInterface $command
      *
-     * @return Packet
+     * @return Event
      */
     public function execute(CommandInterface $command)
     {
-        $packet = $this->cpu->dispatch(Events::RECEIVED_COMMAND, new Packet(['command' => $command]));
+        $event = $this->cpu->dispatch(Events::RECEIVED_COMMAND, new Event(['command' => $command]));
 
-        return $this->cpu->dispatch(Events::AFTER_EXECUTE_COMMAND, $packet);
+        return $this->cpu->dispatch(Events::AFTER_EXECUTE_COMMAND, $event);
     }
 
     /**
@@ -76,16 +77,16 @@ class Mainframe implements Executable
             ));
         }
 
-        return function (Packet $packet) use ($bot, $matcher) {
+        return function (Event $event) use ($bot, $matcher) {
             if ($matcher instanceof MatcherInterface) {
-                $isMatch = $matcher->matches($packet['command']);
+                $isMatch = $matcher->matches($event['command']);
             } else {
-                $isMatch = call_user_func($matcher, $packet['command']);
+                $isMatch = call_user_func($matcher, $event['command']);
             }
 
             if ($isMatch) {
-                $packet->stopPropagation();
-                $packet['output'] = $bot->execute($packet['command']);
+                $event->stopPropagation();
+                $event['message'] = $bot->execute($event['command']);
             }
         };
     }
