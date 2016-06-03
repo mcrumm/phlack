@@ -2,16 +2,19 @@
 
 namespace spec\Crummy\Phlack\Bridge\Symfony\HttpKernel;
 
+use Crummy\Phlack\Bot\ExpressionBot;
 use Crummy\Phlack\WebHook\Mainframe;
-use Crummy\Phlack\WebHook\SlashCommand;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\Request;
 
 class MainframeKernelSpec extends ObjectBehavior
 {
-    function let(Mainframe $mainframe)
+    function let()
     {
-        $this->beConstructedWith($mainframe);
+        $mf = new Mainframe();
+        $mf->attach(new ExpressionBot('/math'));
+
+        $this->beConstructedWith($mf);
     }
 
     function it_an_HttpKernelInterface_adapter()
@@ -21,13 +24,25 @@ class MainframeKernelSpec extends ObjectBehavior
         $this->shouldBeAnInstanceOf('\Symfony\Component\HttpKernel\HttpKernelInterface');
     }
 
-    function it_turns_a_request_into_a_response($mainframe, Request $request, SlashCommand $cmd)
+    function it_turns_a_request_into_a_response()
     {
-        $this->beConstructedWith($mainframe, function () use ($cmd) {
-            return $cmd->getWrappedObject();
-        });
+        $request = new Request([], [
+            'token' => 'gIkuvaNzQIHg97ATvDxqgjtO',
+            'team_id' => 'T0001',
+            'team_domain' => 'example',
+            'channel_id' => 'C2147483705',
+            'channel_name' =>'test',
+            'user_id' => 'U2147483697',
+            'user_name' => 'Steve',
+            'command' => '/math',
+            'text' => '2 - -2',
+            'response_url' => 'https://hooks.slack.com/commands/1234/5678'
+        ]);
 
-        $mainframe->execute($cmd)->shouldBeCalled();
-        $this->handle($request)->shouldReturnAnInstanceOf('\Symfony\Component\HttpFoundation\Response');
+        $this
+            ->handle($request)
+            ->getContent()
+            ->shouldBe(json_encode(['text' => '4']))
+        ;
     }
 }

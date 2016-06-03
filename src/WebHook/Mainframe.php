@@ -31,9 +31,13 @@ class Mainframe implements Executable
      */
     public function execute(CommandInterface $command)
     {
-        $event = $this->cpu->dispatch(Events::RECEIVED_COMMAND, new Event(['command' => $command]));
+        $event = new Event(['command' => $command]);
 
-        return $this->cpu->dispatch(Events::AFTER_EXECUTE_COMMAND, $event);
+        $this->cpu->dispatch(Events::RECEIVED_COMMAND, $event);
+
+        $this->cpu->dispatch(Events::AFTER_EXECUTE_COMMAND, $event);
+
+        return $event['message'];
     }
 
     /**

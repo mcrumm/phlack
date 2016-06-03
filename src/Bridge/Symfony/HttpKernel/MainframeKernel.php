@@ -15,12 +15,9 @@ class MainframeKernel extends AbstractAdapter implements HttpKernelInterface
      * @param Mainframe                 $mainframe
      * @param callable|RequestConverter $converter
      */
-    public function __construct(Mainframe $mainframe = null, callable $converter = null)
+    public function __construct(Mainframe $mainframe, callable $converter = null)
     {
-        parent::__construct(
-            $mainframe ?: new Mainframe(),
-            $converter ?: new RequestConverter()
-        );
+        parent::__construct($mainframe, $converter ?: new RequestConverter());
     }
 
     /**
@@ -29,10 +26,10 @@ class MainframeKernel extends AbstractAdapter implements HttpKernelInterface
      */
     public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
     {
-        $converter = $this->converter;
-        $command = $converter($request);
-        $event = $this->mainframe->execute($command);
+        $convert = $this->converter;
+        $command = $convert($request);
+        $message = $this->mainframe->execute($command);
 
-        return new Response($event['message']);
+        return new Response($message);
     }
 }
