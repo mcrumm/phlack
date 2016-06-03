@@ -8,20 +8,23 @@ use Crummy\Phlack\Common\Exception\InvalidArgumentException;
 use Crummy\Phlack\WebHook\Matcher\MatcherAggregate;
 use Crummy\Phlack\WebHook\Matcher\MatcherInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Mainframe implements MainframeInterface
 {
     /**
-     * @var EventDispatcher
+     * @var EventDispatcherInterface
      */
     private $dispatcher;
 
     /**
-     * Constructor.
+     * Mainframe constructor.
+     *
+     * @param EventDispatcherInterface|null $dispatcher
      */
-    public function __construct()
+    public function __construct(EventDispatcherInterface $dispatcher = null)
     {
-        $this->dispatcher = new EventDispatcher();
+        $this->dispatcher = $dispatcher ?: new EventDispatcher();
 
         $this->dispatcher->addSubscriber(new Plugin\EncoderPlugin());
     }
