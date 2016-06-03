@@ -2,7 +2,6 @@
 
 namespace Crummy\Phlack\WebHook;
 
-use Crummy\Phlack\Bot\BotInterface;
 use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\Common\Events;
 use Crummy\Phlack\Common\Exception\InvalidArgumentException;
@@ -10,7 +9,7 @@ use Crummy\Phlack\WebHook\Matcher\MatcherAggregate;
 use Crummy\Phlack\WebHook\Matcher\MatcherInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class Mainframe implements Executable
+class Mainframe implements MainframeInterface
 {
     private $cpu;
 
@@ -41,36 +40,36 @@ class Mainframe implements Executable
     }
 
     /**
-     * @param BotInterface              $bot
+     * @param Executable                $assistant
      * @param MatcherInterface|callable $matcher  If callable, it should accept a CommandInterface and return a boolean.
      * @param int                       $priority
      *
      * @return self
      */
-    public function attach(BotInterface $bot, $matcher = null, $priority = 0)
+    public function attach(Executable $assistant, $matcher = null, $priority = 0)
     {
-        if (!$matcher && $bot instanceof MatcherAggregate) {
-            $matcher = $bot->getMatcher();
+        if (!$matcher && $assistant instanceof MatcherAggregate) {
+            $matcher = $assistant->getMatcher();
         } else {
             $matcher = function () {
                 return true;
             };
         }
 
-        $this->cpu->addListener(Events::RECEIVED_COMMAND, $this->getListener($bot, $matcher), $priority);
+        $this->cpu->addListener(Events::RECEIVED_COMMAND, $this->getListener($assistant, $matcher), $priority);
 
         return $this;
     }
 
     /**
-     * @param BotInterface              $bot
+     * @param Executable                $assistant
      * @param MatcherInterface|callable $matcher If callable, it should accept a CommandInterface and return a boolean.
      *
      * @throws \Crummy\Phlack\Common\Exception\InvalidArgumentException When given an invalid matcher.
      *
      * @return \Closure An anonymous function to be attached to the internal cpu.
      */
-    public function getListener(BotInterface $bot, $matcher)
+    public function getListener(Executable $assistant, $matcher)
     {
         if (!$matcher instanceof MatcherInterface && !is_callable($matcher)) {
             throw new InvalidArgumentException(sprintf(
@@ -79,7 +78,7 @@ class Mainframe implements Executable
             ));
         }
 
-        return function (Event $event) use ($bot, $matcher) {
+        return function (Event $event) use ($assistant, $matcher) {
             if ($matcher instanceof MatcherInterface) {
                 $isMatch = $matcher->matches($event['command']);
             } else {
@@ -88,7 +87,7 @@ class Mainframe implements Executable
 
             if ($isMatch) {
                 $event->stopPropagation();
-                $event['message'] = $bot->execute($event['command']);
+                $event['message'] = $assistant->execute($event['command']);
             }
         };
     }
