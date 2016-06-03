@@ -19,9 +19,9 @@ class ConsoleAdapterSpec extends ObjectBehavior
         $this->beConstructedWith($mf);
     }
 
-    function it_is_initializable()
+    function it_is_a_Symfony_Command()
     {
-        $this->shouldHaveType('Crummy\Phlack\Bridge\Symfony\Console\ConsoleAdapter');
+        $this->shouldBeAnInstanceOf('Symfony\Component\Console\Command\Command');
     }
 
     function it_executes_the_command_argument(InputInterface $input, OutputInterface $output)

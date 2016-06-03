@@ -2,23 +2,26 @@
 
 namespace Crummy\Phlack\Bridge\Symfony\Console;
 
-use Crummy\Phlack\WebHook\Mainframe;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 
 class ShellBot extends Application
 {
-    private $bot;
+    /**
+     * @var ConsoleAdapter
+     */
+    private $adapter;
 
     /**
      * {@inheritdoc}
      *
-     * @param BotCommand $botCommand The BotCommand that executes for this ShellBot.
+     * @param ConsoleAdapter $adapter Mediates between the Console IO and Phlack's Mainframe.
      */
-    public function __construct($name = 'phlackbot', $version = 'UNKNOWN', BotCommand $botCommand = null)
+    public function __construct($name = 'phlackbot', $version = 'UNKNOWN', ConsoleAdapter $adapter)
     {
-        $this->bot = $botCommand ?: new BotCommand(new ConsoleAdapter(new Mainframe()));
+        $this->adapter = $adapter;
+
         parent::__construct($name, $version);
     }
 
@@ -28,17 +31,17 @@ class ShellBot extends Application
      */
     protected function getCommandName(InputInterface $input)
     {
-        return $this->bot->getName();
+        return $this->adapter->getName();
     }
 
     /**
-     * Adds BotCommand as the sole command for this ShellBot.
+     * Adds ConsoleAdapter as the sole command for this ShellBot.
      * {@inheritdoc}
      */
     protected function getDefaultCommands()
     {
         $defaultCommands = parent::getDefaultCommands();
-        $defaultCommands[] = $this->bot;
+        $defaultCommands[] = $this->adapter;
 
         return $defaultCommands;
     }
@@ -51,7 +54,9 @@ class ShellBot extends Application
     {
         $inputDefinition = parent::getDefinition();
         $inputDefinition->setArguments([
-            new InputArgument('command', InputArgument::OPTIONAL | InputArgument::IS_ARRAY, 'The input command'),
+            new InputArgument(
+                $this->adapter->getName(),
+                InputArgument::OPTIONAL | InputArgument::IS_ARRAY, 'The input command'),
         ]);
 
         return $inputDefinition;

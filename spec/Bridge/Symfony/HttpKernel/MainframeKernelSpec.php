@@ -20,7 +20,6 @@ class MainframeKernelSpec extends ObjectBehavior
     function it_an_HttpKernelInterface_adapter()
     {
         $this->shouldHaveType('Crummy\Phlack\Bridge\Symfony\HttpKernel\MainframeKernel');
-        $this->shouldImplement('\Crummy\Phlack\Bot\Mainframe\Adapter\AdapterInterface');
         $this->shouldBeAnInstanceOf('\Symfony\Component\HttpKernel\HttpKernelInterface');
     }
 

@@ -2,22 +2,33 @@
 
 namespace Crummy\Phlack\Bridge\Symfony\HttpKernel;
 
-use Crummy\Phlack\Bot\Mainframe\Adapter\AbstractAdapter;
 use Crummy\Phlack\Bridge\Symfony\HttpFoundation\RequestConverter;
-use Crummy\Phlack\WebHook\Mainframe;
+use Crummy\Phlack\WebHook\MainframeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-class MainframeKernel extends AbstractAdapter implements HttpKernelInterface
+class MainframeKernel implements HttpKernelInterface
 {
     /**
-     * @param Mainframe                 $mainframe
-     * @param callable|RequestConverter $converter
+     * @var MainframeInterface
      */
-    public function __construct(Mainframe $mainframe, callable $converter = null)
+    protected $mainframe;
+
+    /**
+     * @var RequestConverter
+     */
+    protected $converter;
+
+    /**
+     * MainframeKernel constructor.
+     *
+     * @param MainframeInterface $mainframe
+     */
+    public function __construct(MainframeInterface $mainframe)
     {
-        parent::__construct($mainframe, $converter ?: new RequestConverter());
+        $this->mainframe = $mainframe;
+        $this->converter = new RequestConverter();
     }
 
     /**

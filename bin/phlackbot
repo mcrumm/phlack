@@ -20,15 +20,12 @@ if (is_dir($vendor = __DIR__ . '/../vendor')) {
     );
 }
 
-$mainframe  = new \Crummy\Phlack\WebHook\Mainframe();
-$adapter    = new \Crummy\Phlack\Bridge\Symfony\Console\ConsoleAdapter($mainframe);
-$botCommand = new \Crummy\Phlack\Bridge\Symfony\Console\BotCommand($adapter);
-
-$botCommand
+$mainframe  = (new \Crummy\Phlack\WebHook\Mainframe())
     ->attach(new \Crummy\Phlack\Bot\ExpressionBot('/math')) # Attach the ExpressionBot at /math (e.g /math 2 + 2)
     ->attach(new \Crummy\Phlack\Bot\RepeaterBot()) # Attach the RepeaterBot to respond to all other commands.
 ;
 
-$app = new \Crummy\Phlack\Bridge\Symfony\Console\ShellBot(PHLACKBOT_NAME, PHLACKBOT_VERSION, $botCommand);
+$adapter  = new \Crummy\Phlack\Bridge\Symfony\Console\ConsoleAdapter('phlack', $mainframe);
+$app      = new \Crummy\Phlack\Bridge\Symfony\Console\ShellBot(PHLACKBOT_NAME, PHLACKBOT_VERSION, $adapter);
 
 $app->run();
