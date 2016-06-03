@@ -10,6 +10,10 @@ class SlashCommand extends AbstractCommand
     {
         parent::setDefaultOptions($resolver);
 
-        $resolver->setDefined(['team_domain', 'service_id']);
+        $resolver->setDefined([
+            'team_domain',
+            'service_id',
+            'response_url',
+        ]);
     }
 }
