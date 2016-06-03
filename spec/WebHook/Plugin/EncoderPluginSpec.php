@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Crummy\Phlack\Bot\Mainframe\Plugin;
+namespace spec\Crummy\Phlack\WebHook\Plugin;
 
 use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\Common\Formatter\FormatterInterface;
@@ -14,10 +14,10 @@ class EncoderPluginSpec extends ObjectBehavior
         $this->beConstructedWith($formatter);
     }
 
-    function it_is_a_Mainframe_Plugin()
+    function it_is_a_Command_Plugin()
     {
-        $this->shouldHaveType('Crummy\Phlack\Bot\Mainframe\Plugin\EncoderPlugin');
-        $this->shouldImplement('\Crummy\Phlack\Bot\Mainframe\Plugin\PluginInterface');
+        $this->shouldHaveType('Crummy\Phlack\WebHook\Plugin\EncoderPlugin');
+        $this->shouldImplement('Symfony\Component\EventDispatcher\EventSubscriberInterface');
     }
 
     function it_fires_after_the_command_is_executed(Event $event)

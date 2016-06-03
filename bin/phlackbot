@@ -20,7 +20,7 @@ if (is_dir($vendor = __DIR__ . '/../vendor')) {
     );
 }
 
-$mainframe  = new \Crummy\Phlack\Bot\Mainframe\Mainframe();
+$mainframe  = new \Crummy\Phlack\WebHook\Mainframe();
 $adapter    = new \Crummy\Phlack\Bridge\Symfony\Console\ConsoleAdapter($mainframe);
 $botCommand = new \Crummy\Phlack\Bridge\Symfony\Console\BotCommand($adapter);
 

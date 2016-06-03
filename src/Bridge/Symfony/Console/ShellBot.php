@@ -2,7 +2,7 @@
 
 namespace Crummy\Phlack\Bridge\Symfony\Console;
 
-use Crummy\Phlack\Bot\Mainframe\Mainframe;
+use Crummy\Phlack\WebHook\Mainframe;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

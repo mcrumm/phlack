@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Crummy\Phlack\Bot\Mainframe;
+namespace spec\Crummy\Phlack\WebHook;
 
 use Crummy\Phlack\Bot\BotInterface;
 use Crummy\Phlack\Common\Event;
@@ -13,7 +13,7 @@ class MainframeSpec extends ObjectBehavior
 {
     function it_is_an_executable()
     {
-        $this->shouldHaveType('Crummy\Phlack\Bot\Mainframe\Mainframe');
+        $this->shouldHaveType('Crummy\Phlack\WebHook\Mainframe');
         $this->shouldImplement('\Crummy\Phlack\WebHook\Executable');
     }
 

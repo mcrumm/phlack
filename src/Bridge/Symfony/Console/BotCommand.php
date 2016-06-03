@@ -4,7 +4,7 @@ namespace Crummy\Phlack\Bridge\Symfony\Console;
 
 use Crummy\Phlack\Bot\BotInterface;
 use Crummy\Phlack\Bot\Mainframe\Adapter\AdapterInterface;
-use Crummy\Phlack\Bot\Mainframe\Mainframe;
+use Crummy\Phlack\WebHook\Mainframe;
 use Crummy\Phlack\WebHook\Matcher\MatcherInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

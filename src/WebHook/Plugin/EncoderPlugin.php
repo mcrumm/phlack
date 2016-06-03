@@ -1,6 +1,6 @@
 <?php
 
-namespace Crummy\Phlack\Bot\Mainframe\Plugin;
+namespace Crummy\Phlack\WebHook\Plugin;
 
 use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\Common\Events;
@@ -8,8 +8,9 @@ use Crummy\Phlack\Common\Formatter\EncodeFormatter;
 use Crummy\Phlack\Common\Formatter\FormatterCollection;
 use Crummy\Phlack\Common\Formatter\FormatterInterface;
 use Crummy\Phlack\Common\Formatter\LinkFormatter;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class EncoderPlugin implements PluginInterface
+class EncoderPlugin implements EventSubscriberInterface
 {
     private $formatter;
 

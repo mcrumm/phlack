@@ -3,10 +3,10 @@
 namespace Crummy\Phlack\Bot\Mainframe\Adapter;
 
 use Crummy\Phlack\Bot\BotInterface;
-use Crummy\Phlack\Bot\Mainframe\Mainframe;
-use Crummy\Phlack\WebHook\Matcher\MatcherInterface;
 use Crummy\Phlack\WebHook\Converter\ConverterInterface;
 use Crummy\Phlack\WebHook\Converter\StringConverter;
+use Crummy\Phlack\WebHook\Mainframe;
+use Crummy\Phlack\WebHook\Matcher\MatcherInterface;
 
 class AbstractAdapter implements AdapterInterface
 {

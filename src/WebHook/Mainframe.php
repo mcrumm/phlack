@@ -1,13 +1,11 @@
 <?php
 
-namespace Crummy\Phlack\Bot\Mainframe;
+namespace Crummy\Phlack\WebHook;
 
 use Crummy\Phlack\Bot\BotInterface;
 use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\Common\Events;
 use Crummy\Phlack\Common\Exception\InvalidArgumentException;
-use Crummy\Phlack\WebHook\CommandInterface;
-use Crummy\Phlack\WebHook\Executable;
 use Crummy\Phlack\WebHook\Matcher\MatcherAggregate;
 use Crummy\Phlack\WebHook\Matcher\MatcherInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;

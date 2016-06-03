@@ -3,8 +3,8 @@
 namespace spec\Crummy\Phlack\Bridge\Symfony\Console;
 
 use Crummy\Phlack\Bot\BotInterface;
-use Crummy\Phlack\Bot\Mainframe\Mainframe;
 use Crummy\Phlack\Bridge\Symfony\Console\ConsoleAdapter;
+use Crummy\Phlack\WebHook\Mainframe;
 use PhpSpec\ObjectBehavior;
 
 class BotCommandSpec extends ObjectBehavior

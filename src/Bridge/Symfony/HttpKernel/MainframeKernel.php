@@ -3,8 +3,8 @@
 namespace Crummy\Phlack\Bridge\Symfony\HttpKernel;
 
 use Crummy\Phlack\Bot\Mainframe\Adapter\AbstractAdapter;
-use Crummy\Phlack\Bot\Mainframe\Mainframe;
 use Crummy\Phlack\Bridge\Symfony\HttpFoundation\RequestConverter;
+use Crummy\Phlack\WebHook\Mainframe;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;

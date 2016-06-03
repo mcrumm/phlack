@@ -2,8 +2,7 @@
 
 namespace spec\Crummy\Phlack\Bridge\Symfony\HttpKernel;
 
-use Crummy\Phlack\Bot\Mainframe\Mainframe;
-use Crummy\Phlack\Bridge\Symfony\HttpFoundation\RequestConverter;
+use Crummy\Phlack\WebHook\Mainframe;
 use Crummy\Phlack\WebHook\SlashCommand;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\Request;

@@ -2,10 +2,10 @@
 
 namespace spec\Crummy\Phlack\Bridge\Symfony\Console;
 
-use Crummy\Phlack\Bot\Mainframe\Mainframe;
 use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\Message\Message;
 use Crummy\Phlack\WebHook\Converter\StringConverter;
+use Crummy\Phlack\WebHook\Mainframe;
 use Crummy\Phlack\WebHook\SlashCommand;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\Console\Input\InputInterface;
