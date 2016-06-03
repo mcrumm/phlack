@@ -11,16 +11,19 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class Mainframe implements MainframeInterface
 {
-    private $cpu;
+    /**
+     * @var EventDispatcher
+     */
+    private $dispatcher;
 
     /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->cpu = new EventDispatcher();
+        $this->dispatcher = new EventDispatcher();
 
-        $this->cpu->addSubscriber(new Plugin\EncoderPlugin());
+        $this->dispatcher->addSubscriber(new Plugin\EncoderPlugin());
     }
 
     /**
@@ -32,9 +35,9 @@ class Mainframe implements MainframeInterface
     {
         $event = new Event(['command' => $command]);
 
-        $this->cpu->dispatch(Events::RECEIVED_COMMAND, $event);
+        $this->dispatcher->dispatch(Events::RECEIVED_COMMAND, $event);
 
-        $this->cpu->dispatch(Events::AFTER_EXECUTE_COMMAND, $event);
+        $this->dispatcher->dispatch(Events::AFTER_EXECUTE_COMMAND, $event);
 
         return $event['message'];
     }
@@ -56,7 +59,7 @@ class Mainframe implements MainframeInterface
             };
         }
 
-        $this->cpu->addListener(Events::RECEIVED_COMMAND, $this->getListener($assistant, $matcher), $priority);
+        $this->dispatcher->addListener(Events::RECEIVED_COMMAND, $this->getListener($assistant, $matcher), $priority);
 
         return $this;
     }
