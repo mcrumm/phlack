@@ -14,8 +14,7 @@ class Event extends GuzzleEvent implements Encodable
     {
         return $this['message'] && $this['message'] instanceof JsonSerializable
             ? $this['message']->jsonSerialize()
-            : $this['message']
-        ;
+            : $this['message'];
     }
 
     /**

@@ -22,6 +22,7 @@ class ConsoleAdapter extends Command
 
     /**
      * ConsoleAdapter constructor.
+     *
      * @param Mainframe     $mainframe
      * @param callable|null $converter
      */

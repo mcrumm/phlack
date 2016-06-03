@@ -14,11 +14,13 @@ class ShellBot extends Application
     private $adapter;
 
     /**
-     * {@inheritdoc}
+     * ShellBot constructor.
      *
      * @param ConsoleAdapter $adapter Mediates between the Console IO and Phlack's Mainframe.
+     * @param string         $name
+     * @param string         $version
      */
-    public function __construct($name = 'phlackbot', $version = 'UNKNOWN', ConsoleAdapter $adapter)
+    public function __construct(ConsoleAdapter $adapter, $name = 'phlackbot', $version = 'UNKNOWN')
     {
         $this->adapter = $adapter;
 

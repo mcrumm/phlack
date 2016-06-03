@@ -11,6 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RequestConverter implements ConverterInterface
 {
+    /**
+     * @param Request $request
+     *
+     * @return CommandInterface
+     */
     public function convert(Request $request)
     {
         return $this($request);
@@ -18,6 +23,7 @@ class RequestConverter implements ConverterInterface
 
     /**
      * @param Request $payload
+     *
      * @return CommandInterface
      */
     public function __invoke($payload)

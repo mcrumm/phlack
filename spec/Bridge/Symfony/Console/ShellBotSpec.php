@@ -12,9 +12,9 @@ class ShellBotSpec extends ObjectBehavior
     {
         $adapter = new ConsoleAdapter(new Mainframe());
 
-        $this->beConstructedWith('shellbot', 'spec', $adapter);
+        $this->beConstructedWith($adapter, 'shellbot', 'spec');
     }
-g
+
     function it_is_a_console_application()
     {
         $this->shouldHaveType('Crummy\Phlack\Bridge\Symfony\Console\ShellBot');

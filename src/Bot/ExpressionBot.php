@@ -3,8 +3,8 @@
 namespace Crummy\Phlack\Bot;
 
 use Crummy\Phlack\Message\Message;
-use Crummy\Phlack\WebHook\Matcher\CommandMatcher;
 use Crummy\Phlack\WebHook\CommandInterface;
+use Crummy\Phlack\WebHook\Matcher\CommandMatcher;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\ExpressionLanguage\SyntaxError;
 
