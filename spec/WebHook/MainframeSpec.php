@@ -4,9 +4,9 @@ namespace spec\Crummy\Phlack\WebHook;
 
 use Crummy\Phlack\Bot\BotInterface;
 use Crummy\Phlack\Common\Event;
+use Crummy\Phlack\WebHook\Command;
 use Crummy\Phlack\WebHook\Matcher\DefaultMatcher;
 use Crummy\Phlack\WebHook\Matcher\MatcherInterface;
-use Crummy\Phlack\WebHook\CommandInterface;
 use PhpSpec\ObjectBehavior;
 
 class MainframeSpec extends ObjectBehavior
@@ -27,7 +27,7 @@ class MainframeSpec extends ObjectBehavior
         $this->attach($bot, $matcher)->shouldReturn($this);
     }
 
-    function its_listener_executes_commands_on_match(BotInterface $bot, MatcherInterface $matcher, CommandInterface $command, Event $event)
+    function its_listener_executes_commands_on_match(BotInterface $bot, MatcherInterface $matcher, Command $command, Event $event)
     {
         $event->offsetGet('command')->willReturn($command);
         $event->offsetSet('message', null)->shouldBeCalled();
@@ -40,7 +40,7 @@ class MainframeSpec extends ObjectBehavior
         $listener($event);
     }
 
-    function its_listener_does_not_execute_without_match(BotInterface $bot, MatcherInterface $matcher, CommandInterface $command, Event $event)
+    function its_listener_does_not_execute_without_match(BotInterface $bot, MatcherInterface $matcher, Command $command, Event $event)
     {
         $event->offsetGet('command')->willReturn($command);
 
@@ -53,7 +53,7 @@ class MainframeSpec extends ObjectBehavior
         $listener($event);
     }
 
-    function its_listener_can_accept_a_callable_as_a_matcher(BotInterface $bot, CommandInterface $command, Event $event)
+    function its_listener_can_accept_a_callable_as_a_matcher(BotInterface $bot, Command $command, Event $event)
     {
         $event->offsetGet('command')->willReturn($command);
         $event->offsetSet('message', null)->shouldBeCalled();
@@ -61,7 +61,7 @@ class MainframeSpec extends ObjectBehavior
         $event->stopPropagation()->shouldBeCalled();
         $bot->execute($command)->shouldBeCalled();
 
-        $listener = $this->getListener($bot, function ($command) { return true; });
+        $listener = $this->getListener($bot, function () { return true; });
         $listener($event);
     }
 

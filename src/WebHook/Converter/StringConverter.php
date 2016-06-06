@@ -2,8 +2,7 @@
 
 namespace Crummy\Phlack\WebHook\Converter;
 
-use Crummy\Phlack\WebHook\SlashCommand;
-use Crummy\Phlack\WebHook\WebHook;
+use Crummy\Phlack\WebHook\Command;
 
 class StringConverter implements ConverterInterface
 {
@@ -31,7 +30,7 @@ class StringConverter implements ConverterInterface
     /**
      * @param $command
      *
-     * @return \Crummy\Phlack\WebHook\CommandInterface
+     * @return Command
      */
     public function convert($command)
     {
@@ -41,16 +40,16 @@ class StringConverter implements ConverterInterface
     /**
      * @param mixed $payload
      *
-     * @return \Crummy\Phlack\WebHook\CommandInterface
+     * @return Command
      */
     public function __invoke($payload)
     {
         if (0 !== strpos($payload, '/')) {
-            return new WebHook(['text' => $payload] + $this->webHook);
+            return new Command(['text' => $payload] + $this->webHook);
         } else {
             list($payload, $text) = explode(' ', $payload, 2);
 
-            return new SlashCommand(['command' => $payload, 'text' => $text] + $this->slashCommand);
+            return new Command(['command' => $payload, 'text' => $text] + $this->slashCommand);
         }
     }
 }

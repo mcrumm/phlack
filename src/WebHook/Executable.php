@@ -7,9 +7,9 @@ use Crummy\Phlack\Common\Encodable;
 interface Executable
 {
     /**
-     * @param CommandInterface $command
+     * @param Command $command
      *
      * @return Encodable
      */
-    public function execute(CommandInterface $command);
+    public function execute(Command $command);
 }

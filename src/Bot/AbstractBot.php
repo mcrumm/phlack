@@ -5,7 +5,7 @@ namespace Crummy\Phlack\Bot;
 use Crummy\Phlack\Common\Exception\InvalidArgumentException;
 use Crummy\Phlack\Common\Formatter\Sequencer;
 use Crummy\Phlack\Message\Message;
-use Crummy\Phlack\WebHook\CommandInterface;
+use Crummy\Phlack\WebHook\Command;
 use Crummy\Phlack\WebHook\Matcher;
 
 abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
@@ -94,14 +94,14 @@ abstract class AbstractBot implements BotInterface, Matcher\MatcherAggregate
     }
 
     /**
-     * @param CommandInterface $user The user_id, or a CommandInterface to inspect.
-     * @param string           $text
+     * @param Command $user The user_id, or a Command to inspect.
+     * @param string  $text
      *
      * @return Message
      */
     protected function reply($user, $text)
     {
-        if ($user instanceof CommandInterface) {
+        if ($user instanceof Command) {
             $sequence = $this->sequencer->command($user);
 
             return $this->say($sequence['user'].' '.$text);

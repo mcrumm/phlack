@@ -2,8 +2,8 @@
 
 namespace spec\Crummy\Phlack\Bridge\Guzzle;
 
+use Crummy\Phlack\WebHook\Command;
 use Guzzle\Common\Event;
-use Guzzle\Service\Command\CommandInterface;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -26,7 +26,7 @@ class ApiClientSpec extends ObjectBehavior
         $this::factory($this->config)->shouldReturnAnInstanceOf($this);
     }
 
-    function it_adds_the_token_to_the_command_before_prepare(Event $event, CommandInterface $command)
+    function it_adds_the_token_to_the_command_before_prepare(Event $event, Command $command)
     {
         /** @var EventDispatcher $dispatcher */
         $dispatcher = $this->getEventDispatcher();

@@ -2,9 +2,8 @@
 
 namespace spec\Crummy\Phlack\Bot;
 
+use Crummy\Phlack\WebHook\Command;
 use Crummy\Phlack\WebHook\Matcher\NonMatcher;
-use Crummy\Phlack\WebHook\CommandInterface;
-use Crummy\Phlack\WebHook\WebHook;
 use PhpSpec\ObjectBehavior;
 
 class RepeaterBotSpec extends ObjectBehavior
@@ -15,14 +14,17 @@ class RepeaterBotSpec extends ObjectBehavior
         $this->shouldBeAnInstanceOf('\Crummy\Phlack\Bot\AbstractBot');
     }
 
-    function it_does_the_repeater(WebHook $command)
+    function it_does_the_repeater()
     {
-        $command->offsetGet('channel_id')->willReturn('C98765');
-        $command->offsetGet('channel_name')->willReturn('group');
-        $command->offsetGet('user_id')->willReturn('U12345');
-        $command->offsetGet('user_name')->willReturn('crumm');
-        $command->offsetGet('text')->willReturn('Would you mind stepping down from there, with your license and registration?');
-        $command->offsetGet('command')->willReturn('would:');
+        $command = new Command([
+            'channel_id' => 'C98765',
+            'channel_name' => 'group',
+            'user_id' => 'U12345',
+            'user_name' => 'crumm',
+            'command' => 'would:',
+            'text' => 'Would you mind stepping down from there, with your license and registration?',
+        ]);
+
         $this
             ->execute($command)['text']
                 ->shouldReturn('<@U12345|crumm> Would you mind stepping down from there, with your license and registration?');
@@ -36,7 +38,7 @@ class RepeaterBotSpec extends ObjectBehavior
 
     function it_sets_and_gets_a_callable_matcher()
     {
-        $matcher = function (CommandInterface $command) {
+        $matcher = function (Command $command) {
             return true;
         };
 
@@ -51,40 +53,49 @@ class RepeaterBotSpec extends ObjectBehavior
                 ->during('setMatcher', ['matcher']);
     }
 
-    function it_strips_the_command_from_the_webhook_text(WebHook $command)
+    function it_strips_the_command_from_the_webhook_text()
     {
-        $command->offsetGet('channel_id')->willReturn('C98765');
-        $command->offsetGet('channel_name')->willReturn('group');
-        $command->offsetGet('user_id')->willReturn('U12345');
-        $command->offsetGet('user_name')->willReturn('crumm');
-        $command->offsetGet('command')->willReturn('foo:');
-        $command->offsetGet('text')->willReturn('foo: bar');
+        $command = new Command([
+            'channel_id' => 'C98765',
+            'channel_name' => 'group',
+            'user_id' => 'U12345',
+            'user_name' => 'crumm',
+            'command' => 'foo:',
+            'text' => 'foo: bar',
+        ]);
+
         $this
             ->execute($command)['text']
                 ->shouldReturn('<@U12345|crumm> bar');
     }
 
-    function it_does_not_strip_the_first_word_if_not_the_command(WebHook $command)
+    function it_does_not_strip_the_first_word_if_not_the_command()
     {
-        $command->offsetGet('channel_id')->willReturn('C98765');
-        $command->offsetGet('channel_name')->willReturn('group');
-        $command->offsetGet('user_id')->willReturn('U12345');
-        $command->offsetGet('user_name')->willReturn('crumm');
-        $command->offsetGet('command')->willReturn('foo:');
-        $command->offsetGet('text')->willReturn('foo bar');
+        $command = new Command([
+            'channel_id' => 'C98765',
+            'channel_name' => 'group',
+            'user_id' => 'U12345',
+            'user_name' => 'crumm',
+            'command' => 'foo:',
+            'text' => 'foo bar',
+        ]);
+
         $this
             ->execute($command)['text']
             ->shouldReturn('<@U12345|crumm> foo bar');
     }
 
-    function it_does_not_strip_multiple_occurrences(WebHook $command)
+    function it_does_not_strip_multiple_occurrences()
     {
-        $command->offsetGet('channel_id')->willReturn('C98765');
-        $command->offsetGet('channel_name')->willReturn('group');
-        $command->offsetGet('user_id')->willReturn('U12345');
-        $command->offsetGet('user_name')->willReturn('crumm');
-        $command->offsetGet('command')->willReturn('foo:');
-        $command->offsetGet('text')->willReturn('foo: bar foo: bat foo baz foo: you');
+        $command = new Command([
+            'channel_id' => 'C98765',
+            'channel_name' => 'group',
+            'user_id' => 'U12345',
+            'user_name' => 'crumm',
+            'command' => 'foo:',
+            'text' => 'foo: bar foo: bat foo baz foo: you',
+        ]);
+
         $this
             ->execute($command)['text']
             ->shouldReturn('<@U12345|crumm> bar foo: bat foo baz foo: you');

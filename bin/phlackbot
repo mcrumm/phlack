@@ -25,7 +25,7 @@ $mainframe  = (new \Crummy\Phlack\WebHook\Mainframe())
     ->attach(new \Crummy\Phlack\Bot\RepeaterBot()) # Attach the RepeaterBot to respond to all other commands.
 ;
 
-$adapter  = new \Crummy\Phlack\Bridge\Symfony\Console\ConsoleAdapter('phlack', $mainframe);
-$app      = new \Crummy\Phlack\Bridge\Symfony\Console\ShellBot(PHLACKBOT_NAME, PHLACKBOT_VERSION, $adapter);
+$adapter  = new \Crummy\Phlack\Bridge\Symfony\Console\ConsoleAdapter($mainframe);
+$app      = new \Crummy\Phlack\Bridge\Symfony\Console\ShellBot($adapter, PHLACKBOT_NAME, PHLACKBOT_VERSION);
 
 $app->run();

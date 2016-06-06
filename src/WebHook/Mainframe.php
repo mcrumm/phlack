@@ -30,11 +30,11 @@ class Mainframe implements MainframeInterface
     }
 
     /**
-     * @param CommandInterface $command
+     * @param Command $command
      *
      * @return Event
      */
-    public function execute(CommandInterface $command)
+    public function execute(Command $command)
     {
         $event = new Event(['command' => $command]);
 
@@ -47,7 +47,7 @@ class Mainframe implements MainframeInterface
 
     /**
      * @param Executable                $assistant
-     * @param MatcherInterface|callable $matcher   If callable, it should accept a CommandInterface and return a boolean.
+     * @param MatcherInterface|callable $matcher   If callable, it should accept a Command and return a boolean.
      * @param int                       $priority
      *
      * @return self
@@ -69,7 +69,7 @@ class Mainframe implements MainframeInterface
 
     /**
      * @param Executable                $assistant
-     * @param MatcherInterface|callable $matcher   If callable, it should accept a CommandInterface and return a boolean.
+     * @param MatcherInterface|callable $matcher   If callable, it should accept a Command and return a boolean.
      *
      * @throws \Crummy\Phlack\Common\Exception\InvalidArgumentException When given an invalid matcher.
      *

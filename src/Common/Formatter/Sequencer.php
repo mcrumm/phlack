@@ -2,7 +2,7 @@
 
 namespace Crummy\Phlack\Common\Formatter;
 
-use Crummy\Phlack\WebHook\CommandInterface;
+use Crummy\Phlack\WebHook\Command;
 
 class Sequencer implements FormatterInterface
 {
@@ -33,11 +33,11 @@ class Sequencer implements FormatterInterface
     }
 
     /**
-     * @param CommandInterface $command
+     * @param Command $command
      *
      * @return array
      */
-    public static function command(CommandInterface $command)
+    public static function command(Command $command)
     {
         return [
             'channel'   => self::sequence('#'.$command['channel_id'], $command['channel_name']),

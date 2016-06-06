@@ -3,7 +3,7 @@
 namespace Crummy\Phlack\Bot;
 
 use Crummy\Phlack\Message\Message;
-use Crummy\Phlack\WebHook\CommandInterface;
+use Crummy\Phlack\WebHook\Command;
 use Crummy\Phlack\WebHook\Matcher\CommandMatcher;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\ExpressionLanguage\SyntaxError;
@@ -25,11 +25,11 @@ class ExpressionBot extends AbstractBot
     }
 
     /**
-     * @param CommandInterface $command
+     * @param Command $command
      *
      * @return Message
      */
-    public function execute(CommandInterface $command)
+    public function execute(Command $command)
     {
         try {
             $response = (string) $this->evaluate($command, $this->getValues($command));
@@ -41,22 +41,22 @@ class ExpressionBot extends AbstractBot
     }
 
     /**
-     * @param CommandInterface $command
+     * @param Command $command
      * @param array            $values
      *
      * @return string
      */
-    protected function evaluate(CommandInterface $command, $values = [])
+    protected function evaluate(Command $command, $values = [])
     {
         return $this->language->evaluate($command['text'], $values);
     }
 
     /**
-     * @param CommandInterface $command
+     * @param Command $command
      *
      * @return array
      */
-    protected function getValues(CommandInterface $command)
+    protected function getValues(Command $command)
     {
         return [];
     }

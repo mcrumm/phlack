@@ -2,7 +2,7 @@
 
 namespace spec\Crummy\Phlack\Common\Formatter;
 
-use Crummy\Phlack\WebHook\CommandInterface;
+use Crummy\Phlack\WebHook\Command;
 use PhpSpec\ObjectBehavior;
 
 class SequencerSpec extends ObjectBehavior
@@ -20,25 +20,29 @@ class SequencerSpec extends ObjectBehavior
                 ->shouldReturn('<@U12345>');
     }
 
-    function it_sequences_a_command(CommandInterface $command)
+    function it_sequences_a_command()
     {
-        $command->offsetGet('user_id')->willReturn('U8686');
-        $command->offsetGet('user_name')->willReturn('agent');
-        $command->offsetGet('channel_id')->willReturn('C0001');
-        $command->offsetGet('channel_name')->willReturn('cone');
+        $command = new Command([
+            'user_id' => 'U8686',
+            'user_name' => 'agent',
+            'channel_id' => 'C0001',
+            'channel_name' => 'cone',
+        ]);
 
         $this
             ->command($command)
-                ->shouldReturn([
-                    'channel'   => '<#C0001|cone>',
-                    'user'      => '<@U8686|agent>',
-                ]);
+            ->shouldReturn([
+                'channel'   => '<#C0001|cone>',
+                'user'      => '<@U8686|agent>',
+            ])
+        ;
     }
 
     function it_sequences_an_alert()
     {
         $this
             ->alert('everybody')
-                ->shouldReturn('<!everybody>');
+            ->shouldReturn('<!everybody>')
+        ;
     }
 }

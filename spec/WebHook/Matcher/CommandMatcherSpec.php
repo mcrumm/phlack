@@ -2,41 +2,38 @@
 
 namespace spec\Crummy\Phlack\WebHook\Matcher;
 
-use Crummy\Phlack\WebHook\SlashCommand;
-use Crummy\Phlack\WebHook\WebHookInterface;
+use Crummy\Phlack\WebHook\Command;
 use PhpSpec\ObjectBehavior;
 
 class CommandMatcherSpec extends ObjectBehavior
 {
-    function let()
+    function it_is_a_matcher()
     {
-        $this->beConstructedWith(null);
+        $this->shouldImplement('\Crummy\Phlack\WebHook\Matcher\MatcherInterface');
     }
 
-    function it_is_initializable()
+    function it_matches_a_command_by_name()
     {
-        $this->shouldHaveType('Crummy\Phlack\WebHook\Matcher\CommandMatcher');
+        $this->beConstructedWith('/foo');
+
+        $this
+            ->matches(new Command(['command' => '/foo']))
+            ->shouldBe(true)
+        ;
     }
 
-    function it_matches_slash_commands(SlashCommand $command)
+    function it_does_not_match_unmatched_names()
     {
-        $this->matches($command)->shouldReturn(true);
+        $this->beConstructedWith('/foo');
+
+        $this
+            ->matches(new Command(['command' => '/bar']))
+            ->shouldBe(false)
+        ;
     }
 
-    function it_does_not_match_webhooks(WebHookInterface $webhook)
+    function it_does_not_match_non_commands()
     {
-        $this->matches($webhook)->shouldReturn(false);
-    }
-
-    function it_matches_command_by_name(SlashCommand $command)
-    {
-        $command->get('command')->willReturn('/foo');
-        $this->setCommandName('/foo')->matches($command)->shouldReturn(true);
-    }
-
-    function it_does_not_match_unmatched_names(SlashCommand $command)
-    {
-        $command->get('command')->willReturn('/bar');
-        $this->setCommandName('/foo')->matches($command)->shouldReturn(false);
+        $this->matches(new Command())->shouldBe(false);
     }
 }

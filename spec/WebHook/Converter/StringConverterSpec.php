@@ -12,23 +12,23 @@ class StringConverterSpec extends ObjectBehavior
         $this->shouldImplement('\Crummy\Phlack\WebHook\Converter\ConverterInterface');
     }
 
-    function it_converts_commands_to_slash_commands()
+    function it_converts_commands()
     {
-        $this->convert('/foo bar')->shouldReturnAnInstanceOf('\Crummy\Phlack\WebHook\SlashCommand');
+        $this->convert('/foo bar')->shouldReturnAnInstanceOf('\Crummy\Phlack\WebHook\Command');
     }
 
     function it_can_be_invoked_for_slash_commands()
     {
-        $this->__invoke('/foo bar')->shouldReturnAnInstanceOf('\Crummy\Phlack\WebHook\SlashCommand');
+        $this->__invoke('/foo bar')->shouldReturnAnInstanceOf('\Crummy\Phlack\WebHook\Command');
     }
 
-    function it_converts_non_commands_to_webhooks()
+    function it_converts_outgoing_webhooks()
     {
-        $this->convert('foo: bar')->shouldReturnAnInstanceOf('\Crummy\Phlack\WebHook\WebHook');
+        $this->convert('foo: bar')->shouldReturnAnInstanceOf('\Crummy\Phlack\WebHook\Command');
     }
 
-    function it_can_be_invoked_for_webhooks()
+    function it_can_be_invoked_for_an_outgoing_webhook()
     {
-        $this->__invoke('foo: bar')->shouldReturnAnInstanceOf('\Crummy\Phlack\WebHook\WebHook');
+        $this->__invoke('foo: bar')->shouldReturnAnInstanceOf('\Crummy\Phlack\WebHook\Command');
     }
 }

@@ -57,7 +57,7 @@ class ShellBot extends Application
         $inputDefinition = parent::getDefinition();
         $inputDefinition->setArguments([
             new InputArgument(
-                $this->adapter->getName(),
+                'command',
                 InputArgument::OPTIONAL | InputArgument::IS_ARRAY, 'The input command'),
         ]);
 

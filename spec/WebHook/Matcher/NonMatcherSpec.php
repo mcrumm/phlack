@@ -2,7 +2,7 @@
 
 namespace spec\Crummy\Phlack\WebHook\Matcher;
 
-use Crummy\Phlack\WebHook\CommandInterface;
+use Crummy\Phlack\WebHook\Command;
 use PhpSpec\ObjectBehavior;
 
 class NonMatcherSpec extends ObjectBehavior
@@ -13,7 +13,7 @@ class NonMatcherSpec extends ObjectBehavior
         $this->shouldImplement('\Crummy\Phlack\WebHook\Matcher\MatcherInterface');
     }
 
-    function it_matches_no_commands(CommandInterface $command)
+    function it_matches_no_commands(Command $command)
     {
         $this->matches($command)->shouldReturn(false);
     }

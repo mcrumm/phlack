@@ -5,6 +5,11 @@ namespace spec\Crummy\Phlack\Bridge\Symfony\Console;
 use Crummy\Phlack\Bridge\Symfony\Console\ConsoleAdapter;
 use Crummy\Phlack\WebHook\Mainframe;
 use PhpSpec\ObjectBehavior;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputDefinition;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class ShellBotSpec extends ObjectBehavior
 {

@@ -2,18 +2,34 @@
 
 namespace Crummy\Phlack\WebHook\Matcher;
 
-use Crummy\Phlack\WebHook\CommandInterface;
-use Crummy\Phlack\WebHook\SlashCommand;
+use Crummy\Phlack\WebHook\Command;
 
-class CommandMatcher extends CommandNameMatcher
+class CommandMatcher implements MatcherInterface
 {
     /**
-     * {@inheritdoc}
+     * @var null|string
      */
-    public function matches(CommandInterface $command)
+    protected $commandName;
+
+    /**
+     * CommandMatcher constructor.
+     *
+     * @param null|string $commandName
+     */
+    public function __construct($commandName = null)
+    {
+        $this->commandName = $commandName;
+    }
+
+    /**
+     * @param Command $command
+     *
+     * @return bool
+     */
+    public function matches(Command $command)
     {
         return null === $this->commandName
-            ? $command instanceof SlashCommand
-            : $command instanceof SlashCommand && parent::matches($command);
+            ? isset($command['command'])
+            : isset($command['command']) && $command['command'] === $this->commandName;
     }
 }

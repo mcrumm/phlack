@@ -2,16 +2,16 @@
 
 namespace Crummy\Phlack\WebHook\Matcher;
 
-use Crummy\Phlack\WebHook\CommandInterface;
+use Crummy\Phlack\WebHook\Command;
 
 class DefaultMatcher implements MatcherInterface
 {
     /**
-     * @param CommandInterface $command
+     * @param Command $command
      *
      * @return bool
      */
-    public function matches(CommandInterface $command)
+    public function matches(Command $command)
     {
         return true;
     }

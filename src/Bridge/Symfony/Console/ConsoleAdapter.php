@@ -31,12 +31,12 @@ class ConsoleAdapter extends Command
         $this->mainframe = $mainframe;
         $this->converter = $converter ?: new StringConverter();
 
-        parent::__construct('command');
+        parent::__construct('phlack');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $in = $input->getArgument($this->getName());
+        $in = $input->getArgument('command');
         $text = is_array($in) ? implode(' ', $in) : $in;
 
         $converter = $this->converter;

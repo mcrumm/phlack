@@ -2,11 +2,8 @@
 
 namespace Crummy\Phlack\Bridge\Symfony\HttpFoundation;
 
-use Crummy\Phlack\Common\Exception\UnexpectedValueException;
+use Crummy\Phlack\WebHook\Command;
 use Crummy\Phlack\WebHook\Converter\ConverterInterface;
-use Crummy\Phlack\WebHook\SlashCommand;
-use Crummy\Phlack\WebHook\WebHook;
-use Guzzle\Service\Command\CommandInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class RequestConverter implements ConverterInterface
@@ -14,7 +11,7 @@ class RequestConverter implements ConverterInterface
     /**
      * @param Request $request
      *
-     * @return CommandInterface
+     * @return Command
      */
     public function convert(Request $request)
     {
@@ -24,22 +21,16 @@ class RequestConverter implements ConverterInterface
     /**
      * @param Request $payload
      *
-     * @return CommandInterface
+     * @return Command
      */
     public function __invoke($payload)
     {
-        try {
-            $parameters = $payload->request->all();
+        $parameters = $payload->request->all();
 
-            if (array_key_exists('command', $parameters)) {
-                return new SlashCommand($parameters);
-            } elseif (empty($parameters)) {
-                $parameters = $payload->query->all();
-            }
-
-            return new WebHook($parameters);
-        } catch (\Exception $exception) {
-            throw new UnexpectedValueException('Request could not be converted.', 0, $exception);
+        if (empty($parameters) || !array_key_exists('command', $parameters)) {
+            $parameters = $payload->query->all();
         }
+
+        return new Command($parameters);
     }
 }
