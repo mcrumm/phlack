@@ -9,7 +9,7 @@ class Command extends \ArrayObject implements Encodable
     /**
      * @return array
      */
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         return $this->getArrayCopy();
     }

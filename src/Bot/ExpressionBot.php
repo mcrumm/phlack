@@ -42,7 +42,7 @@ class ExpressionBot extends AbstractBot
 
     /**
      * @param Command $command
-     * @param array            $values
+     * @param array   $values
      *
      * @return string
      */
