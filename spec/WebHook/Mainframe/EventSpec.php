@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Crummy\Phlack\Common;
+namespace spec\Crummy\Phlack\WebHook\Mainframe;
 
 use Crummy\Phlack\Message\Message;
 use PhpSpec\ObjectBehavior;

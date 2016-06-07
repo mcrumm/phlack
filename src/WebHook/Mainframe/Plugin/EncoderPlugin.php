@@ -2,16 +2,19 @@
 
 namespace Crummy\Phlack\WebHook\Mainframe\Plugin;
 
-use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\Common\Events;
 use Crummy\Phlack\Common\Formatter\EncodeFormatter;
 use Crummy\Phlack\Common\Formatter\FormatterCollection;
 use Crummy\Phlack\Common\Formatter\FormatterInterface;
 use Crummy\Phlack\Common\Formatter\LinkFormatter;
+use Crummy\Phlack\WebHook\Mainframe\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class EncoderPlugin implements EventSubscriberInterface
 {
+    /**
+     * @var FormatterInterface
+     */
     private $formatter;
 
     /**

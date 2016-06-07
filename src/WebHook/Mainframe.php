@@ -2,8 +2,9 @@
 
 namespace Crummy\Phlack\WebHook;
 
-use Crummy\Phlack\Common\Event;
+use Crummy\Phlack\Common\Encodable;
 use Crummy\Phlack\Common\Events;
+use Crummy\Phlack\WebHook\Mainframe\Event;
 use Crummy\Phlack\WebHook\Mainframe\ListenerFactory;
 use Crummy\Phlack\WebHook\Mainframe\Plugin\EncoderPlugin;
 use Crummy\Phlack\WebHook\Matcher\DefaultMatcher;
@@ -41,7 +42,7 @@ class Mainframe implements MainframeInterface
     /**
      * @param Command $command
      *
-     * @return Event
+     * @return Encodable
      */
     public function execute(Command $command)
     {

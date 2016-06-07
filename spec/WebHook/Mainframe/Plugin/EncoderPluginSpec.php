@@ -2,9 +2,9 @@
 
 namespace spec\Crummy\Phlack\WebHook\Mainframe\Plugin;
 
-use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\Common\Formatter\FormatterInterface;
 use Crummy\Phlack\Message\Message;
+use Crummy\Phlack\WebHook\Mainframe\Event;
 use PhpSpec\ObjectBehavior;
 
 class EncoderPluginSpec extends ObjectBehavior

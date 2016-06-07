@@ -1,7 +1,8 @@
 <?php
 
-namespace Crummy\Phlack\Common;
+namespace Crummy\Phlack\WebHook\Mainframe;
 
+use Crummy\Phlack\Common\Encodable;
 use Guzzle\Common\Event as GuzzleEvent;
 use JsonSerializable;
 

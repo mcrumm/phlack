@@ -2,7 +2,6 @@
 
 namespace Crummy\Phlack\WebHook\Mainframe;
 
-use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\Common\Exception\UnexpectedTypeException;
 use Crummy\Phlack\WebHook\Executable;
 use Crummy\Phlack\WebHook\Matcher\MatcherInterface;

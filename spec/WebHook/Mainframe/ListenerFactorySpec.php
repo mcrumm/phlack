@@ -2,9 +2,9 @@
 
 namespace spec\Crummy\Phlack\WebHook\Mainframe;
 
-use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\WebHook\Command;
 use Crummy\Phlack\WebHook\Executable;
+use Crummy\Phlack\WebHook\Mainframe\Event;
 use Crummy\Phlack\WebHook\Matcher\DefaultMatcher;
 use Crummy\Phlack\WebHook\Matcher\NonMatcher;
 use PhpSpec\ObjectBehavior;
