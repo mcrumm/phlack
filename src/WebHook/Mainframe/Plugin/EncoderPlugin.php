@@ -1,6 +1,6 @@
 <?php
 
-namespace Crummy\Phlack\WebHook\Plugin;
+namespace Crummy\Phlack\WebHook\Mainframe\Plugin;
 
 use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\Common\Events;

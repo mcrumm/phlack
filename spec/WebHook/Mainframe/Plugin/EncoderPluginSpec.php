@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Crummy\Phlack\WebHook\Plugin;
+namespace spec\Crummy\Phlack\WebHook\Mainframe\Plugin;
 
 use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\Common\Formatter\FormatterInterface;
@@ -16,7 +16,7 @@ class EncoderPluginSpec extends ObjectBehavior
 
     function it_is_a_Command_Plugin()
     {
-        $this->shouldHaveType('Crummy\Phlack\WebHook\Plugin\EncoderPlugin');
+        $this->shouldHaveType('Crummy\Phlack\WebHook\Mainframe\Plugin\EncoderPlugin');
         $this->shouldImplement('Symfony\Component\EventDispatcher\EventSubscriberInterface');
     }
 

@@ -5,6 +5,7 @@ namespace Crummy\Phlack\WebHook;
 use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\Common\Events;
 use Crummy\Phlack\WebHook\Mainframe\ListenerFactory;
+use Crummy\Phlack\WebHook\Mainframe\Plugin\EncoderPlugin;
 use Crummy\Phlack\WebHook\Matcher\DefaultMatcher;
 use Crummy\Phlack\WebHook\Matcher\MatcherAggregate;
 use Crummy\Phlack\WebHook\Matcher\MatcherInterface;
@@ -32,7 +33,7 @@ class Mainframe implements MainframeInterface
     {
         $this->dispatcher = $dispatcher ?: new EventDispatcher();
 
-        $this->dispatcher->addSubscriber(new Plugin\EncoderPlugin());
+        $this->dispatcher->addSubscriber(new EncoderPlugin());
 
         $this->listenerFactory = new ListenerFactory();
     }
