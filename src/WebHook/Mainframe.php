@@ -4,7 +4,8 @@ namespace Crummy\Phlack\WebHook;
 
 use Crummy\Phlack\Common\Event;
 use Crummy\Phlack\Common\Events;
-use Crummy\Phlack\Common\Exception\InvalidArgumentException;
+use Crummy\Phlack\WebHook\Mainframe\ListenerFactory;
+use Crummy\Phlack\WebHook\Matcher\DefaultMatcher;
 use Crummy\Phlack\WebHook\Matcher\MatcherAggregate;
 use Crummy\Phlack\WebHook\Matcher\MatcherInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -18,6 +19,11 @@ class Mainframe implements MainframeInterface
     private $dispatcher;
 
     /**
+     * @var ListenerFactory
+     */
+    private $listenerFactory;
+
+    /**
      * Mainframe constructor.
      *
      * @param EventDispatcherInterface|null $dispatcher
@@ -27,6 +33,8 @@ class Mainframe implements MainframeInterface
         $this->dispatcher = $dispatcher ?: new EventDispatcher();
 
         $this->dispatcher->addSubscriber(new Plugin\EncoderPlugin());
+
+        $this->listenerFactory = new ListenerFactory();
     }
 
     /**
@@ -54,47 +62,24 @@ class Mainframe implements MainframeInterface
      */
     public function attach(Executable $assistant, $matcher = null, $priority = 0)
     {
-        if (!$matcher && $assistant instanceof MatcherAggregate) {
-            $matcher = $assistant->getMatcher();
-        } else {
-            $matcher = function () {
-                return true;
-            };
-        }
+        $matcher = $matcher ?: $this->getMatcherForExecutable($assistant);
 
-        $this->dispatcher->addListener(Events::RECEIVED_COMMAND, $this->getListener($assistant, $matcher), $priority);
+        $listener = $this->listenerFactory->newListener($assistant, $matcher);
+
+        $this->dispatcher->addListener(Events::RECEIVED_COMMAND, $listener, $priority);
 
         return $this;
     }
 
     /**
-     * @param Executable                $assistant
-     * @param MatcherInterface|callable $matcher   If callable, it should accept a Command and return a boolean.
+     * @param Executable $assistant
      *
-     * @throws \Crummy\Phlack\Common\Exception\InvalidArgumentException When given an invalid matcher.
-     *
-     * @return \Closure An anonymous function to be attached to the internal cpu.
+     * @return MatcherInterface
      */
-    public function getListener(Executable $assistant, $matcher)
+    protected function getMatcherForExecutable(Executable $assistant)
     {
-        if (!$matcher instanceof MatcherInterface && !is_callable($matcher)) {
-            throw new InvalidArgumentException(sprintf(
-                'The matcher must be callable, or an instance of MatcherInterface. "%s" given.',
-                is_object($matcher) ? get_class($matcher) : gettype($matcher)
-            ));
-        }
-
-        return function (Event $event) use ($assistant, $matcher) {
-            if ($matcher instanceof MatcherInterface) {
-                $isMatch = $matcher->matches($event['command']);
-            } else {
-                $isMatch = call_user_func($matcher, $event['command']);
-            }
-
-            if ($isMatch) {
-                $event->stopPropagation();
-                $event['message'] = $assistant->execute($event['command']);
-            }
-        };
+        return $assistant instanceof MatcherAggregate
+            ? $assistant->getMatcher()
+            : new DefaultMatcher();
     }
 }
