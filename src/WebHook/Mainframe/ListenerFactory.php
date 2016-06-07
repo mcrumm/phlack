@@ -22,7 +22,7 @@ class ListenerFactory
         if (!$matcher instanceof MatcherInterface && !is_callable($matcher)) {
             throw new UnexpectedTypeException($matcher, [
                 'callable',
-                'Crummy\Phlack\WebHook\Matcher\MatcherInterface'
+                'Crummy\Phlack\WebHook\Matcher\MatcherInterface',
             ]);
         }
 

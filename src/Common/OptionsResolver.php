@@ -20,7 +20,9 @@ class OptionsResolver extends BaseOptionsResolver
     public function setTypesAllowed($allowedTypes = null)
     {
         if (!$this->isLatest()) {
+            // @codeCoverageIgnoreStart
             return $this->setAllowedTypes($allowedTypes);
+            // @codeCoverageIgnoreEnd
         }
 
         foreach ($allowedTypes as $option => $typesAllowed) {
@@ -36,7 +38,9 @@ class OptionsResolver extends BaseOptionsResolver
     public function setDefined($optionNames)
     {
         if (!$this->isLatest()) {
+            // @codeCoverageIgnoreStart
             return $this->setOptional($optionNames);
+            // @codeCoverageIgnoreEnd
         }
 
         return parent::setDefined($optionNames);
@@ -45,7 +49,9 @@ class OptionsResolver extends BaseOptionsResolver
     public function setNormalizers(array $normalizers)
     {
         if (!$this->isLatest()) {
+            // @codeCoverageIgnoreStart
             return parent::setNormalizers($normalizers);
+            // @codeCoverageIgnoreEnd
         }
 
         foreach ($normalizers as $option => $normalizer) {
